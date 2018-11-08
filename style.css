@@ -1,0 +1,45 @@
+/* ~~~~~~~~~~~~~INDIVIDUAL STYLES~~~~~~~~~~~~~ */
+html {
+	width: 100%;	
+	height: 100%;
+}
+
+head {
+	
+	width: 100%;
+	height: 100%;
+
+}
+
+body {
+	background-color:#ccfff5;
+	overflow:hidden;
+	width: 100%;
+	height: 100;
+}
+
+p {
+	color: #004f3f;
+
+	font-size: 14px;
+	font-weight: bold;
+	margin-top: 10px;
+}
+
+#input_fields {
+	width: 40%;
+	height: 100%;
+}
+
+#title {
+	color: #004f3f;
+	font-size: 18px;
+	font-weight: bold;
+	margin-top: 10px;
+}
+
+form {
+	color: #004f3f;
+}
+
+
