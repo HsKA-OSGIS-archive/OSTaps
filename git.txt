@@ -19,7 +19,7 @@ git commit -m "what has changed"
 git push
 
 // update changes others have done
-// (you have to cd in the folder KAOS-GIS)
+// (you have to cd in the folder OSTaps)
 git fetch origin
 git status // to see if something has changed
 git pull
