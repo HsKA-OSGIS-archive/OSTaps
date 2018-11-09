@@ -1,0 +1,79 @@
+WORKING WITH OUR REMOTE GIT
+
+// cd to folder you want to have the data in
+git clone https://github.com/HsKA-OSGIS/OSTaps
+cd OSTaps    -->   all data we are working on are stored in this folder 
+
+git add example.txt  ----- add a file to staging area
+OR                                  
+git add -A   ------------------- add all files of folder to staging area
+git add .      --------------------add all files of folder and subfolder to staging area
+
+//make changes
+
+git diff
+git status
+git commit -m "what has changed"
+
+//publish the changes to all of us
+git push
+
+// update changes others have done
+// (you have to cd in the folder KAOS-GIS)
+git fetch origin
+git status // to see if something has changed
+git pull
+
+
+////////////////////////////////////////////////////////////////////////////////
+Git is the industry-standard version control system for web developers
+Use Git commands to help keep track of changes made to a project:
+
+        git init 											creates a new Git repository in the actual directory (cd)
+        git status 											inspects the contents of the working directory and staging area
+        git add example.txt									adds files from the working directory to the staging area
+		//do some changes
+        git diff example.txt								shows the difference between the working directory and the staging area
+        git commit -m "beschreibung" 						permanently stores file changes from the staging area in the repository
+        git log 											shows a list of all previous commits
+		git clone git://github.com/schacon/grit.git mygrit	clone the repository on github
+		git add --help										get help to an command
+		git mv test.txt firsttest.txt						move (change name) and automaticly add into staging area:
+
+		git show HEAD   				 					HEAD is at the most recent commit
+		git checkout HEAD filename		 					discard changes, resore file as last commit
+
+multiple file contoll:
+
+		git add data1.txt data2.txt      					add multiple files to the staging area
+		git reset HEAD data1.txt 	    					unstage a file from the staging area
+
+resetting commits:
+
+		git log							 					see commits, press q if there are to much commits
+		git reset 5d69206				 					first 7 digits of the SHA of the commit
+		--> HEAD goes to a previously made commit 
+							
+
+		git checkout HEAD filename  						Discards changes in the working directory.
+		git reset HEAD filename 							Unstages file changes in the staging area.
+		git reset commit_SHA 								Resets to a previous commit in your commit history.
+
+connect to GitHub Repository:
+
+		git remote add origin https://github.com/flyEagelsfly/GITtest.git
+		
+		add all versioned files:
+		git add -u
+
+
+
+
+branching:
+
+git branch
+git branch new_branch                       // create new branch
+git checkout new_branch                     // change to new branch
+//make changes
+git checkout master                         // change to master branch
+git merge new_branch -m "what have I done"  // merge branch with master
