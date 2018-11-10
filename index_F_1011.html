@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<!-- General Settings-->
+		<meta charset = "UTF-8" />
+		<meta name = "viewport" content ="width=device.width, initial-scale=1"/>
+		<title> Thematic Map Creator </title> 
+		<link rel = "stylesheet" href = "style.css" />
+
+	
+	</head>
+	
+
+	<body>
+		
+		<!-- INPUT FIELDS -->
+		<div id = "input_fields">
+		
+			<h1 id = "title"> Thematic Map Creator </h1>
+			
+			<!-- GEODATA SELECTOR -->
+			<p id = "t_select_input"> Select your Input GeoJSON </p>
+			<form id = "f_select_input" lang="en" method="post" enctype="multipart/form-data">	<!-- method=post specifies that form data is sent as HTTP post transaction // enctype  specifies how form data should be encoded when submitting it to a server -->
+				<input id = "i_select_input" "name="File" type="file" size="50" accept=".geojson, .shp">  
+			</form>
+			<!-- ATTRIBTUE SELECTOR (has to be made dynamic based on attributes https://css-tricks.com/examples/DynamicDropdown/) -->
+			<p id = "t_select_attribute"> Select the Attribute for Choropleth Map Creation </p>
+			<form id = "f_select_attribute">
+				<select id = "s_select_attribute" name = "f_select_attribute" onchange=""> 
+					<option id = "o_select_attribute" value="" selected></option> 
+				</select> 
+			</form>
+			
+			<!-- CLASS SELECTOR -->
+			<p id = "t_select_attribute"> Select the Number of Classes </p>
+			<form id = "f_select_classes">
+				<select id = "s_select_classes" name = "f_select_classes" onchange=""> 
+					<option id = "o_select_classes_2" value="" selected>2</option>
+					<option id = "o_select_classes_3" value="" selected>3</option> 
+					<option id = "o_select_classes_4" value="" selected>4</option> 
+					<option id = "o_select_classes_5" value="" selected>5</option> 
+					<option id = "o_select_classes_6" value="" selected>6</option> 
+					<option id = "o_select_classes_7" value="" selected>7</option> 
+					<option id = "o_select_classes_8" value="" selected>8</option> 
+				</select> 
+			</form>
+			
+			<!-- CLASS SELECTOR -->
+			<p id = "t_select_color_scheme"> Select the Color Scheme </p>
+			<form id = "f_select_classes">
+				<select id = "s_select_classes" name = "f_select_classes" onchange=""> 
+					<option id = "o_select_classes_2" value="" selected>2</option>
+					<option id = "o_select_classes_3" value="" selected>3</option> 
+					<option id = "o_select_classes_4" value="" selected>4</option> 
+					<option id = "o_select_classes_5" value="" selected>5</option> 
+					<option id = "o_select_classes_6" value="" selected>6</option> 
+					<option id = "o_select_classes_7" value="" selected>7</option> 
+					<option id = "o_select_classes_8" value="" selected>8</option> 
+				</select> 
+			</form>
+			
+			<!-- CLASS SELECTOR -->
+			<p id = "t_specify_opacity"> Specify the Opacity of the Choropleth Map </p>
+			<div class="slidecontainer">
+				<input type="range" min="1" max="100" value="50" class="slider" id="myRange">
+			</div>
+			
+			<!-- CLASS SELECTOR Radio Buttons -->
+			<p id = "t_specify_basemap"> Specify the orientation of the map </p>
+			<form>
+			  <input type="radio" name="radiobutton" value="portrait"checked> Portrait<br>
+			  <input type="radio" name="radiobutton" value="landscape" > Landscape<br>
+			</form>
+			
+			<!-- CLASS SELECTOR Radio Buttons -->
+			<p id = "t_specify_basemap"> Specify the desired basemap </p>
+			<form>
+			  <input type="radio" name="radiobutton" value="OSM"checked> OSM<br>
+			  <input type="radio" name="radiobutton" value="GoogleMaps" > Google Maps<br>
+			</form>
+			
+			<!-- CLASS Textfield -->	
+			<p id = "t_specify_WMS"> Specify the URL of an additional WMS </p>			
+			<form>
+				<input type="text" name="URLofWMS"><br>
+			</form>
+
+			<p id = "Absatz">  </p>	
+			
+			<!-- Buttons -->
+			<button class="button"
+					type="button">
+				Image
+			</button>
+			
+			<button class="button"
+					type="button">
+				Map 
+			</button>
+			
+			<button class="button"
+					type="button">
+				Help
+			</button>
+		
+		<div>
+	</body>	
+</html>
