@@ -1,0 +1,9 @@
+-- Django installation --
+! make sure python and its pip are in windows system variable
+
+pip install django
+
+-- Create project --
+django-admin startproject backend
+! in this folder you find the manage.py script which starts the server
+! as well as the "backend" folder where the python files are stored
