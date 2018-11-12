@@ -23,6 +23,7 @@
 			<form id = "f_select_input" lang="en" method="post" enctype="multipart/form-data">	<!-- method=post specifies that form data is sent as HTTP post transaction // enctype  specifies how form data should be encoded when submitting it to a server -->
 				<input id = "i_select_input" "name="File" type="file" size="50" accept=".geojson, .shp">  
 			</form>
+			
 			<!-- ATTRIBTUE SELECTOR (has to be made dynamic based on attributes https://css-tricks.com/examples/DynamicDropdown/) -->
 			<p id = "t_select_attribute"> Select the Attribute for Choropleth Map Creation </p>
 			<form id = "f_select_attribute">
@@ -35,73 +36,62 @@
 			<p id = "t_select_attribute"> Select the Number of Classes </p>
 			<form id = "f_select_classes">
 				<select id = "s_select_classes" name = "f_select_classes" onchange=""> 
-					<option id = "o_select_classes_2" value="" selected>2</option>
-					<option id = "o_select_classes_3" value="" selected>3</option> 
-					<option id = "o_select_classes_4" value="" selected>4</option> 
-					<option id = "o_select_classes_5" value="" selected>5</option> 
-					<option id = "o_select_classes_6" value="" selected>6</option> 
-					<option id = "o_select_classes_7" value="" selected>7</option> 
-					<option id = "o_select_classes_8" value="" selected>8</option> 
+					<option id = "o_select_classes_2" value="2" selected>2</option>
+					<option id = "o_select_classes_3" value="3">3</option> 
+					<option id = "o_select_classes_4" value="4">4</option> 
+					<option id = "o_select_classes_5" value="5">5</option> 
+					<option id = "o_select_classes_6" value="6">6</option> 
+					<option id = "o_select_classes_7" value="7">7</option> 
+					<option id = "o_select_classes_8" value="8">8</option> 
 				</select> 
 			</form>
 			
-			<!-- CLASS SELECTOR -->
-			<p id = "t_select_color_scheme"> Select the Color Scheme </p>
-			<form id = "f_select_classes">
-				<select id = "s_select_classes" name = "f_select_classes" onchange=""> 
-					<option id = "o_select_classes_2" value="" selected>2</option>
-					<option id = "o_select_classes_3" value="" selected>3</option> 
-					<option id = "o_select_classes_4" value="" selected>4</option> 
-					<option id = "o_select_classes_5" value="" selected>5</option> 
-					<option id = "o_select_classes_6" value="" selected>6</option> 
-					<option id = "o_select_classes_7" value="" selected>7</option> 
-					<option id = "o_select_classes_8" value="" selected>8</option> 
+			<!-- COLOR SELECTOR -->
+			<p id = "t_select_color"> Select the Color Scheme </p>
+			<form id = "f_select_color">
+				<select id = "s_select_color" name = "f_select_color" onchange=""> 
+					<option id = "o_select_color_r" value="red" selected>Red</option>
+					<option id = "o_select_color_g" value="green">Green</option> 
+					<option id = "o_select_color_b" value="blue">Blue</option> 
+					<option id = "o_select_color_o" value="orange">Orange</option> 
+					<option id = "o_select_color_p" value="purple">Purple</option> 
 				</select> 
 			</form>
 			
-			<!-- CLASS SELECTOR -->
-			<p id = "t_specify_opacity"> Specify the Opacity of the Choropleth Map </p>
-			<div class="slidecontainer">
-				<input type="range" min="1" max="100" value="50" class="slider" id="myRange">
-			</div>
 			
-			<!-- CLASS SELECTOR Radio Buttons -->
-			<p id = "t_specify_basemap"> Specify the orientation of the Map </p>
-			<form>
-			  <input type="radio" name="radiobutton" value="portrait"checked> Portrait<br>
-			  <input type="radio" name="radiobutton" value="landscape" > Landscape<br>
-			</form>
+			<!-- ALL THIS IS ONLY NEEDED WHEN WE SUPPORT BASEMAPS -->
+			<!--<!-- CLASS SELECTOR --> 
+			<!-- <p id = "t_specify_opacity"> Specify the Opacity of the Choropleth Map </p> -->
+			<!-- <div class="slidecontainer"> -->
+				<!-- <input type="range" min="1" max="100" value="50" class="slider" id="myRange"> -->
+			<!-- </div> -->
 			
-			<!-- CLASS SELECTOR Radio Buttons -->
-			<p id = "t_specify_basemap"> Specify the desired Basemap </p>
-			<form>
-			  <input type="radio" name="radiobutton" value="OSM"checked> OSM<br>
-			  <input type="radio" name="radiobutton" value="GoogleMaps" > Google Maps<br>
-			</form>
+			<!-- <!-- CLASS SELECTOR Radio Buttons --> 
+			<!-- <p id = "t_specify_basemap"> Specify the orientation of the Map </p> -->
+			<!-- <form> -->
+			  <!-- <input type="radio" name="radiobutton" value="portrait"checked> Portrait<br> -->
+			  <!-- <input type="radio" name="radiobutton" value="landscape" > Landscape<br> -->
+			<!-- </form> -->
 			
-			<!-- CLASS Textfield -->	
-			<p id = "t_specify_WMS"> Specify the URL of an additional WMS </p>			
-			<form>
-				<input type="text" name="URLofWMS"><br>
-			</form>
+			<!-- <!-- CLASS SELECTOR Radio Buttons --> 
+			<!-- <p id = "t_specify_basemap"> Specify the desired Basemap </p> -->
+			<!-- <form> -->
+			  <!-- <input type="radio" name="radiobutton" value="OSM"checked> OSM<br> -->
+			  <!-- <input type="radio" name="radiobutton" value="GoogleMaps" > Google Maps<br> -->
+			<!-- </form> -->
+			
+			<!-- CLASS Textfield  -->
+			<!-- <p id = "t_specify_WMS"> Specify the URL of an additional WMS </p>			 -->
+			<!-- <form> -->
+				<!-- <input type="text" name="URLofWMS"><br> -->
+			<!-- </form> -->
 
 			<p id = "Absatz">  </p>	
 			
 			<!-- Buttons -->
-			<button class="button"
-					type="button">
-				Image
-			</button>
-			
-			<button class="button"
-					type="button">
-				Map 
-			</button>
-			
-			<button class="button"
-					type="button">
-				Help
-			</button>
+			<button class="button" type="button">Download Map <br/>as Image</button>
+			<button class="button" type="button">Download Map <br/>as Leaflet Map</button>
+			<button class="button" type="button">Help</button>
 		
 		<div>
 	</body>	
