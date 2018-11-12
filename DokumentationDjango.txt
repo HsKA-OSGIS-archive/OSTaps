@@ -1,0 +1,63 @@
+-- DJANGO INSTALLATION --
+! make sure python and its pip are in windows system variable
+
+pip install django
+
+-- CREATE PROJECT --
+django-admin startproject backend
+! in this folder you find the manage.py script which starts the server
+! as well as the "backend" folder where the python files are stored
+
+-- CREATE HTML-PAGE AND DISPLAY IT --
+! create a folder "frontend" in the folder structure where the manage.py
+! script and the "backend" folder is stored. In this you can create a html-files
+! named index.html e.g.
+
+<html>
+  <body>
+    <p>Hello World!</p>   
+  </body>
+</html>
+
+! the backend now needs to know where the frontend is located. In the settings.py
+! file in the "backend" folder you find the TEMPLATES entry with an empty 'DIRS': []
+! -> in the square brackets add
+os.path.join(BASE_DIR, 'frontend')
+! now the backend knows where your html templates are located.
+
+! the backend now needs to know how to handle client requests.
+! in the "backend" folder create a python file views.py with the content 
+
+from django.shortcuts import render
+def index (request):
+	return render(request, 'index.html')
+	
+! the backend now knows what to response if the index method is called 
+! (namely to render index.html).
+
+! the URLs which define which view is loaded are defined in the backends urls.py
+! here we first need to import the views folder 
+from . import views
+
+! and then add the index url which sends the request to the index method of views.py
+url(r'^index/', views.index),
+
+-- RUN SERVER --
+! open cmd and navigate to the folder where the manage.py is located. Call
+python manage.py runserver
+! to start the server and open localhost:8000/index to view the created html page!
+! to be able to open the index page without calling /index but only the domain change 
+url(r'^index/', views.index),
+! to 
+url(r'^$', views.index),
+! now localhost:8000 will render the index.html page
+
+! this can be shortened with a .bat file like startServer.bat which includes 
+start "" http://127.0.0.1:8000/index
+python manage.py runserver
+
+
+
+
+
+
