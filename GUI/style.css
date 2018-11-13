@@ -1,0 +1,74 @@
+/* ~~~~~~~~~~~~~GENERAL STYLES~~~~~~~~~~~~~ */
+html {
+	width: 100%;	
+	height: 100%;
+}
+
+head {
+	
+	width: 100%;
+	height: 100%;
+
+}
+
+body {
+	background-color:#ccfff5;
+	overflow:hidden;
+	width: 100%;
+	height: 100%;
+}
+
+p {
+	color: #004f3f;
+	font-size: 14px;
+	font-weight: bold;
+	margin-top: 10px;
+}
+
+
+/* For Attribute Selector */
+select:required:invalid {
+  color: gray;
+}
+option[value=""][disabled] {
+  display: none;
+}
+option {
+  color: black;
+}
+form {
+	color: #004f3f;
+}
+
+/* ~~~~~~~~~~~~~ID BASED STYLES~~~~~~~~~~~~~ */
+
+#input_fields {
+	width: 30%;
+
+}
+
+#attribute_selection {
+	width: 90%;
+	border: 1px solid #004f3f;
+	padding: 2%;
+	
+}
+
+#title {
+	color: #004f3f;
+	font-size: 18px;
+	font-weight: bold;
+	margin-top: 10px;
+}
+
+#t_select_Attribute {
+	font-size: 12px;
+}
+
+#tf_attribute {
+	width: 100%;
+}
+
+
+
+
