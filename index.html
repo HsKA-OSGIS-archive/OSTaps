@@ -25,15 +25,11 @@
 			</form>
 			
 			<!-- ATTRIBTUE SELECTOR (has to be made dynamic based on attributes https://css-tricks.com/examples/DynamicDropdown/) -->
-			<p id = "t_select_attribute"> Select the Attribute for Choropleth Map Creation </p>
-			<form id = "f_select_attribute">
-				<select id = "s_select_attribute" name = "f_select_attribute" onchange=""> 
-					<option id = "o_select_attribute" value="" selected></option> 
-				</select> 
-			</form>
+			<p id = "t_select_attribute"> Select the Attribute (Combination) for Choropleth Map Creation </p>
+			<button class="button" type="button" onclick="openAttributeChooser">Open Attribute Chooser</button>
 			
 			<!-- CLASS SELECTOR -->
-			<p id = "t_select_attribute"> Select the Number of Classes </p>
+			<p id = "t_select_classes"> Select the Number of Classes </p>
 			<form id = "f_select_classes">
 				<select id = "s_select_classes" name = "f_select_classes" onchange=""> 
 					<option id = "o_select_classes_2" value="2" selected>2</option>
@@ -89,9 +85,9 @@
 			<p id = "Absatz">  </p>	
 			
 			<!-- Buttons -->
-			<button class="button" type="button">Download Map <br/>as Image</button>
-			<button class="button" type="button">Download Map <br/>as Leaflet Map</button>
-			<button class="button" type="button">Help</button>
+			<button id = "b_downImage" class="button" type="button">Download Map <br/>as Image</button>
+			<button id = "b_downMap" class="button" type="button">Download Map <br/>as Leaflet Map</button>
+			<button id = "b_help" class="button" type="button">Help</button>
 		
 		<div>
 	</body>	
