@@ -1,17 +1,19 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<!-- General Settings-->
+		<!-- General Settings -->
 		<meta charset = "UTF-8" />
 		<meta name = "viewport" content ="width=device.width, initial-scale=1"/>
 		<title> Thematic Map Creator </title> 
+		
+		<!-- Stylesheet CSS -->
 		<link rel = "stylesheet" href = "style.css" />
 		
 		<!-- Leaflet Source Code -->
 		<link rel="stylesheet" href="https://unpkg.com/leaflet@1.3.4/dist/leaflet.css" />
 		<script src="https://unpkg.com/leaflet@1.3.4/dist/leaflet.js"></script>
 		
-		<!--  -->
+		<!-- Referencing Script Files -->
 		 <script src="attribute_selection.js"></script> 
 	
 	</head>
@@ -31,13 +33,39 @@
 			</form>
 			
 			<!-- ATTRIBTUE SELECTOR (has to be made dynamic based on attributes https://css-tricks.com/examples/DynamicDropdown/) -->
-			<p id = "t_select_attribute"> Select the Attribute (Combination) for Choropleth Map Creation </p>
-			<button class="button" type="button" onclick="openAttributeChooser">Open Attribute Chooser</button>
+			<p id = "t_select_attribute"> Select the Attribute for Choropleth Map Creation </p>
+			<div id = "attribute_selection">
+			
+				<p id = "t_select_Attribute"> Select any numerical Attribute of your Input File or <br/> combine them via the +, -, * or /</p>
+				<select required id = "s_select_attribute">
+					<option value="" disabled selected>Select...</option>
+					<option value="1">One</option>
+				</select>
+
+				<p></p>
+				
+				<button id="plus" class="button" type="button" onclick="add()">+</button>
+				<button id="minus" class="button" type="button" onclick="subtract()">-</button>
+				<button id="multiply" class="button" type="button" onclick="multiply()">*</button>
+				<button id="divide" class="button" type="button" onclick="divide()">/</button>
+				
+				<p></p>
+				
+				<form>
+					<input type="text" id="tf_attribute" value="sf">
+				</form>
+				
+				<p></p>
+				
+				<button class="button" type="button" onclick="">Apply</button>
+			</div>
+			
+			
 			
 			<!-- CLASS SELECTOR -->
 			<p id = "t_select_classes"> Select the Number of Classes </p>
 			<form id = "f_select_classes">
-				<select id = "s_select_classes" name = "f_select_classes" onchange=""> 
+				<select id = "s_select_classes" name = "s_select_classes" onchange=""> 
 					<option id = "o_select_classes_2" value="2" selected>2</option>
 					<option id = "o_select_classes_3" value="3">3</option> 
 					<option id = "o_select_classes_4" value="4">4</option> 
@@ -48,10 +76,10 @@
 				</select> 
 			</form>
 			
-			<!-- COLOR SELECTOR -->
+			<!-- COLOR SCHEME SELECTOR -->
 			<p id = "t_select_color"> Select the Color Scheme </p>
 			<form id = "f_select_color">
-				<select id = "s_select_color" name = "f_select_color" onchange=""> 
+				<select id = "s_select_color" name = "s_select_color" onchange=""> 
 					<option id = "o_select_color_r" value="red" selected>Red</option>
 					<option id = "o_select_color_g" value="green">Green</option> 
 					<option id = "o_select_color_b" value="blue">Blue</option> 
@@ -59,6 +87,26 @@
 					<option id = "o_select_color_p" value="purple">Purple</option> 
 				</select> 
 			</form>
+			
+			<!-- LINE WIDTH SELECTOR -->
+			<p id = "t_select_line_width"> Select the Width of the Outline </p>
+			<form id = "f_select_line_width">
+				<input type="number" min="0.1" max="5.0" value="0.1" step="0.1">
+			</form>
+			
+			<!-- LINE STYLE SELECTOR -->
+			<p id = "t_select_line_style"> Select the Style of the Outline </p>
+			<form id = "f_select_line_style">
+				<select id = "s_select_line_style" name = "s_select_line_style" onchange=""> 
+					<option id = "o_select_line_style_s" value="solid" selected>Solid</option>
+					<option id = "o_select_line_style_d" value="dotted">Dotted</option> 
+					<option id = "o_select_line_style_" value="..">To be continued...</option> 
+				</select> 
+			</form>
+			
+			<!-- LINE COLOR SELECTOR -->
+			<p id = "t_select_line_color"> Select the Color of the Outline </p>
+			<input type="color" id="i_select_line_color" name="i_select_line_color" value="#424242">
 			
 			
 			<!-- ALL THIS IS ONLY NEEDED WHEN WE SUPPORT BASEMAPS -->
@@ -88,7 +136,7 @@
 				<!-- <input type="text" name="URLofWMS"><br> -->
 			<!-- </form> -->
 
-			<p id = "Absatz">  </p>	
+			<p>  </p>	
 			
 			<!-- Buttons -->
 			<button id = "b_downImage" class="button" type="button">Download Map <br/>as Image</button>
