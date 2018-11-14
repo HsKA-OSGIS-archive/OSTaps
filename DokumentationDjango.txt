@@ -107,6 +107,38 @@ def upload(request):
 !     file and open it with write acess
 ! l5+:write the content of the post request file into the new file and close 
 
+-- LIST ALL UPLOADED FILES --
+! create new html file in the frontend called filelist.html containing
+
+<html>
+  <body>
+    <ol>
+    {% for file in files %}
+      <li>{{file}}</li>
+    {% endfor %}
+    </ol>  
+  </body>
+</html>
+
+! the code in {} is django syntax to create html content without hard coding.
+! we will use this now in python, first create the URL to view all uploaded files:
+
+url(r'^files/', views.files  ),
+
+! next we define the "files" method in views.py:
+
+def files(request):
+	path=settings.BASE_DIR+'\\uploads\\'  # insert the path to your directory   
+	file_list =os.listdir(path) 
+	context = {'files': file_list,}
+	return render(request, 'filelist.html', context)
+
+! (this needs the adding of "import os" in the top of the file)
+! l2: build the path to the folder where the uploads are stored
+! l3: get all files in the folder using the os library
+! l4: build the 'files' variable used in the html with all the files listed in file_list
+! l5: render the html file but with the context (the files) as additional parameter
+
 
 
 

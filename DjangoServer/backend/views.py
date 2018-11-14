@@ -1,3 +1,4 @@
+import os
 from django.conf import settings
 from django.shortcuts import render
 from django.http import HttpResponse,Http404
@@ -13,3 +14,9 @@ def upload(request):
             fd.write(chunk)
         fd.close()
 	return files(request)
+
+def files(request):
+	path=settings.BASE_DIR+'\\uploads\\'  # insert the path to your directory   
+	file_list =os.listdir(path) 
+	context = {'files': file_list,}
+	return render(request, 'filelist.html', context)
