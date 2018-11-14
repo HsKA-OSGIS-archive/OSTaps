@@ -1,5 +1,13 @@
 <html>
   <body>
-    <p>Hello World!</p>   
+    <form ref='uploadForm' 
+      id='uploadForm' 
+      action='http://localhost:8000/upload/' 
+      method='post' 
+      encType="multipart/form-data">{% csrf_token %}
+        <input type="file" name="myFile" /> 
+        <input type="hidden" name="_csrf" value="<your_csrf_token>" />
+        <input type='submit' value='Upload!' />
+    </form>     
   </body>
 </html>
