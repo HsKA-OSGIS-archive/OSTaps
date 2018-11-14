@@ -139,7 +139,39 @@ def files(request):
 ! l4: build the 'files' variable used in the html with all the files listed in file_list
 ! l5: render the html file but with the context (the files) as additional parameter
 
+-- RETURN UPLOADED FILE TO USER --
+! we now want that a user can acess his uploaded file. First create a URL:
 
+url(r'^getFile/(?P<path>.*)$', views.getFile),
 
+! while in (?P<path>.*)$ "path" is a variable in which the passed filename is 
+! stored and passed to the views method as additional parameter (see below)
+! (e.g. /getFile/test.json -> path = "test.json"
+
+! next we define the "getFile" method in views.py:
+
+def getFile(request, path):
+	path_upload=settings.BASE_DIR+'\\uploads\\'  # insert the path to your directory   
+	file_path = os.path.join(path_upload, path)
+	if os.path.exists(file_path):
+
+                json_data = open(file_path)
+                data = json.load(json_data) 
+                json_data.close()
+                return JsonResponse(data)
+
+	raise Http404
+
+! (this needs the adding of "import json" and "from django.http import JsonResponse"
+! in the top of the file)
+! l1: see the addidional parameter from the url (path)
+! l2: build the path to the folder where the uploads are stored
+! l3: join this path with the given filename
+! l4: if this file exists on the servers file storage
+! l5: open the file
+! l6: parse the json data
+! l7: close the file
+! l8: and return a JsonResponse (JSON will be displayed in the Browser)
+! l9: if file does not exist raise Http404 file not found error
 
 
