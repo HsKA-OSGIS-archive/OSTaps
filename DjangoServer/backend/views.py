@@ -32,5 +32,8 @@ def getFile(request, path):
                 data = json.load(json_data) 
                 json_data.close()
                 return JsonResponse(data)
-
+        
 	raise Http404
+
+def renderGeoJSON (request):
+        return render(request, 'leaflet.html')
