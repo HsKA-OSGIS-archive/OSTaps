@@ -15,11 +15,22 @@
 		
 		<!-- Referencing Script Files -->
 		 <script src="attribute_selection.js"></script> 
+		
+		<!-- Add GeoJson -->
+		 <!-- <script src="leaflet.ajax.min"></script> -->
+		 <script src = "data/DEU.geojson"></script>
+		 <!-- <script src = "lib/index.js"></script> -->
+		 
+		 <!-- Load JavaScript Files -->
 	
 	</head>
 	
 
 	<body>
+
+	
+	
+	
 		
 		<!-- INPUT FIELDS -->
 		<div id = "input_fields">
@@ -30,6 +41,15 @@
 			<p id = "t_select_input"> Select your Input GeoJSON </p>
 			<form id = "f_select_input" lang="en" method="post" enctype="multipart/form-data">	<!-- method=post specifies that form data is sent as HTTP post transaction // enctype  specifies how form data should be encoded when submitting it to a server -->
 				<input id = "i_select_input" "name="File" type="file" size="50" accept=".geojson, .shp">  
+				<input id = "submit" type="submit" name="submit" >
+				
+				<!-- <button onClick = "chooseFile()">Display</button> -->
+				<!-- <script> -->
+					<!-- function chooseFile(){ -->
+						<!-- var x = document.getElementById("i_select_input"); -->
+						<!-- x.accept = true; -->
+					<!-- } -->
+				<!-- </script> -->
 			</form>
 			
 			<!-- ATTRIBTUE SELECTOR (has to be made dynamic based on attributes https://css-tricks.com/examples/DynamicDropdown/) -->
@@ -143,6 +163,92 @@
 			<button id = "b_downMap" class="button" type="button">Download Map <br/>as Leaflet Map</button>
 			<button id = "b_help" class="button" type="button">Help</button>
 		
-		<div>
+		</div>
+		
+		<div id = "map">
+			<!-- multipart/form-data allows entire files to be included in the data -->
+			<form method="post" enctype="multipart/form-data">
+				<label>Wählen Sie eine Datei von Ihrem Rechner aus.
+					<!-- <input id = "datei", name="datei" type="file" size="50" accept=".geojson, .shp, .jpg, .png">  -->
+					<input type="file" id="datei" size="50">
+					
+				</label>  
+			</form>
+			<button type="button" onclick="loaddata()">Try it</button>
+			<p id="demo"></p>
+			
+			<script>
+				map = L.map('map').setView([43.8, 18.3],3);
+				<!-- EvenListener für den FileHandler  -->
+				document.querySelector('#datei').addEventListener('click', loaddata);
+				
+				 
+	 
+				function loaddata () {
+					<!-- zum Prüfen, ob EvenListener von FileHandler funktioniert -->
+					<!-- L.geoJson(DEU).addTo(map); -->
+					
+					  
+					
+					<!-- get Element von FileUploader -->
+					var x = document.getElementById("datei").value;
+					<!-- write Element in demo  -->
+					document.getElementById("demo").innerHTML = x;
+					
+					<!-- leeres geojson erzeugen, um es dann vielleicht füllen zu können -->
+					var gJ = L.geoJSON().addTo(map);
+				}
+					<!-- gJ.addData(document.getElementById("x")); -->
+					
+					<!-- document.getElementById(L.geoJson(x).addTo(map));   -->
+					<!-- var countriesLayer = geo.addTo(map); -->
+					<!-- map.fitBounds(countriesLayer.getBounds()); -->							
+				<!-- document.querySelector("map"); -->
+				
+				<!-- Test Style				 -->
+				geojson = L.geoJson(DEU, {
+					style: style
+					//onEachFeature: onEachFeature,
+					}).addTo(map);
+					
+				function style(feature) {
+					
+						return {
+							weight: 5,
+							opacity: 1,
+							<!-- outlinecolor -->
+							color: 'red', 
+							"stroke-width":"500",
+							dashArray: '3',
+							fillOpacity: 0.3,
+							fillColor: '#ffa500'
+							
+						};
+				}
+			</script> 
+		
+		</div>
+	
+		<!-- <div id = "map"> -->
+				<!-- <input id = "i_select_input" "name="File" type="file" size="50" accept=".geojson, .shp, png, .jpg">   -->
+				
+				
+				<!-- <button onClick = "chooseFile()">Display</button> -->
+				<!-- <script> -->
+					
+					<!-- function chooseFile(){ -->
+						<!-- var x = document.getElementById("i_select_input"); -->
+						<!-- x.accept = true;												 -->
+					<!-- } -->
+					<!-- <!-- map = L.map('map').setView([43.8, 18.3],3); --> -->
+					<!-- <!-- var countriesLayer = L.geoJson(DEU).addTo(map);  --> -->
+					<!-- <!-- map.fitBounds(countriesLayer.getBounds()); --> -->
+
+				
+				
+				
+			<!-- </script> -->
+		<!-- </div> -->
+	
 	</body>	
 </html>

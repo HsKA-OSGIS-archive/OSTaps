@@ -2,6 +2,7 @@
 html {
 	width: 100%;	
 	height: 100%;
+	margin: 0;
 }
 
 head {
@@ -12,7 +13,7 @@ head {
 }
 
 body {
-	background-color:#ccfff5;
+	/* background-color:#ccfff5; */
 	overflow:hidden;
 	width: 100%;
 	height: 100%;
@@ -44,6 +45,17 @@ form {
 
 #input_fields {
 	width: 30%;
+	float: left;
+	height: 100%;
+	background-color:#ccfff5; 
+
+}
+
+#map {
+	width: 70%;
+	height: 100%;
+	/* float: right; */
+	/* background-color: #666; */
 
 }
 
