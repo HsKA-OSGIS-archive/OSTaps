@@ -20,7 +20,7 @@ urlpatterns = [
     url(r'^$', views.index),
     url(r'^upload/', views.upload  ),
     url(r'^files/', views.files  ),
-    url(r'^getFile/(?P<path>.*)$', views.getFile),
-    url(r'^leaflet', views.renderGeoJSON),
+    url(r'^get/(?P<path>.*)$', views.get),
+    url(r'^leaflet/(?P<path>.*)$', views.renderGeoJSON),
     url(r'^admin/', include(admin.site.urls)),
 ]

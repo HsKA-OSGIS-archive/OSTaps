@@ -23,7 +23,7 @@ def files(request):
 	context = {'files': file_list,}
 	return render(request, 'filelist.html', context)
 
-def getFile(request, path):
+def get(request, path):
 	path_upload=settings.BASE_DIR+'\\uploads\\'  # insert the path to your directory   
 	file_path = os.path.join(path_upload, path)
 	if os.path.exists(file_path):
@@ -35,5 +35,6 @@ def getFile(request, path):
         
 	raise Http404
 
-def renderGeoJSON (request):
-        return render(request, 'leaflet.html')
+def renderGeoJSON (request, path):
+        context = {'filename': path,}
+        return render(request, 'leaflet.html', context)
