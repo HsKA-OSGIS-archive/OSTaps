@@ -2,7 +2,7 @@
 
 ### Django installation
 
-make sure python and its pip are in windows system variable!
+make sure python (e.g. C:\Python27\) and its pip (C:\Python27\Scripts) are in windows system variable!
 
 ```
 pip install django
