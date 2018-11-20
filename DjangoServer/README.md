@@ -1,6 +1,7 @@
 # How to use this:
-.
+
 ###Django installation
+
 make sure python and its pip are in windows system variable!
 
 ```
@@ -36,7 +37,7 @@ as well as the "backend" folder where the python files are stored
 
 ### Create html-page and display it
 create a folder "frontend" in the folder structure where the manage.py
-script and the "backend" folder is stored. In this you can create a html-files
+script and the "backend" folder is stored. In this you can create a html-file
 named index.html e.g.
 
 ```html
@@ -47,7 +48,7 @@ named index.html e.g.
 </html>
 ```
 
-the backend now needs to know where the frontend is located. In the settings.py
+The backend now needs to know where the frontend is located. In the settings.py
 file in the "backend" folder you find the TEMPLATES entry with an empty 
 ```
 'DIRS': []
@@ -58,8 +59,8 @@ os.path.join(BASE_DIR, 'frontend')
 ```
 now the backend knows where your html templates are located.
 
-the backend now needs to know how to handle client requests.
-in the "backend" folder create a python file views.py with the content 
+The backend now needs to know how to handle client requests.
+In the "backend" folder create a python file views.py with the content 
 
 ```python
 from django.shortcuts import render
@@ -73,8 +74,8 @@ def index (request):
 the backend now knows what to response if the index method is called 
 (namely to render index.html).
 
-the URLs which define which view is loaded are defined in the backends urls.py
-here we first need to import the views folder 
+The URLs which define which view is loaded are defined in the backends urls.py.
+Here we first need to import the views folder 
 ```python
 from . import views
 ```
@@ -90,7 +91,7 @@ open cmd and navigate to the folder where the manage.py is located. Call
 python manage.py runserver
 ```
 to start the server and open localhost:8000/index to view the created html page!
-to be able to open the index page without calling /index but only the domain change 
+To be able to open the index page without calling /index but only the domain change 
 ```python
 url(r'^index/', views.index),
 ```
@@ -98,9 +99,9 @@ to
 ```python
 url(r'^$', views.index),
 ```
-now localhost:8000 will render the index.html page
+now localhost:8000 will render the index.html page.
 
-this can be shortened with a .bat file like startServer.bat which includes 
+This can be shortened with a .bat file like startServer.bat which includes 
 ```
 start "" http://localhost:8000
 python manage.py runserver
@@ -129,10 +130,10 @@ A form can take user input parameters and send a post request to perform somethi
 The "action" which should be done is defined in the URL 'http://localhost:8000/upload/'
 which we'll create later. 'encType="multipart/form-data"' defines that the post 
 request will contain data (which should be stored on the server).
-csrf tokens are for security reasons (link). 
-The three input buttons types are:
-file -> button to open explorer to open file
-hidden -> not displayed csrf key sended for security 
+CSRF tokens are for security reasons (https://docs.djangoproject.com/en/2.1/ref/csrf/).<br> 
+The three input buttons types are:<br> 
+file -> button to open explorer to open file<br> 
+hidden -> not displayed csrf key sended for security<br> 
 submit -> perform the post request
 
 to create a valid link for the form we need to insert the URL in the backends urls.py
@@ -152,13 +153,13 @@ def upload(request):
 	return files(request)
 ```
 
-l2: get the file attached to the request (named 'myFile' in the html code)
-l3: get the name of the file
+l2: get the file attached to the request (named 'myFile' in the html code)<br> 
+l3: get the name of the file<br> 
 l4: (for this line we need to create a new folder called "uploads" in the folder where 
-    the manage.py file is located -> in this folder the uploaded files are stored)
+    the manage.py file is located -> in this folder the uploaded files are stored)<br> 
     In the newly created folder create a new file with the same name as the uploaded 
-    file and open it with write acess
-l5+:write the content of the post request file into the new file and close 
+    file and open it with write acess<br> 
+l5+:write the content of the post request file into the new file and close<br> 
 l8: call the "files" function which we'll create now
 
 ### List all uploaded files
@@ -177,7 +178,7 @@ create new html file in the frontend called filelist.html containing
 ```
 
 the code in {} is django syntax to create html content without hard coding.
-we will use this now in python, first create the URL to view all uploaded files:
+We will use this now in python, first create the URL to view all uploaded files:
 ```python
 url(r'^files/', views.files  ),
 ```
@@ -191,10 +192,10 @@ def files(request):
 	return render(request, 'filelist.html', context)
 ```
 
-(this needs the adding of "import os" in the top of the file)
-l2: build the path to the folder where the uploads are stored
-l3: get all files in the folder using the os library
-l4: build the 'files' variable used in the html with all the files listed in file_list
+(this needs the adding of "import os" in the top of the file)<br> 
+l2: build the path to the folder where the uploads are stored<br> 
+l3: get all files in the folder using the os library<br> 
+l4: build the 'files' variable used in the html with all the files listed in file_list<br> 
 l5: render the html file with the context (the files) as additional parameter
 
 ### Return uploaded file to user
@@ -203,7 +204,7 @@ we now want that a user can acess his uploaded file. First create a URL:
 url(r'^get/(?P<path>.*)$', views.get),
 ```
 while in (?P<path>.*)$ "path" is a variable in which the passed filename is 
-stored and passed to the views method as additional parameter (see below)
+stored and passed to the views method as additional parameter (see below)<br> 
 (e.g. /get/test.json -> path = "test.json"
 
 next we define the "getFile" method in views.py:
@@ -222,15 +223,15 @@ def get(request, path):
 ```
 
 (this needs the adding of "import json" and "from django.http import JsonResponse"
-in the top of the file)
-l1: see the addidional parameter from the url (path)
-l2: build the path to the folder where the uploads are stored
-l3: join this path with the given filename
-l4: if this file exists on the servers file storage
-l5: open the file
-l6: parse the json data
-l7: close the file
-l8: and return a JsonResponse (JSON will be displayed in the Browser)
+in the top of the file)<br> 
+l1: see the addidional parameter from the url (path)<br> 
+l2: build the path to the folder where the uploads are stored<br> 
+l3: join this path with the given filename<br> 
+l4: if this file exists on the servers file storage<br> 
+l5: open the file<br> 
+l6: parse the json data<br> 
+l7: close the file<br> 
+l8: and return a JsonResponse (JSON will be displayed in the Browser)<br> 
 l9: if file does not exist raise Http404 file not found error
 
 ### Render uploaded geoJSON in leaflet map
