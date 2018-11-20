@@ -1,8 +1,8 @@
 # How to use this:
 
-###Django installation
+### Django installation
 
-make sure python and its pip are in windows system variable!
+make sure python (e.g. C:\Python27\) and its pip (e.g. C:\Python27\Scripts) are in windows system variable!
 
 ```
 pip install django
@@ -205,7 +205,7 @@ url(r'^get/(?P<path>.*)$', views.get),
 ```
 while in (?P<path>.*)$ "path" is a variable in which the passed filename is 
 stored and passed to the views method as additional parameter (see below)<br> 
-(e.g. /get/test.json -> path = "test.json"
+(e.g. /get/test.json -> path = "test.json)"
 
 next we define the "getFile" method in views.py:
 ```python
@@ -298,7 +298,7 @@ Define HTML (leaflet.html) in the frontend:
 localhost:8000/leaflet/test.geojson would now pass the filename (test.geojson)
 to the leaflet.html via the context. The filename can be acessed using "{{filename}}".
 JQuery ($.getJSON) is used to receive the uploaded GeoJSON via the get method and pass 
-it to a function which builds up the leaflet map
+it to a function which builds up the leaflet map.
 
 
 
