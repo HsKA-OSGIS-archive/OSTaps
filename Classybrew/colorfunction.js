@@ -178,9 +178,6 @@ console.log("Matrix2:",mat2);
 			this.range.sort(function (a, b) { return a-b })
 
 			return this.range; //array of breaks
-
-			console.log("kclass:",this.range);
-
 }
  
  
@@ -189,7 +186,7 @@ console.log("Matrix2:",mat2);
  
  }
  
- }
+ })
  
  
  
