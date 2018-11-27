@@ -1,15 +1,8 @@
-<!DOCTYPE html>
-<html>
-<body>
-
-<h1>Natural Breaks </h1>
-
-<script>
 (function () {
 
- var classyBrew = function() {
+	var classyBrew = function() {
  
- return function () {
+		return function () {
  
 this.series = undefined;
 this.numClasses= null;
@@ -17,17 +10,13 @@ this.breaks = undefined;
 this.colorCode = undefined;
 this.range = undefined;
 
-var nbClass = 8;
-dataList = [0.0011,	0.0194,	0.0479,	0.0480,	0.481,	0.0602,	0.0686	,0.0691,	0.0780,	0.0833,	0.0845,	0.0893,	0.1095,	0.1185,	0.1362,	0.1446]
-console.log(nbClass)
-console.log(dataList)
-dataList = dataList.sort();
-console.log(dataList)
 
 
-
-this.colorSchemes = {
-			
+this.series = this.series.sort();
+console.log(this.series)
+ 
+ 
+			this.colorSchemes = {
 				/** Sequential **/
 				OrRd:  {3: ['rgb(254,232,200)', 'rgb(253,187,132)', 'rgb(227,74,51)'], 4: ['rgb(254,240,217)', 'rgb(253,204,138)', 'rgb(252,141,89)', 'rgb(215,48,31)'], 5: ['rgb(254,240,217)', 'rgb(253,204,138)', 'rgb(252,141,89)', 'rgb(227,74,51)', 'rgb(179,0,0)'], 6: ['rgb(254,240,217)', 'rgb(253,212,158)', 'rgb(253,187,132)', 'rgb(252,141,89)', 'rgb(227,74,51)', 'rgb(179,0,0)'], 7: ['rgb(254,240,217)', 'rgb(253,212,158)', 'rgb(253,187,132)', 'rgb(252,141,89)', 'rgb(239,101,72)', 'rgb(215,48,31)', 'rgb(153,0,0)'], 8: ['rgb(255,247,236)', 'rgb(254,232,200)', 'rgb(253,212,158)', 'rgb(253,187,132)', 'rgb(252,141,89)', 'rgb(239,101,72)', 'rgb(215,48,31)', 'rgb(153,0,0)'], 9: ['rgb(255,247,236)', 'rgb(254,232,200)', 'rgb(253,212,158)', 'rgb(253,187,132)', 'rgb(252,141,89)', 'rgb(239,101,72)', 'rgb(215,48,31)', 'rgb(179,0,0)', 'rgb(127,0,0)'], 'properties':{'type': 'seq','blind':[1],'print':[1,1,0,0,0,0,0],'copy':[1,1,2,0,0,0,0],'screen':[1,1,1,0,0,0,0] } } ,
 				PuBu:  {3: ['rgb(236,231,242)', 'rgb(166,189,219)', 'rgb(43,140,190)'], 4: ['rgb(241,238,246)', 'rgb(189,201,225)', 'rgb(116,169,207)', 'rgb(5,112,176)'], 5: ['rgb(241,238,246)', 'rgb(189,201,225)', 'rgb(116,169,207)', 'rgb(43,140,190)', 'rgb(4,90,141)'], 6: ['rgb(241,238,246)', 'rgb(208,209,230)', 'rgb(166,189,219)', 'rgb(116,169,207)', 'rgb(43,140,190)', 'rgb(4,90,141)'], 7: ['rgb(241,238,246)', 'rgb(208,209,230)', 'rgb(166,189,219)', 'rgb(116,169,207)', 'rgb(54,144,192)', 'rgb(5,112,176)', 'rgb(3,78,123)'], 8: ['rgb(255,247,251)', 'rgb(236,231,242)', 'rgb(208,209,230)', 'rgb(166,189,219)', 'rgb(116,169,207)', 'rgb(54,144,192)', 'rgb(5,112,176)', 'rgb(3,78,123)'], 9: ['rgb(255,247,251)', 'rgb(236,231,242)', 'rgb(208,209,230)', 'rgb(166,189,219)', 'rgb(116,169,207)', 'rgb(54,144,192)', 'rgb(5,112,176)', 'rgb(4,90,141)', 'rgb(2,56,88)'], 'properties':{'type': 'seq','blind':[1],'print':[1,2,2,0,0,0,0],'copy':[1,2,0,0,0,0,0],'screen':[1,1,2,0,0,0,0] } } ,
@@ -67,30 +56,47 @@ this.colorSchemes = {
 				Pastel2:  {3: ['rgb(179,226,205)', 'rgb(253,205,172)', 'rgb(203,213,232)'], 4: ['rgb(179,226,205)', 'rgb(253,205,172)', 'rgb(203,213,232)', 'rgb(244,202,228)'], 5: ['rgb(179,226,205)', 'rgb(253,205,172)', 'rgb(203,213,232)', 'rgb(244,202,228)', 'rgb(230,245,201)'], 6: ['rgb(179,226,205)', 'rgb(253,205,172)', 'rgb(203,213,232)', 'rgb(244,202,228)', 'rgb(230,245,201)', 'rgb(255,242,174)'], 7: ['rgb(179,226,205)', 'rgb(253,205,172)', 'rgb(203,213,232)', 'rgb(244,202,228)', 'rgb(230,245,201)', 'rgb(255,242,174)', 'rgb(241,226,204)'], 8: ['rgb(179,226,205)', 'rgb(253,205,172)', 'rgb(203,213,232)', 'rgb(244,202,228)', 'rgb(230,245,201)', 'rgb(255,242,174)', 'rgb(241,226,204)', 'rgb(204,204,204)'], 'properties':{'type': 'qual','blind':[2,0,0,0,0,0],'print':[2,0,0,0,0,0],'copy':[0],'screen':[2,2,0,0,0,0] } } ,
 				Pastel1:  {3: ['rgb(251,180,174)', 'rgb(179,205,227)', 'rgb(204,235,197)'], 4: ['rgb(251,180,174)', 'rgb(179,205,227)', 'rgb(204,235,197)', 'rgb(222,203,228)'], 5: ['rgb(251,180,174)', 'rgb(179,205,227)', 'rgb(204,235,197)', 'rgb(222,203,228)', 'rgb(254,217,166)'], 6: ['rgb(251,180,174)', 'rgb(179,205,227)', 'rgb(204,235,197)', 'rgb(222,203,228)', 'rgb(254,217,166)', 'rgb(255,255,204)'], 7: ['rgb(251,180,174)', 'rgb(179,205,227)', 'rgb(204,235,197)', 'rgb(222,203,228)', 'rgb(254,217,166)', 'rgb(255,255,204)', 'rgb(229,216,189)'], 8: ['rgb(251,180,174)', 'rgb(179,205,227)', 'rgb(204,235,197)', 'rgb(222,203,228)', 'rgb(254,217,166)', 'rgb(255,255,204)', 'rgb(229,216,189)', 'rgb(253,218,236)'], 9: ['rgb(251,180,174)', 'rgb(179,205,227)', 'rgb(204,235,197)', 'rgb(222,203,228)', 'rgb(254,217,166)', 'rgb(255,255,204)', 'rgb(229,216,189)', 'rgb(253,218,236)', 'rgb(242,242,242)'], 'properties':{'type': 'qual','blind':[2,0,0,0,0,0,0],'print':[2,2,2,0,0,0,0],'copy':[0],'screen':[2,2,2,2,0,0,0] } }
 		};
+ 
+			// define array of values
+			this.setSeries = function (seriesArr) {
+				this.series = Array();
+				this.series = seriesArr;
+				this.series = this.series.sort(function (a, b) { return a-b });
+			};
 
+			// return array of values
+			this.getSeries = function () {
+				return this.series;
+			};
 
+			// set number of classes
+			this.setNumClasses = function (n) {
+				this.numClasses = n;
+			};
 
-
-
-		
-
-
-function() {
-//creation of two twodimensional matrixes, Dimension is: [values in dataList +1 ][number of classes +1] 
+			// get number of classes
+			this.getNumClasses = function () {
+				return this.numClasses;
+			};
+ 
+ 
+ 
+this.classify = function() {
+//creation of two twodimensional matrixes, Dimension is: [values in this.series +1 ][number of classes +1] 
 // both values are completly filled with 0 values
 var mat1 = []
-		for ( var x = 0, xl = dataList.length + 1; x < xl; x++) {
+		for ( var x = 0, xl = this.series.length + 1; x < xl; x++) {
 			var temp = []
-			for ( var j = 0, jl = nbClass + 1; j < jl; j++) {
+			for ( var j = 0, jl = this.numClasses + 1; j < jl; j++) {
 				temp.push(0)
 			}
 			mat1.push(temp)
 		}
 
 var mat2 = []
-		for ( var i = 0, il = dataList.length + 1; i < il; i++) {
+		for ( var i = 0, il = this.series.length + 1; i < il; i++) {
 			var temp2 = []
-			for ( var c = 0, cl = nbClass + 1; c < cl; c++) {
+			for ( var c = 0, cl = this.numClasses + 1; c < cl; c++) {
 				temp2.push(0)
 			}
 			mat2.push(temp2)
@@ -100,10 +106,10 @@ var mat2 = []
 		// absolutely no idea what this does - best I can tell, it sets the 1st
 		// group in the
 		// mat1 and mat2 arrays to 1 and 0 respectively
-		for ( var y = 1, yl = nbClass + 1; y < yl; y++) {
+		for ( var y = 1, yl = this.numClasses + 1; y < yl; y++) {
 			mat1[0][y] = 1
 			mat2[0][y] = 0
-			for ( var t = 1, tl = dataList.length + 1; t < tl; t++) {
+			for ( var t = 1, tl = this.series.length + 1; t < tl; t++) {
 				mat2[t][y] = Infinity
 			}
 			var v = 0.0
@@ -117,21 +123,21 @@ var mat2 = []
 		// one another to and adjust the indices until you meet the rules:
 		// minimum deviation
 		// within a class and maximum separation between classes
-		for ( var l = 2, ll = dataList.length + 1; l < ll; l++) { //loop through DataList, starting at value 2 (dL[1,2,6,8] 4 vaölues)
+		for ( var l = 2, ll = this.series.length + 1; l < ll; l++) { //loop through this.series, starting at value 2 (dL[1,2,6,8] 4 vaölues)
 			var s1 = 0.0
 			var s2 = 0.0			//s1 and s2 = standard Deviation? setting zero
 			var w = 0.0				// w = ?
 			
 			for ( var m = 1, ml = l + 1; m < ml; m++) { //loop with  l iterations
 				var i3 = l - m + 1 // i3 for first iteration : 2, 1 ; second: 3, 2, 1 ... last: 4,3,2,1
-				var val = parseFloat(dataList[i3 - 1]) // val for first it: dataList[1,0], second: dL[2,1,0] ... last: dL[3,2,1,0]
-				s2 += val * val // square of each value from dataList
-				s1 += val		// value out of dataList
+				var val = parseFloat(this.series[i3 - 1]) // val for first it: this.series[1,0], second: dL[2,1,0] ... last: dL[3,2,1,0]
+				s2 += val * val // square of each value from this.series
+				s1 += val		// value out of this.series
 				w += 1			// counter for each loop
 				v = s2 - (s1 * s1) / w // Varianz minus  // 4 -(2*2)/1 = 0 / 5 - (5*5)/2 = -7,5
 				var i4 = i3 - 1
 				if (i4 != 0) {
-					for ( var p = 2, pl = nbClass + 1; p < pl; p++) {
+					for ( var p = 2, pl = this.numClasses + 1; p < pl; p++) {
 						if (mat2[l][p] >= (v + mat2[i4][p - 1])) {
 							mat1[l][p] = i3
 							mat2[l][p] = v + mat2[i4][p - 1]
@@ -145,40 +151,45 @@ var mat2 = []
 console.log("Matrix1:",mat1);
 console.log("Matrix2:",mat2);
 
-		var k = dataList.length
+		var k = this.series.length
 		var kclass = []
 
 		// fill the kclass (classification) array with zeros:
-		for (i = 0; i <= nbClass; i++) {
+		for (i = 0; i <= this.numClasses; i++) {
 			kclass.push(0);
 		}
 
 		// this is the last number in the array:
-		kclass[nbClass] = parseFloat(dataList[dataList.length - 1])
+		kclass[this.numClasses] = parseFloat(this.series[this.series.length - 1])
 		// this is the first number - can set to zero, but want to set to lowest
 		// to use for legend:
-		kclass[0] = parseFloat(dataList[0])
-		var countNum = nbClass
+		kclass[0] = parseFloat(this.series[0])
+		var countNum = this.numClasses
 		while (countNum >= 2) {
 			var id = parseInt((mat1[k][countNum]) - 2)
-			kclass[countNum - 1] = dataList[id]
+			kclass[countNum - 1] = this.series[id]
 			k = parseInt((mat1[k][countNum] - 1))
 			// spits out the rank and value of the break values:
-			console.log("id="+id,"rank = " + String(mat1[k][countNum]),"val = " + String(dataList[id]))
+			console.log("id="+id,"rank = " + String(mat1[k][countNum]),"val = " + String(this.series[id]))
 			// count down:
 			countNum -= 1
 		}
-console.log("Matrix1:",mat1);
-console.log("Matrix2:",mat2);
-console.log("kclass:",kclass);
+			this.range = kclass;
+			this.range.sort(function (a, b) { return a-b })
+
+			return this.range; //array of breaks
+
+			console.log("kclass:",this.range);
 
 }
-}
-
-}
-		
-		
-</script>
-
-</body>
-</html>
+ 
+ 
+ 
+ }
+ 
+ }
+ 
+ }
+ 
+ 
+ 
