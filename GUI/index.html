@@ -23,6 +23,7 @@
 		 <!-- <script src="leaflet.ajax.min"></script> -->
 		 <script src = "data/DEU.geojson"></script>
 		 <script src = "data/brown_coal.geojson"></script>
+		 <script src = "data/test.geojson"></script>
 		 <!-- <script src = "lib/index.js"></script> -->
 		 
 		 <!-- Load JavaScript Files -->
@@ -47,48 +48,61 @@
 				<input id = "i_select_input" "name="File" type="file" size="50" accept=".geojson, .shp">  
 				<input id = "submit" type="submit" name="submit" >
 				
-				<!-- <button onClick = "chooseFile()">Display</button> -->
-				<!-- <script> -->
-					<!-- function chooseFile(){ -->
-						<!-- var x = document.getElementById("i_select_input"); -->
-						<!-- x.accept = true; -->
-					<!-- } -->
-				<!-- </script> -->
 			</form>
 			
-			<!-- ATTRIBTUE SELECTOR (has to be made dynamic based on attributes https://css-tricks.com/examples/DynamicDropdown/) -->
+			<!-- ATTRIBTUE SELECTOR FOR SINGLE ATTRIBUTES -->
 			<p id = "t_select_attribute"> Select the Attribute for Choropleth Map Creation </p>
 			
-			<input type="radio" id="single" name="Attribute" value="SingleAttribute" checked="checked">
-			<label for="mc"> Single Attribute</label> 
-			<input type="radio" id="calculated" name="Attribute" value="CalculatedAttribute">
-			<label for="vi"> Calculated Attribute</label>
+			<input type="radio" id="singleRadio" name="Attribute" value="SingleAttribute" checked="checked" onchange = "selectAttributeSelectionType()" >
+			<label for="singleRadio"> Single Attribute</label> 
+			<input type="radio" id="calculatedRadio" name="Attribute" value="CalculatedAttribute" onchange = "selectAttributeSelectionType()">
+			<label for="calculatedRadio"> Calculated Attribute</label>
 			
-			<div id = "attribute_selection">
+			<!-- ATTRIBTUE SELECTOR FOR SINGLE ATTRIBUTES -->
+			<div id = "s_attribute_selection">
 			
-				<p id = "t_select_Attribute"> Select any numerical Attribute of your Input File or <br/> combine them via the +, -, * or /</p>
-				<button id="loadattr" class="button" type="button" onclick="fillAttributeDropdown(brown_coal_gjson)">Load Attributes...</button>
+				<p id = "t_select_Attribute"> Select an Attribute of your Input File </p>
+				
+				<!--  will be deleted when loading geojson dynamically from server -->
+				<button id="sing_loadattr" class="button" type="button" onclick="fillAttributeDropdown(testgjson)">Load Attributes...</button>
 			
-				<select required id = "s_select_attribute">
+				<select required id = "sing_s_select_attribute" onchange ="addAttributeToTextfield()">
+					<option value="" selected>Select...</option>
+				</select>
+				<button class="button" type="button" onclick="">Apply</button>
+			</div>
+			
+			
+			<!-- ATTRIBTUE SELECTOR FOR CALCULATED ATTRIBUTES -->
+			<div id = "c_attribute_selection" style="display:none">
+			
+				<p id = "t_select_Attribute"> Select Attributes of your Input File and calculate a new Attribute via the +, -, * or /</p>
+				
+				<!--  will be deleted when loading geojson dynamically from server -->
+				<button id="calc_loadattr" class="button" type="button" onclick="fillAttributeDropdown(testgjson)">Load Attributes...</button>
+			
+				<select required id = "calc_s_select_attribute" onchange ="addAttributeToTextfield()">
 					<option value="" selected>Select...</option>
 				</select>
 
 				<p></p>
 				
-				<button id="plus" class="button" type="button" onclick="add()">+</button>
+ 				<button id="plus" class="button" type="button" onclick="add()">+</button>
 				<button id="minus" class="button" type="button" onclick="subtract()">-</button>
 				<button id="multiply" class="button" type="button" onclick="multiply()">*</button>
-				<button id="divide" class="button" type="button" onclick="divide()">/</button>
-				
+				<button id="divide" class="button" type="button" onclick="divide()">/</button> 
+				<button id="o_brackets" class="button" type="button" onclick="obrackets()">(</button>
+				<button id="c_brackets" class="button" type="button" onclick="cbrackets()">)</button>
+		
 				<p></p>
 				
 				<form>
-					<input type="text" id="tf_attribute" value="sf">
+					<input type="text" id="tf_attribute" value="">
 				</form>
 				
 				<p></p>
 				
-				<button class="button" type="button" onclick="">Apply</button>
+				<button class="button" type="button" onclick="calculateNewAttribute()">Apply</button>
 			</div>
 			
 			
@@ -139,34 +153,6 @@
 			<p id = "t_select_line_color"> Select the Color of the Outline </p>
 			<input type="color" id="i_select_line_color" name="i_select_line_color" value="#424242">
 			
-			
-			<!-- ALL THIS IS ONLY NEEDED WHEN WE SUPPORT BASEMAPS -->
-			<!--<!-- CLASS SELECTOR --> 
-			<!-- <p id = "t_specify_opacity"> Specify the Opacity of the Choropleth Map </p> -->
-			<!-- <div class="slidecontainer"> -->
-				<!-- <input type="range" min="1" max="100" value="50" class="slider" id="myRange"> -->
-			<!-- </div> -->
-			
-			<!-- <!-- CLASS SELECTOR Radio Buttons --> 
-			<!-- <p id = "t_specify_basemap"> Specify the orientation of the Map </p> -->
-			<!-- <form> -->
-			  <!-- <input type="radio" name="radiobutton" value="portrait"checked> Portrait<br> -->
-			  <!-- <input type="radio" name="radiobutton" value="landscape" > Landscape<br> -->
-			<!-- </form> -->
-			
-			<!-- <!-- CLASS SELECTOR Radio Buttons --> 
-			<!-- <p id = "t_specify_basemap"> Specify the desired Basemap </p> -->
-			<!-- <form> -->
-			  <!-- <input type="radio" name="radiobutton" value="OSM"checked> OSM<br> -->
-			  <!-- <input type="radio" name="radiobutton" value="GoogleMaps" > Google Maps<br> -->
-			<!-- </form> -->
-			
-			<!-- CLASS Textfield  -->
-			<!-- <p id = "t_specify_WMS"> Specify the URL of an additional WMS </p>			 -->
-			<!-- <form> -->
-				<!-- <input type="text" name="URLofWMS"><br> -->
-			<!-- </form> -->
-
 			<p>  </p>	
 			
 			<!-- Buttons -->

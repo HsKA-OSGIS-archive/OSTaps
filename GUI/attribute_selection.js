@@ -1,11 +1,24 @@
-// next steps:
-// > Filter for numerical values and those which can be converted into numeric values
-// > Function for adding the clicked Attribute to Text Field
-// > Validation of Text Field when Apply is clicked
-// > Calculation of Attribute for Displaying in Choropleth Map
+// TODO function calculateNewAttribute
+// Makes Div for Attribute Selection invisible based on selection of radio buttons
+function selectAttributeSelectionType() {
+	var singleAttributeDiv = document.getElementById("s_attribute_selection");
+	var calcAttributeDiv = document.getElementById("c_attribute_selection");
+	
+	var singleRadio = document.getElementById("singleRadio");
+	var calcRadio = document.getElementById("calculatedRadio");
+	
+	if (singleRadio.checked){
+		calcAttributeDiv.style.display = "none";
+		singleAttributeDiv.style.display = "block";
+	} else if (calcRadio.checked){
+		singleAttributeDiv.style.display = "none";
+		calcAttributeDiv.style.display = "block";
+	}
+	
 
+}
 
-// functions for adding operators to text field
+// functions for adding operators + - * / ( ) to text field
 function add() {
 	var textfield = document.getElementById("tf_attribute");
 	textfield.value = textfield.value + " + "
@@ -26,7 +39,48 @@ function divide() {
 	textfield.value = textfield.value + " / "
 }
 
-// function for returning property list of geojson
+function obrackets() {
+	var textfield = document.getElementById("tf_attribute");
+	textfield.value = textfield.value + " ( "
+}
+
+function cbrackets() {
+	var textfield = document.getElementById("tf_attribute");
+	textfield.value = textfield.value + " ) "
+}
+
+// adds Clicked Value of Dropdown to Textfield (attached to onchange method of select)
+function addAttributeToTextfield() {
+	var dropdown = document.getElementById("calc_s_select_attribute");
+	var selectedOption = dropdown.options[dropdown.selectedIndex].text; // holds the changed value of select
+	
+	var textfield = document.getElementById("tf_attribute");
+	textfield.value = textfield.value + selectedOption					// assigns the changed value to the text field
+	
+}
+
+// Fills Dropdown for Attribute Selection dynamically with Result of getProperties function
+function fillAttributeDropdown(gjson) {
+	properties = getProperties(gjson, filtered = true);
+	
+	var singleRadio = document.getElementById("singleRadio");
+	var calcRadio = document.getElementById("calculatedRadio");
+	if (singleRadio.checked){
+		dropdown = document.getElementById("sing_s_select_attribute");
+	}else if (calcRadio.checked){
+		dropdown = document.getElementById("calc_s_select_attribute");
+	}
+	
+	for (var i = 0; i< properties.length; i++){
+		var opt = document.createElement('option');
+		opt.value = properties[i];
+		opt.innerHTML = properties[i];
+		dropdown.appendChild(opt);
+	}
+	
+}
+
+// function for returning numerical property list of geojson
 function getProperties(gjson, filtered = false){ 
 	var properties = new Array();
 	
@@ -56,6 +110,7 @@ function getProperties(gjson, filtered = false){
 	}
 	
 	var propertyNames = properties[0];										// if all arrays are equal (which should be the case for a valid geojson), return property list of features
+	var numericProperties = properties[1];
 	var nbproperties = propertyNames.length;
 	
 	// filters data for numeric values and those which can be converted to numbers
@@ -66,26 +121,50 @@ function getProperties(gjson, filtered = false){
 
 			for (var j = 0; j < nbproperties; j++) {						// iterates over all properties
 				var currProperty = currFeature.properties[propertyNames[j]];
-				console.log(typeof(currProperty));
-				
 				if (typeof(currProperty) == "number") {						// if data type of current property = number
 					continue;												// if yes -> continue
-				} else if (typeof(currProperty) != "number") {				// if not
-					// THIS IS NOT WORKING UNTIL NOW !!!!!!!!!!!!
-					// if(Number(currProperty) == NaN) {					// checks for converting non numerical attribtues into numbers https://www.w3schools.com/jsref/jsref_number.asp
-						propertyNames.splice(j,1);							// delete current element from propertyNames Array
-					// }
+				} else {													// if not	
+					if(isNaN(Number(currProperty))) {						// checks for converting non numerical attributes into numbers https://www.w3schools.com/jsref/jsref_number.asp
+						numericProperties.remove(propertyNames[j]);			// delete current property name from numericProperties Array
+					}
 				}
 			}
 			
 		}
-	
 	}
 	
-	
-	console.log(propertyNames);
-	return propertyNames;
+	return numericProperties; // this is the list of numeric properties 
+
 } 
+
+
+function calculateNewAttribute(){
+	// Validation of Text Field when Apply is clicked
+	
+	// Calculation of new Attribute
+	var calculation = document.getElementById("tf_attribute").value; // returning string https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/eval
+	console.log(calculation);
+	
+	// Iterate over every Feature and it's properties for calculation ( 2 for loops
+
+	
+}
+
+
+
+
+// EXTERNAL FUNCTIONS
+// Removes a specific value from an array https://stackoverflow.com/questions/3954438/how-to-remove-item-from-array-by-value
+Array.prototype.remove = function() {
+    var what, a = arguments, L = a.length, ax;
+    while (L && this.length) {
+        what = a[--L];
+        while ((ax = this.indexOf(what)) !== -1) {
+            this.splice(ax, 1);
+        }
+    }
+    return this;
+};
 
 // function for checking if 2 arrays are identical (https://stackoverflow.com/questions/4025893/how-to-check-identical-array-in-most-efficient-way/4025958)
 function arraysEqual(arr1, arr2) {
@@ -99,18 +178,3 @@ function arraysEqual(arr1, arr2) {
     return true;
 }
 
-// Fills Dropdown for Attribute Selection dynamically
-function fillAttributeDropdown(gjson) {
-	properties = getProperties(gjson, filtered = true);
-	
-	
-	dropdown = document.getElementById("s_select_attribute");
-
-	for (var i = 0; i< properties.length; i++){
-		var opt = document.createElement('option');
-		opt.value = properties[i];
-		opt.innerHTML = properties[i];
-		dropdown.appendChild(opt);
-	}
-	
-}
