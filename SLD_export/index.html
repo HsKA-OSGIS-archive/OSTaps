@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<title>
+			My Map
+		</title>
+		<!-- Leaflet -->
+		<link rel="stylesheet" href="lib/leaflet/leaflet.css" />
+		<script src="lib/leaflet/leaflet.js"></script>
+		<script src="lib/js/FileSaver.js"></script>
+		<script type="text/javascript">
+			var blob = new Blob(["Hello, world!"], {type: "text/plain;charset=utf-8"});
+			blob = new Blob([blob,"hello again"], {type: "text/plain"});
+			saveAs(blob, "hello world.sld");
+		</script>
+		<script src="lib/js/test.js"></script>
+		<script src="data/countries.geojson"></script>
+		<style type="text/css">
+			#map { height : 400px; }
+		</style>
+	</head>
+	<bodyon load="load();">
+		<h1>My Map</h1>
+		<div id="map"></div>
+		<script>
+			var map = L.map('map').setView([43.8476, 18.3564], 13);
+			var countriesLayer = L.geoJson(countries).addTo(map);
+			map.fitBounds(countriesLayer.getBounds());
+		</script>
+		<button onclick="myFunction()">Click me</button> 
+		<button onclick="WriteToFile()">Click me2</button> 
+		<a href="images/w3logo.jpg" download="w3logo">
+		<img src="images/w3logo.jpg" alt="W3Schools" width="104" height="142">
+		</a>
+		
+		<form>
+    <input type="text" name="filename" value="testfile.txt" id="filename" />
+    <textarea cols="60" rows="10" name="data" id="data">
+        Whatever you put in this text box will be downloaded and saved in the file. If you leave it blank, no file will be downloaded
+    </textarea>
+  </form>
+  <button onclick="save()">export</button> 
+	</body>
+</html>
