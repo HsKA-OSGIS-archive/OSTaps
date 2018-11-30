@@ -18,6 +18,9 @@
 		
 		<!-- Referencing Script Files -->
 		 <script src="attribute_selection.js"></script> 
+		 <script src="style_geoJson.js"></script> 
+		 <script src="leaflet.js"></script> 
+
 		
 		<!-- Add Static GeoJson for Testing -->
 		 <!-- <script src="leaflet.ajax.min"></script> -->
@@ -123,6 +126,7 @@
 			<p id = "t_select_line_width"> Select the Width of the Outline </p>
 			<form id = "f_select_line_width">
 				<input type="number" min="0.1" max="5.0" value="0.1" step="0.1">
+				<input type="submit" value="submit" onclick="changeWeight();">
 			</form>
 			
 			<!-- LINE STYLE SELECTOR -->
@@ -137,7 +141,9 @@
 			
 			<!-- LINE COLOR SELECTOR -->
 			<p id = "t_select_line_color"> Select the Color of the Outline </p>
-			<input type="color" id="i_select_line_color" name="i_select_line_color" value="#424242">
+			<input type="color" id="i_select_line_color" name="i_select_line_color" value = "#E8B121" >
+			<!-- <button id="i_select_line_color_button" class="button" type="button" onclick="changecolor();">OK</button> -->
+			
 			
 			
 			<!-- ALL THIS IS ONLY NEEDED WHEN WE SUPPORT BASEMAPS -->
@@ -177,89 +183,30 @@
 		</div>
 		
 		<div id = "map">
-			<!-- multipart/form-data allows entire files to be included in the data -->
-			<form method="post" enctype="multipart/form-data">
-				<label>Wählen Sie eine Datei von Ihrem Rechner aus.
-					<!-- <input id = "datei", name="datei" type="file" size="50" accept=".geojson, .shp, .jpg, .png">  -->
-					<input type="file" id="datei" size="50">
-					
-				</label>  
-			</form>
-			<button type="button" onclick="loaddata()">Try it</button>
-			<p id="demo"></p>
 			
 			<script>
-				map = L.map('map').setView([43.8, 18.3],3);
-				<!-- EvenListener für den FileHandler  -->
-				document.querySelector('#datei').addEventListener('click', loaddata);
+				<!-- var i_select_line_color; -->
+				<!-- var defaultColor = "#ff7800"; -->
+				<!-- var defaultWeight  = 2; -->
+				<!-- var x; -->
+				<!-- var newColor; -->
+				<!-- var state; -->
 				
-				 
-	 
-				function loaddata () {
-					<!-- zum Prüfen, ob EvenListener von FileHandler funktioniert -->
-					<!-- L.geoJson(DEU).addTo(map); -->
-					
-					  
-					
-					<!-- get Element von FileUploader -->
-					var x = document.getElementById("datei").value;
-					<!-- write Element in demo  -->
-					document.getElementById("demo").innerHTML = x;
-					
-					<!-- leeres geojson erzeugen, um es dann vielleicht füllen zu können -->
-					var gJ = L.geoJSON().addTo(map);
-				}
-					<!-- gJ.addData(document.getElementById("x")); -->
-					
-					<!-- document.getElementById(L.geoJson(x).addTo(map));   -->
-					<!-- var countriesLayer = geo.addTo(map); -->
-					<!-- map.fitBounds(countriesLayer.getBounds()); -->							
-				<!-- document.querySelector("map"); -->
+				// Create a map.
+				var map = L.map('map').setView([51, 10], 6);
 				
-				<!-- Test Style				 -->
-				geojson = L.geoJson(DEU, {
-					style: style
-					//onEachFeature: onEachFeature,
-					}).addTo(map);
-					
-				function style(feature) {
-					
-						return {
-							weight: 5,
-							opacity: 1,
-							<!-- outlinecolor -->
-							color: 'red', 
-							"stroke-width":"500",
-							dashArray: '3',
-							fillOpacity: 0.3,
-							fillColor: '#ffa500'
-							
-						};
-				}
+				L.geoJson(DEU, {style: geoJsonstyle}).addTo(map);
+				
+	
+
+
+			
+				
 			</script> 
 		
 		</div>
 	
-		<!-- <div id = "map"> -->
-				<!-- <input id = "i_select_input" "name="File" type="file" size="50" accept=".geojson, .shp, png, .jpg">   -->
-				
-				
-				<!-- <button onClick = "chooseFile()">Display</button> -->
-				<!-- <script> -->
-					
-					<!-- function chooseFile(){ -->
-						<!-- var x = document.getElementById("i_select_input"); -->
-						<!-- x.accept = true;												 -->
-					<!-- } -->
-					<!-- <!-- map = L.map('map').setView([43.8, 18.3],3); --> -->
-					<!-- <!-- var countriesLayer = L.geoJson(DEU).addTo(map);  --> -->
-					<!-- <!-- map.fitBounds(countriesLayer.getBounds()); --> -->
 
-				
-				
-				
-			<!-- </script> -->
-		<!-- </div> -->
 	
 	</body>	
 </html>
