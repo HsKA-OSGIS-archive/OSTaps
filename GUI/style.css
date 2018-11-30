@@ -26,8 +26,14 @@ p {
 	margin-top: 10px;
 }
 
+label {
+	color: #004f3f;
+	font-size: 14px;
+	margin-top: 10px;
+}
 
 /* For Attribute Selector */
+
 select:required:invalid {
   color: gray;
 }
@@ -59,7 +65,14 @@ form {
 
 }
 
-#attribute_selection {
+#s_attribute_selection {
+	width: 90%;
+	border: 1px solid #004f3f;
+	padding: 2%;
+	
+}
+
+#c_attribute_selection {
 	width: 90%;
 	border: 1px solid #004f3f;
 	padding: 2%;
