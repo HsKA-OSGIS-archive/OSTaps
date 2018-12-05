@@ -20,33 +20,51 @@ function selectAttributeSelectionType() {
 
 // functions for adding operators + - * / ( ) to text field
 function add() {
-	var textfield = document.getElementById("tf_attribute");
-	textfield.value = textfield.value + " + "
+	var cursorPos = $('#tf_attribute').prop('selectionStart');
+	var v = $('#tf_attribute').val();
+	var textBefore = v.substring(0,  cursorPos );
+	var textAfter  = v.substring( cursorPos, v.length );
+	$('#tf_attribute').val( textBefore+ " + " + textAfter );
 }
 
 function subtract() {
-	var textfield = document.getElementById("tf_attribute");
-	textfield.value = textfield.value + " - "
+	var cursorPos = $('#tf_attribute').prop('selectionStart');
+	var v = $('#tf_attribute').val();
+	var textBefore = v.substring(0,  cursorPos );
+	var textAfter  = v.substring( cursorPos, v.length );
+	$('#tf_attribute').val( textBefore+ " - " + textAfter );
 }
 
 function multiply() {
-	var textfield = document.getElementById("tf_attribute");
-	textfield.value = textfield.value + " * "
+	var cursorPos = $('#tf_attribute').prop('selectionStart');
+	var v = $('#tf_attribute').val();
+	var textBefore = v.substring(0,  cursorPos );
+	var textAfter  = v.substring( cursorPos, v.length );
+	$('#tf_attribute').val( textBefore+ " * " + textAfter );
 }
 
 function divide() {
-	var textfield = document.getElementById("tf_attribute");
-	textfield.value = textfield.value + " / "
+	var cursorPos = $('#tf_attribute').prop('selectionStart');
+	var v = $('#tf_attribute').val();
+	var textBefore = v.substring(0,  cursorPos );
+	var textAfter  = v.substring( cursorPos, v.length );
+	$('#tf_attribute').val( textBefore+ " / " + textAfter );
 }
 
 function obrackets() {
-	var textfield = document.getElementById("tf_attribute");
-	textfield.value = textfield.value + " ( "
+	var cursorPos = $('#tf_attribute').prop('selectionStart');
+	var v = $('#tf_attribute').val();
+	var textBefore = v.substring(0,  cursorPos );
+	var textAfter  = v.substring( cursorPos, v.length );
+	$('#tf_attribute').val( textBefore+ " ( " + textAfter );
 }
 
 function cbrackets() {
-	var textfield = document.getElementById("tf_attribute");
-	textfield.value = textfield.value + " ) "
+	var cursorPos = $('#tf_attribute').prop('selectionStart');
+	var v = $('#tf_attribute').val();
+	var textBefore = v.substring(0,  cursorPos );
+	var textAfter  = v.substring( cursorPos, v.length );
+	$('#tf_attribute').val( textBefore+ " ) " + textAfter );
 }
 
 // adds Clicked Value of Dropdown to Textfield (attached to onchange method of select)
@@ -54,29 +72,41 @@ function addAttributeToTextfield() {
 	var dropdown = document.getElementById("calc_s_select_attribute");
 	var selectedOption = dropdown.options[dropdown.selectedIndex].text; // holds the changed value of select
 	
-	var textfield = document.getElementById("tf_attribute");
-	textfield.value = textfield.value + selectedOption					// assigns the changed value to the text field
-	
+	var cursorPos = $('#tf_attribute').prop('selectionStart');			// assigns the changed value to the text field
+	var v = $('#tf_attribute').val();
+	var textBefore = v.substring(0,  cursorPos );
+	var textAfter  = v.substring( cursorPos, v.length );
+	$('#tf_attribute').val( textBefore+ selectedOption + textAfter );
+
 }
 
 // Fills Dropdown for Attribute Selection dynamically with Result of getProperties function
+// !!!!! TODO https://stackoverflow.com/questions/12713564/function-in-javascript-that-can-be-called-only-once
 function fillAttributeDropdown(gjson) {
-	properties = getProperties(gjson, filtered = true);
-	
-	var singleRadio = document.getElementById("singleRadio");
-	var calcRadio = document.getElementById("calculatedRadio");
-	if (singleRadio.checked){
-		dropdown = document.getElementById("sing_s_select_attribute");
-	}else if (calcRadio.checked){
-		dropdown = document.getElementById("calc_s_select_attribute");
-	}
-	
-	for (var i = 0; i< properties.length; i++){
-		var opt = document.createElement('option');
-		opt.value = properties[i];
-		opt.innerHTML = properties[i];
-		dropdown.appendChild(opt);
-	}
+	console.log("not executed");
+	var executed = false;
+	return function() {
+		if (!executed) {
+			executed = true;
+			console.log("executed");
+			properties = getProperties(gjson, filtered = true);
+			
+			var singleRadio = document.getElementById("singleRadio");
+			var calcRadio = document.getElementById("calculatedRadio");
+			if (singleRadio.checked){
+				dropdown = document.getElementById("sing_s_select_attribute");
+			}else if (calcRadio.checked){
+				dropdown = document.getElementById("calc_s_select_attribute");
+			}
+			
+			for (var i = 0; i< properties.length; i++){
+				var opt = document.createElement('option');
+				opt.value = properties[i];
+				opt.innerHTML = properties[i];
+				dropdown.appendChild(opt);
+			}
+		}
+	};
 	
 }
 
