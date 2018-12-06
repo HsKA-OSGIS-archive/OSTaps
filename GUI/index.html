@@ -67,7 +67,7 @@
 				<p id = "t_select_Attribute"> Select an Attribute of your Input File </p>
 				
 				<!--  will be deleted when loading geojson dynamically from server -->
-				<button id="sing_loadattr" class="button" type="button" onclick="fillAttributeDropdown(testgjson)">Load Attributes...</button>
+				<button id="sing_loadattr" class="button" type="button" onclick="fillAttributeDropdownSing(testgjson)">Load Attributes...</button>
 			
 				<select required id = "sing_s_select_attribute" onchange ="addAttributeToTextfield()">
 					<option value="" selected>Select...</option>
@@ -82,7 +82,7 @@
 				<p id = "t_select_Attribute"> Select Attributes of your Input File and calculate a new Attribute via the +, -, * or /</p>
 				
 				<!--  will be deleted when loading geojson dynamically from server -->
-				<button id="calc_loadattr" class="button" type="button" onclick="fillAttributeDropdown(testgjson)">Load Attributes...</button>
+				<button id="calc_loadattr" class="button" type="button" onclick="fillAttributeDropdownCalc(testgjson)">Load Attributes...</button>
 			
 				<select required id = "calc_s_select_attribute" onchange ="addAttributeToTextfield()">
 					<option value="" selected>Select...</option>

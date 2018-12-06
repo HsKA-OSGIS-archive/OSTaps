@@ -82,33 +82,44 @@ function addAttributeToTextfield() {
 
 // Fills Dropdown for Attribute Selection dynamically with Result of getProperties function
 // !!!!! TODO https://stackoverflow.com/questions/12713564/function-in-javascript-that-can-be-called-only-once
-function fillAttributeDropdown(gjson) {
-	console.log("not executed");
-	var executed = false;
-	return function() {
-		if (!executed) {
-			executed = true;
-			console.log("executed");
-			properties = getProperties(gjson, filtered = true);
-			
-			var singleRadio = document.getElementById("singleRadio");
-			var calcRadio = document.getElementById("calculatedRadio");
-			if (singleRadio.checked){
-				dropdown = document.getElementById("sing_s_select_attribute");
-			}else if (calcRadio.checked){
-				dropdown = document.getElementById("calc_s_select_attribute");
-			}
-			
-			for (var i = 0; i< properties.length; i++){
-				var opt = document.createElement('option');
-				opt.value = properties[i];
-				opt.innerHTML = properties[i];
-				dropdown.appendChild(opt);
-			}
-		}
-	};
+function fillAttributeDropdownCalc(gjson) {
+
+	fillAttributeDropdownCalc = function(){}; // realizes that function is only executed once
+
+	properties = getProperties(gjson, filtered = true);
+	
+	dropdown = document.getElementById("calc_s_select_attribute");
+	
+	
+	for (var i = 0; i< properties.length; i++){
+		var opt = document.createElement('option');
+		opt.value = properties[i];
+		opt.innerHTML = properties[i];
+		dropdown.appendChild(opt);
+	}
+		
+	
 	
 }
+
+function fillAttributeDropdownSing(gjson) {
+
+	fillAttributeDropdownSing = function(){}; // realizes that function is only executed once
+
+	properties = getProperties(gjson, filtered = true);
+	
+
+	dropdown = document.getElementById("sing_s_select_attribute");
+
+	
+	for (var i = 0; i< properties.length; i++){
+		var opt = document.createElement('option');
+		opt.value = properties[i];
+		opt.innerHTML = properties[i];
+		dropdown.appendChild(opt);
+	}
+}
+
 
 // function for returning numerical property list of geojson
 function getProperties(gjson, filtered = false){ 
