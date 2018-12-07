@@ -1,4 +1,0 @@
-# No staging of following files/folders:
-node_modules/
-package-lock.json
-js/parserBrowserified.js
