@@ -1,4 +1,6 @@
-## Introduction on how to use "require()" functionality and make it browser compatible using "browserify" and "watchify"
+# Introduction on how to use "require()" functionality and make it browser compatible using "browserify" and "watchify"
+
+## How to use this:
 
 ### Install NodeJS and the package manager npm
 Linux: 
@@ -11,6 +13,29 @@ Windows:
 https://nodejs.org/en/download/<br> 
 -> is automaticaly connected to windwos system variable path<br> 
 -> npm is installed within
+
+### Usage
+
+- Install the needed packages by calling
+```
+npm install 
+```
+
+- Browserify the Javascript-Files which are using "require()" functionality 
+```
+npm run build 
+```
+
+- Open the index.html and the console to see if the Script is working
+
+- For developing call 
+```
+npm run watch 
+```
+-> changes you make in the parser.js file are automatically "browserified" using "watchify"
+
+
+## How to rebuild this:
 
 ### Initialise project
 Go to an (empty) folder where you want to create the nodeJS project and run
@@ -135,7 +160,7 @@ parser
   });
 ```
 
-If you now open the html page and open the console, you'll find an ***ReferenceError: require is not defined*** error<br>
+If you now open the html page and open the console, you'll find an ***ReferenceError: require is not defined*** error.<br>
 This is thrown because browsers do not know how to handle require statements. We need to make a browser-readable file out of the curent js file
 
 ### Make your Javascript browser readable using "browserify"
@@ -156,7 +181,7 @@ to
 ```html
 <script src="./js/parserBrowserified.js"></script>
 ```
-and open the html + console again.
+and open the html + console again. You should now see a parsed xml file.
 
 ### Create a build routine for multiple scripts
 Imagine you have multiple script that need to be browserified. You don't want to call browserify js/parser.js -o js/parserBrowserified.js
@@ -189,3 +214,35 @@ if you have several scripts you can add them to the build script by using &&:
 just replace the "echo" statements with other "browserify" statements
 
 ***Note:*** If you don't want to upload browserified scripts to your GitHub repository add them to your .gitignore, e.g. js/parserBrowserified.js
+
+### Use "watchify" during your development
+While you programm your JS you want to test the changes immediately and not with calling "npm run build" everytime before you open the browser. 
+"Watchify" therefore listens for changes you make in the original JS-file and "browserifies" it each time you save the changes so you do not 
+need to worry about making your scripts browser readable during development. For this you also need to install "watchify" first.
+```
+npm install --global watchify
+```
+
+to call watchify for one Javascript file run
+
+```
+watchify js/parser.js -o js/parserBrowserified.js -v
+```
+
+-> make some changes in "parser.js" to see how it works
+
+
+You can also build a "watch"-routine to be able to call "npm run watch" and shorten the "watchify js/parser.js -o js/parserBrowserified.js -v" command:
+```
+  "scripts": {
+    "test": "echo hello there!",
+	"build": "browserify js/parser.js -o js/parserBrowserified.js",
+	"watch": "watchify js/parser.js -o js/parserBrowserified.js -v"
+  },
+
+```
+***BUT:*** you can not watch multiple files here because one watch blocks the console!
+
+
+
+ 

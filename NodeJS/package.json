@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo hello there!",
-	"build": "browserify js/parser.js -o js/parserBrowserified.js && echo wait for it ..... && echo Builded!!!"
+	"build": "browserify js/parser.js -o js/parserBrowserified.js",
+	"watch": "watchify js/parser.js -o js/parserBrowserified.js -v"
   },
   "repository": {
     "type": "git",
