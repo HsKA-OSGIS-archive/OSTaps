@@ -4,7 +4,8 @@
   "description": "Introduction on how to use \"require\" functionality and make it browser compatible using \"browserify\" and \"watchify\" ",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo hello there!",
+	"build": "browserify js/parser.js -o js/parserBrowserified.js && echo wait for it ..... && echo Builded!!!"
   },
   "repository": {
     "type": "git",
@@ -20,6 +21,6 @@
   "author": "Lukas Weber",
   "license": "BSD-2-Clause",
   "dependencies": {
-    "geostyler-sld-parser": "^0.18.0",
+    "geostyler-sld-parser": "^0.18.0"
   }
 }
