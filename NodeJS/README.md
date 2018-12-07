@@ -14,6 +14,12 @@ https://nodejs.org/en/download/<br>
 -> is automaticaly connected to windwos system variable path<br> 
 -> npm is installed within
 
+### Install "browserify" and "watchify"
+```
+npm install --global browserify
+npm install --global watchify
+```
+
 ### Usage
 
 - Install the needed packages by calling
@@ -190,7 +196,7 @@ for each script you have everytime. In your "package.json" file you can therefor
 ```
   "scripts": {
     "test": "echo hello there!",
-	"build": "browserify js/parser.js -o js/parserBrowserified.js"
+    "build": "browserify js/parser.js -o js/parserBrowserified.js"
   },
 
 ```
@@ -206,7 +212,7 @@ if you have several scripts you can add them to the build script by using &&:
 ```
   "scripts": {
     "test": "echo hello there!",
-	"build": "browserify js/parser.js -o js/parserBrowserified.js && echo wait for it ..... && echo Builded!!!"
+    "build": "browserify js/parser.js -o js/parserBrowserified.js && echo wait for it ..... && echo Builded!!!"
   },
 
 ```
@@ -236,8 +242,8 @@ You can also build a "watch"-routine to be able to call "npm run watch" and shor
 ```
   "scripts": {
     "test": "echo hello there!",
-	"build": "browserify js/parser.js -o js/parserBrowserified.js",
-	"watch": "watchify js/parser.js -o js/parserBrowserified.js -v"
+    "build": "browserify js/parser.js -o js/parserBrowserified.js",
+    "watch": "watchify js/parser.js -o js/parserBrowserified.js -v"
   },
 
 ```
