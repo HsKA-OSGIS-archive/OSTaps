@@ -1,0 +1,27 @@
+{
+  "name": "nodejs",
+  "version": "1.0.0",
+  "description": "Introduction on how to use \"require\" functionality and make it browser compatible using \"browserify\" and \"watchify\" ",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo hello there!",
+	"build": "browserify js/parser.js -o js/parserBrowserified.js",
+	"watch": "watchify js/parser.js -o js/parserBrowserified.js -v"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/HsKA-OSGIS/OSTaps/NodeJS"
+  },
+  "keywords": [
+    "node",
+    "npm",
+    "require",
+    "browserify",
+    "watchify"
+  ],
+  "author": "Lukas Weber",
+  "license": "BSD-2-Clause",
+  "dependencies": {
+    "geostyler-sld-parser": "^0.18.0"
+  }
+}
