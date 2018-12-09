@@ -1,6 +1,7 @@
+
 (function () {
 		console.log("Classybrew started")
-	var Color = function() {
+	var Color = (function() {
 		console.log("Classybrew started")
  
 		return function () {
@@ -186,15 +187,18 @@ console.log("Matrix2:",mat2);
  
  }
  
- }
+ })();
+ 
  	// support node module and browser
 	if (typeof module !== 'undefined' && typeof module.exports !== 'undefined') {
-		module.exports = colorfunction;
+		module.exports = Color;
 	} else {
-		window.colorfunction = colorfunction;
-}
- 
- })
+		window.classyBrew = Color;
+	}
+
+ return Color;
+ }
+ )();
  
  
  
