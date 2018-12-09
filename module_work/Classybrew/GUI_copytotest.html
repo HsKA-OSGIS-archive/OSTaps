@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<!-- General Settings -->
+		<meta charset = "UTF-8" />
+		<meta name = "viewport" content ="width=device.width, initial-scale=1"/>
+		<title> Thematic Map Creator </title> 
+		
+		<!-- Stylesheet CSS -->
+		<link rel = "stylesheet" href = "../GUI/css/style.css" />
+		
+		<!-- Leaflet Source Code -->
+		<link rel="stylesheet" href="https://unpkg.com/leaflet@1.3.4/dist/leaflet.css" />
+		<script src="https://unpkg.com/leaflet@1.3.4/dist/leaflet.js"></script>
+		
+		<!-- JQuery -->
+		<script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.3.1.min.js"></script>
+		
+		<!-- Referencing Script Files -->
+		 <script src="../GUI/js/attribute_selection.js"></script> 
+		 <script src="../GUI/js/style_geoJson.js"></script> 
+		 <script src="../GUI/js/leaflet.js"></script> <!-- DUBLICATE -->
+
+		
+		<!-- Add Static GeoJson for Testing -->
+		 <!-- <script src="leaflet.ajax.min"></script> -->
+		 <script src = "../GUI/data/DEU.geojson"></script>
+		 <script src = "../GUI/data/brown_coal.geojson"></script>
+		 <script src = "../GUI/data/test.geojson"></script>
+		 <!-- <script src = "lib/index.js"></script> -->
+		 
+		 <!-- Load JavaScript Files -->
+		 
+
+
+		
+
+	
+	</head>
+	
+
+	<body>
+
+	
+	
+	
+		
+		<!-- INPUT FIELDS -->
+		<div id = "input_fields">
+		
+			<h1 id = "title"> Thematic Map Creator </h1>
+			
+			<!-- GEODATA SELECTOR -->
+			<p id = "t_select_input"> Select your Input GeoJSON </p>
+			<form id = "f_select_input" lang="en" method="post" enctype="multipart/form-data">	<!-- method=post specifies that form data is sent as HTTP post transaction // enctype  specifies how form data should be encoded when submitting it to a server -->
+				<input id = "i_select_input" "name="File" type="file" size="50" accept=".geojson, .shp">  
+				<input id = "submit" type="submit" name="submit" >
+				
+			</form>
+			
+			<!-- ATTRIBTUE SELECTOR FOR SINGLE ATTRIBUTES -->
+			<p id = "t_select_attribute"> Select the Attribute for Choropleth Map Creation </p>
+			
+			<input type="radio" id="singleRadio" name="Attribute" value="SingleAttribute" checked="checked" onchange = "selectAttributeSelectionType()" >
+			<label for="singleRadio"> Single Attribute</label> 
+			<input type="radio" id="calculatedRadio" name="Attribute" value="CalculatedAttribute" onchange = "selectAttributeSelectionType()">
+			<label for="calculatedRadio"> Calculated Attribute</label>
+			
+			<!-- ATTRIBTUE SELECTOR FOR SINGLE ATTRIBUTES -->
+			<div id = "s_attribute_selection">
+			
+				<p id = "t_select_Attribute"> Select an Attribute of your Input File </p>
+				
+				<!--  will be deleted when loading geojson dynamically from server -->
+				<button id="sing_loadattr" class="button" type="button" onclick="fillAttributeDropdownSing(testgjson)">Load Attributes...</button>
+			
+				<select required id = "sing_s_select_attribute" onchange ="addAttributeToTextfield()">
+					<option value="" selected>Select...</option>
+				</select>
+				<button class="button" type="button" onclick="">Apply</button>
+			</div>
+			
+			
+			<!-- ATTRIBTUE SELECTOR FOR CALCULATED ATTRIBUTES -->
+			<div id = "c_attribute_selection" style="display:none">
+			
+				<p id = "t_select_Attribute"> Select Attributes of your Input File and calculate a new Attribute via the +, -, * or /</p>
+				
+				<!--  will be deleted when loading geojson dynamically from server -->
+				<button id="calc_loadattr" class="button" type="button" onclick="fillAttributeDropdownCalc(testgjson)">Load Attributes...</button>
+			
+				<select required id = "calc_s_select_attribute" onchange ="addAttributeToTextfield()">
+					<option value="" selected>Select...</option>
+				</select>
+
+				<p></p>
+				
+ 				<button id="plus" class="button" type="button" onclick="add()">+</button>
+				<button id="minus" class="button" type="button" onclick="subtract()">-</button>
+				<button id="multiply" class="button" type="button" onclick="multiply()">*</button>
+				<button id="divide" class="button" type="button" onclick="divide()">/</button> 
+				<button id="o_brackets" class="button" type="button" onclick="obrackets()">(</button>
+				<button id="c_brackets" class="button" type="button" onclick="cbrackets()">)</button>
+		
+				<p></p>
+				
+				<form>
+					<input type="text" id="tf_attribute" value="">
+				</form>
+				
+				<p></p>
+				
+				<button class="button" type="button" onclick="calculateNewAttribute()">Apply</button>
+			</div>
+			
+			
+			
+			<!-- CLASS SELECTOR -->
+			<p id = "t_select_classes"> Select the Number of Classes </p>
+			<form id = "f_select_classes">
+				<select id = "s_select_classes" name = "s_select_classes" onchange=""> 
+					<option id = "o_select_classes_2" value="2" selected>2</option>
+					<option id = "o_select_classes_3" value="3">3</option> 
+					<option id = "o_select_classes_4" value="4">4</option> 
+					<option id = "o_select_classes_5" value="5">5</option> 
+					<option id = "o_select_classes_6" value="6">6</option> 
+					<option id = "o_select_classes_7" value="7">7</option> 
+					<option id = "o_select_classes_8" value="8">8</option> 
+				</select> 
+			</form>
+			
+			<!-- COLOR SCHEME SELECTOR -->
+			<p id = "t_select_color"> Select the Color Scheme </p>
+			<form id = "f_select_color">
+				<select id = "s_select_color" name = "s_select_color" onchange=""> 
+					<option id = "OrRd" value="OrRd" selected>Red-Orange</option>
+					<option id = "PuBu" value="PuBu">Purple-Blue</option> 
+					<option id = "BuPu" value="BuPu">Blue-Purple</option> 
+					<option id = "Oranges" value="Oranges">Orange</option> 
+					<option id = "BuGn" value="BuGn">Blue-Green</option> 
+					<option id = "YlOrBr" value="YlOrBr">Yellow-Orange-Brown</option>
+					<option id = "YlGn" value="YlGn">Yellow-Green</option> 
+					<option id = "Reds" value="Reds">Red</option>
+					<option id = "RdPu" value="RdPu">Red-Purple</option>
+					<option id = "Greens" value="Greens">Green</option>
+					<option id = "YlGnBu" value="YlGn">Yellow-Green-Blue</option>
+					<option id = "Purples" value="Purples">Purple</option>
+					<option id = "GnBu" value="GnBu">Green-Blue</option>
+					<option id = "Greys" value="Greys">Grey</option>
+					<option id = "YlOrRd" value="YlOrRd">Yellow-Orange-Red</option>
+					<option id = "PuRd" value="PuRd">Purple-Red</option>
+					<option id = "Blues" value="Blues">Blue</option>
+					<option id = "PuBuGn" value="PuBuGn">Purple-Blue-Green</option>
+				</select> 
+			</form>
+			
+			<!-- LINE WIDTH SELECTOR -->
+			<p id = "t_select_line_width"> Select the Width of the Outline </p>
+			<form id = "f_select_line_width">
+				<input id="select_line_width" type="number" min="0.1" max="5.0" value="2" step="0.1">
+			</form>
+			
+			<!-- LINE STYLE SELECTOR -->
+			<p id = "t_select_line_style"> Select the Style of the Outline </p>
+			<form id = "f_select_line_style">
+				<select size="1" id = "s_select_line_style" name = "s_select_line_style" > 
+					<option id = "o_select_line_style_s" value="solid" selected>Solid</option>
+					<option id = "o_select_line_style_d" value="dashed">Dashed</option> 
+					<option id = "o_select_line_style_d" value="dotted">Dotted</option> 
+					<!-- <option id = "o_select_line_style_" value="..">To be continued...</option>  -->
+				</select> 
+			</form>
+			
+			<!-- LINE COLOR SELECTOR -->
+			<p id = "t_select_line_color"> Select the Color of the Outline </p>
+			<input type="color" id="i_select_line_color" name="i_select_line_color" value = "#E8B121" >
+			<!-- <button id="i_select_line_color_button" class="button" type="button" onclick="changecolor();">OK</button> -->
+			
+			
+			<p>  </p>	
+			
+			<!-- Buttons -->
+			<button id = "b_downImage" class="button" type="button">Download Map <br/>as Image</button>
+			<button id = "b_downMap" class="button" type="button">Download Map <br/>as Leaflet Map</button>
+			<button id = "b_help" class="button" type="button">Help</button>
+		
+		</div>
+		
+		
+		<script src="./js/colorfunction.js"></script>
+			<script>
+				var test = new Color();
+				test.setSeries([30.01, 14.9, 22.71, 24.96, 7.17]);
+				test.setNumClasses(5);
+				test.setColorCode("BuGn");
+				test.classify();
+
+			
+				
+			</script> 
+		
+		<div id = "map">
+			
+			<script>
+
+				
+				// Create a map.
+				var map = L.map('map').setView([51, 10], 6);
+				
+				// will be styled in style_geoJSON.js
+				var ourGeoJSON = L.geoJson(DEU).addTo(map);
+				
+			</script>	
+
+
+			
+			
+		
+		</div>
+	
+
+	
+	</body>	
+</html>
