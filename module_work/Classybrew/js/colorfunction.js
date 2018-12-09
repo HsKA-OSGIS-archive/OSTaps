@@ -1,12 +1,13 @@
 
-function Color(series,numClasses,breaks,colorCode,range) {
+(function () {
 		console.log("Classybrew started")
-
+	var Color = (function() {
+		console.log("Classybrew started")
  
 		return function () {
  
-this.series = [7.82,	8.18,	9.09,	9.42,	10.00,	10.07,	11.25,11.91,12.05,12.19,	12.39,	18.59,	19.63,	20.20,	22.72,	27.02];
-this.numClasses= 6;
+this.series = undefined;
+this.numClasses= null;
 this.breaks = undefined;
 this.colorCode = undefined;
 this.range = undefined;
@@ -186,11 +187,17 @@ console.log("Matrix2:",mat2);
  
  }
  
- ();
+ })();
+ 
+ 	// support node module and browser
+	if (typeof module !== 'undefined' && typeof module.exports !== 'undefined') {
+		module.exports = Color;
+	} else {
+		window.classyBrew = Color;
+	}
 
-
-
- };
+ }
+ )();
  
  
  
