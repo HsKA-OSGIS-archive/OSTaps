@@ -1,21 +1,21 @@
 
-(function () {
-		console.log("Classybrew started")
-	var Color = (function() {
+function Color (classes, series) {
+		
+	
 		console.log("Classybrew started")
  
-		return function () {
+
  
 this.series = undefined;
-this.numClasses= null;
-this.breaks = undefined;
+this.numClasses= undefined;
+//this.breaks = undefined;
 this.colorCode = undefined;
-this.range = undefined;
+//this.range = undefined;
 
 
 
-this.series = this.series.sort();
-console.log(this.series)
+//this.series = this.series.sort();
+//console.log(this.series)
  
  
 			this.colorSchemes = {
@@ -71,10 +71,14 @@ console.log(this.series)
 			this.getSeries = function () {
 				return this.series;
 			};
+			
+
 
 			// set number of classes
 			this.setNumClasses = function (n) {
 				this.numClasses = n;
+				console.log(n);
+				return this.numClasses;
 			};
 
 			// get number of classes
@@ -83,6 +87,29 @@ console.log(this.series)
 			};
  
  
+			// define color ramp color
+			this.setColorCode = function (color) {
+				this.colorCode = color;
+
+				console.log(this.colorCode);
+				return this.colorCode
+			};
+
+			// get available color ramps
+			this.getColorCode = function () {
+				
+				console.log(this.colorCode);
+				return this.colorCode;
+			};
+			
+			// get colors from data and num classes
+			this.getColors = function () {
+				// return array of colors
+				console.log("colorcode:",this.colorCode)
+				console.log(this.numClasses)
+				console.log(this.colorSchemes["OrRd"][this.numClasses]);
+				return this.colorSchemes["OrRd"][this.numClasses];
+			};
  
 this.classify = function() {
 //creation of two twodimensional matrixes, Dimension is: [values in this.series +1 ][number of classes +1] 
@@ -185,19 +212,14 @@ console.log("Matrix2:",mat2);
  
  
  
- }
  
- })();
  
- 	// support node module and browser
-	if (typeof module !== 'undefined' && typeof module.exports !== 'undefined') {
-		module.exports = Color;
-	} else {
-		window.classyBrew = Color;
-	}
 
- }
- )();
+ 
+
+
+	return this.range, series, classes;
+ };
  
  
  

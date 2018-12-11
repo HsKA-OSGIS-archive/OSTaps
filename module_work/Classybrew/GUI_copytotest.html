@@ -30,9 +30,9 @@
 		 <!-- <script src = "lib/index.js"></script> -->
 		 
 		 <!-- Load JavaScript Files -->
-		 
+		 <script src = "./js/onchange.js"></script>
 
-
+			
 		
 
 	
@@ -118,7 +118,7 @@
 			<!-- CLASS SELECTOR -->
 			<p id = "t_select_classes"> Select the Number of Classes </p>
 			<form id = "f_select_classes">
-				<select id = "s_select_classes" name = "s_select_classes" onchange=""> 
+				<select id = "s_select_classes" name = "s_select_classes" onchange="showOptions(this)"> 
 					<option id = "o_select_classes_2" value="2" selected>2</option>
 					<option id = "o_select_classes_3" value="3">3</option> 
 					<option id = "o_select_classes_4" value="4">4</option> 
@@ -132,7 +132,7 @@
 			<!-- COLOR SCHEME SELECTOR -->
 			<p id = "t_select_color"> Select the Color Scheme </p>
 			<form id = "f_select_color">
-				<select id = "s_select_color" name = "s_select_color" onchange=""> 
+				<select id = "s_select_color" name = "s_select_color" onchange="showOptions(this)"> 
 					<option id = "OrRd" value="OrRd" selected>Red-Orange</option>
 					<option id = "PuBu" value="PuBu">Purple-Blue</option> 
 					<option id = "BuPu" value="BuPu">Blue-Purple</option> 
@@ -189,12 +189,19 @@
 		
 		<script src="./js/colorfunction.js"></script>
 			<script>
-				console.log("TTTT")
-				var test = new Color();
-				test.setSeries([30.01, 14.9, 22.71, 24.96, 7.17]);
-				test.setNumClasses(5);
-				test.setColorCode("BuGn");
-				test.classify();
+			
+
+				
+				var arrSeries = [5,0,1,3,12]
+				t = new Color();
+				t.setNumClasses(3);
+				t.setColorCode(OrRd);
+				t.getColorCode();
+				t.setSeries(arrSeries)
+				t.classify(arrSeries);
+				t.getColors();
+				
+				//Exception schreiben, dass numClasses < series sein muss!!!
 
 			
 				
