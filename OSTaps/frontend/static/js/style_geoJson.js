@@ -17,7 +17,7 @@ var sdotted = "1,10";
 
 // everything is based on this styleGeoJSON function
 // INPUTS:
-// - geoJSON2style: the L.geoJson object created in the html file 
+// - geoJSON2style: the L.geoJson object
 // - outlineColor: 	outline color of the polygons (default value is the default color)
 //					-> can be changed by the user using color chooser
 // - fillColor:		fill color of the polygons (default value is the default color)
@@ -78,7 +78,7 @@ function updateOutlineColor(event) {
 	console.log("New color choosen from user:");
 	console.log(outlineColor);
 	
-	styleGeoJSON(ourGeoJSON);
+	styleGeoJSON(LeafletGeoJSON);
 }
 
 // OUTLINE WIDTH
@@ -88,7 +88,7 @@ function updateLineWidth(event) {
 	console.log("New width choosen from user:");
 	console.log(lineWidth);
 	
-	styleGeoJSON(ourGeoJSON);
+	styleGeoJSON(LeafletGeoJSON);
 }
 
 //OUTLINE STYLE
@@ -102,18 +102,17 @@ function updateLineStyle(event) {
 	
 	if (style == "solid"){
 		outlineStyle = ssolid;
-		styleGeoJSON(ourGeoJSON);
 	}
 	
 	if (style == "dashed"){
 	outlineStyle = sdashed;
-	styleGeoJSON(ourGeoJSON);
 	}
 	
 	if (style == "dotted"){
 	outlineStyle = sdotted;
-	styleGeoJSON(ourGeoJSON);
 	}
+	
+	styleGeoJSON(LeafletGeoJSON);
 	
 }
 
