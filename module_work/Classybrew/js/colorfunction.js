@@ -1,6 +1,8 @@
-(function () {
 
-	var classyBrew = function() {
+(function () {
+		console.log("Classybrew started")
+	var Color = (function() {
+		console.log("Classybrew started")
  
 		return function () {
  
@@ -62,6 +64,7 @@ console.log(this.series)
 				this.series = Array();
 				this.series = seriesArr;
 				this.series = this.series.sort(function (a, b) { return a-b });
+				console.log(this.series)
 			};
 
 			// return array of values
@@ -184,9 +187,17 @@ console.log("Matrix2:",mat2);
  
  }
  
- }
+ })();
  
- })
+ 	// support node module and browser
+	if (typeof module !== 'undefined' && typeof module.exports !== 'undefined') {
+		module.exports = Color;
+	} else {
+		window.classyBrew = Color;
+	}
+
+ }
+ )();
  
  
  
