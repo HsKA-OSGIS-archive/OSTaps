@@ -105,7 +105,8 @@ function fillAttributeDropdownCalc(gjson) {
 function fillAttributeDropdownSing(gjson) {
 
 	fillAttributeDropdownSing = function(){}; // realizes that function is only executed once
-
+	
+	console.log("inside function");
 	properties = getProperties(gjson, filtered = true);
 	
 
@@ -124,7 +125,7 @@ function fillAttributeDropdownSing(gjson) {
 // function for returning numerical property list of geojson
 function getProperties(gjson, filtered = false){ 
 	var properties = new Array();
-	
+	console.log(gjson);
 	// saves all properties in a 2dim array
 	var nbfeatures = Object.keys(gjson.features).length;
 	for (var i = 0; i < nbfeatures; i++){

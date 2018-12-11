@@ -2,12 +2,11 @@ import os
 import json
 from django.conf import settings
 from django.shortcuts import render
-from django.http import HttpResponse,Http404
-from django.http import JsonResponse
+from django.http import HttpResponse,Http404,JsonResponse,HttpResponseRedirect
 
-def index (request, filename=""):
+def index (request):
+        filename = request.GET.get('data')
         context = {'filename': filename,}
-        print context
 	return render(request, 'index.html', context)
 
 def upload(request):
@@ -17,7 +16,7 @@ def upload(request):
         for chunk in doc_to_save.chunks():
             fd.write(chunk)
         fd.close()
-	return index(request, filename)
+	return HttpResponseRedirect("/?data=" + filename)
 
 def get(request, filename):
 	path_upload=settings.BASE_DIR+'\\uploads\\'    
