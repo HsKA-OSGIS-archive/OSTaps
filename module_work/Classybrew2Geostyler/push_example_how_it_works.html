@@ -1,0 +1,166 @@
+<html>
+<script>
+geostylerStyle =
+{
+  "name": "Demo Style",
+  "rules": []
+}
+
+console.log(geostylerStyle);
+
+bla=
+    {
+      "name": "1990 0.001 - 0.00375",
+      "filter": [
+        "&&",
+        [
+          ">=",
+          "1990",
+          "0.001"
+        ],
+        [
+          "<",
+          "1990",
+          "0.00375"
+        ]
+      ],
+      "symbolizers": [
+        {
+          "kind": "Fill",
+          "color": "#f7fcfd"
+        }
+      ]
+    }
+
+geostylerStyle.rules.push(bla);
+
+console.log(geostylerStyle);
+
+bla2=
+    {
+      "name": "1990 0.00375 - 0.0305",
+      "filter": [
+        "&&",
+        [
+          ">=",
+          "1990",
+          "0.00375"
+        ],
+        [
+          "<",
+          "1990",
+          "0.0305"
+        ]
+      ],
+      "symbolizers": [
+        {
+          "kind": "Fill",
+          "color": "#aadfd3"
+        }
+      ]
+    }
+
+geostylerStyle.rules.push(bla2);
+	
+console.log(geostylerStyle);
+
+
+bla3=
+{
+  "name": "Demo Style",
+  "rules": [
+    {
+      "name": "1990 0.001 - 0.00375",
+      "filter": [
+        "&&",
+        [
+          ">=",
+          "1990",
+          "0.001"
+        ],
+        [
+          "<",
+          "1990",
+          "0.00375"
+        ]
+      ],
+      "symbolizers": [
+        {
+          "kind": "Fill",
+          "color": "#f7fcfd"
+        }
+      ]
+    },
+    {
+      "name": "1990 0.00375 - 0.0305",
+      "filter": [
+        "&&",
+        [
+          ">=",
+          "1990",
+          "0.00375"
+        ],
+        [
+          "<",
+          "1990",
+          "0.0305"
+        ]
+      ],
+      "symbolizers": [
+        {
+          "kind": "Fill",
+          "color": "#aadfd3"
+        }
+      ]
+    },
+    {
+      "name": "1990 0.0305 - 0.44725",
+      "filter": [
+        "&&",
+        [
+          ">=",
+          "1990",
+          "0.0305"
+        ],
+        [
+          "<",
+          "1990",
+          "0.44725"
+        ]
+      ],
+      "symbolizers": [
+        {
+          "kind": "Fill",
+          "color": "#36a365"
+        }
+      ]
+    },
+    {
+      "name": "1990 0.44725 - 0.818",
+      "filter": [
+        "&&",
+        [
+          ">=",
+          "1990",
+          "0.44725"
+        ],
+        [
+          "<=",
+          "1990",
+          "0.818"
+        ]
+      ],
+      "symbolizers": [
+        {
+          "kind": "Fill",
+          "color": "#00441b"
+        }
+      ]
+    }
+  ]
+}
+
+console.log(bla3)
+
+</script>
+</html>

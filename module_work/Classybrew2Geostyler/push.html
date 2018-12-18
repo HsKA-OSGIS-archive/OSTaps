@@ -1,0 +1,13 @@
+<html>
+<script src = "./js/colorfunction.js"></script>
+<script src = "./js/classybrew2geostyler.js"></script>
+<script>
+var arrSeries = [5,0,1,3,12,-1,12,3,4,5,1,2,7,11,9,0]
+t = new Color();
+t.setNumClasses(3);
+t.setColorCode("OrRd");
+t.setSeries(arrSeries)
+t.classify(arrSeries);
+console.log(classybrew2geostyler(t, "1990"));
+</script>
+</html>
