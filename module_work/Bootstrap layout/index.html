@@ -1,83 +1,254 @@
----
-layout: home
----
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="favicon.ico">
 
-<main class="bd-masthead" id="content" role="main">
-  <div class="container">
-    <div class="row align-items-center">
-      <div class="col-6 mx-auto col-md-6 order-md-2">
-        <img class="img-fluid mb-3 mb-md-0" src="{{ site.baseurl }}/assets/img/bootstrap-stack.png" alt="" width="1024" height="860">
-      </div>
-      <div class="col-md-6 order-md-1 text-center text-md-left pr-md-5">
-        <h1 class="mb-3 bd-text-purple-bright">Bootstrap</h1>
-        <p class="lead">
-          Build responsive, mobile-first projects on the web with the world's most popular front-end component library.
-        </p>
-        <p class="lead mb-4">
-          Bootstrap is an open source toolkit for developing with HTML, CSS, and JS. Quickly prototype your ideas or build your entire app with our Sass variables and mixins, responsive grid system, extensive prebuilt components, and powerful plugins built on jQuery.
-        </p>
-        <div class="d-flex flex-column flex-md-row lead mb-3">
-          <a href="{{ site.baseurl }}/docs/{{ site.docs_version }}/getting-started/introduction/" class="btn btn-lg btn-bd-primary mb-3 mb-md-0 mr-md-3" onclick="ga('send', 'event', 'Jumbotron actions', 'Get started', 'Get started');">Get started</a>
-          <a href="{{ site.baseurl }}/docs/{{ site.docs_version }}/getting-started/download/" class="btn btn-lg btn-outline-secondary" onclick="ga('send', 'event', 'Jumbotron actions', 'Download', 'Download {{ site.current_version }}');">Download</a>
-        </div>
-        <p class="text-muted mb-0">
-          Currently v{{ site.current_version }}
-        </p>
+    <title>Thematic Map Creator</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="style.css" rel="stylesheet">
+  </head>
+
+  <body>
+    <nav class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0">
+      <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="#">OSTaps</a>
+    </nav>
+
+    <div class="container-fluid">
+      <div class="row">
+        <nav class="col-md-3 d-none d-md-block bg-light sidebar">
+          <div class="sidebar-sticky">
+            <ul class="nav flex-column">
+              <li class="nav-item">
+			  
+			    <!-- GEODATA SELECTOR -->
+				<div class="form-group">
+					<form ref='uploadForm' 
+					  id='f_select_input' 
+					  action='http://localhost:8000/upload/' 
+					  method='post' 
+					  encType="multipart/form-data">  <!-- {% csrf_token %} --->
+					    <label for="fileupload"> Select your Input GeoJSON </label>
+						<input type="file" class="form-control" id="fileupload" name="myFile" /> 
+						<!-- <input type="hidden" class="form-control" name="_csrf" value="<your_csrf_token>" />  -->
+						<input type='submit' class="form-control"/>
+					</form> 
+				<div>
+              </li>
+			  
+			  <br><br>
+			  
+			  <!-- ATTRIBTUE SELECTOR -->
+              <li class="nav-item">
+				<b> Select the Attribute for Choropleth Map Creation </b><br>
+				
+				<input type="radio" id="singleRadio" name="Attribute" value="SingleAttribute" checked="checked" onchange = "selectAttributeSelectionType()" >
+				<label for="singleRadio"> Single Attribute</label> 
+				<input type="radio" id="calculatedRadio" name="Attribute" value="CalculatedAttribute" onchange = "selectAttributeSelectionType()">
+				<label for="calculatedRadio"> Calculated Attribute</label>
+				
+				<!-- FOR SINGLE ATTRIBUTES -->
+				<div id = "s_attribute_selection">
+				
+					<p id = "t_select_Attribute"> Select an Attribute of your Input File </p>
+					
+					<!--  will be deleted when loading geojson dynamically from server -->
+					<button id="sing_loadattr" class="btn btn-secondary btn-sm" type="button" onclick="fillAttributeDropdownSing(GeoJSON)">Load Attributes...</button>
+				
+					<select required id = "sing_s_select_attribute" onchange ="addAttributeToTextfield()">
+						<option value="" selected>Select...</option>
+					</select>
+					<button class="btn btn-secondary btn-sm" type="button" onclick="">Apply</button>
+				</div>
+				
+				
+				<!-- FOR CALCULATED ATTRIBUTES -->
+				<div id = "c_attribute_selection" style="display:none">
+				
+					<p id = "t_select_Attribute"> Select Attributes of your Input File and calculate a new Attribute via the +, -, * or /</p>
+					
+					<!--  will be deleted when loading geojson dynamically from server -->
+					<button id="calc_loadattr" class="btn btn-secondary btn-sm" type="button" onclick="fillAttributeDropdownCalc(GeoJSON)">Load Attributes...</button>
+				
+					<select required id = "calc_s_select_attribute" onchange ="addAttributeToTextfield()">
+						<option value="" selected>Select...</option>
+					</select>
+
+					<p></p>
+					
+					<button id="plus" class="button" type="button" onclick="add()">+</button>
+					<button id="minus" class="button" type="button" onclick="subtract()">-</button>
+					<button id="multiply" class="button" type="button" onclick="multiply()">*</button>
+					<button id="divide" class="button" type="button" onclick="divide()">/</button> 
+					<button id="o_brackets" class="button" type="button" onclick="obrackets()">(</button>
+					<button id="c_brackets" class="button" type="button" onclick="cbrackets()">)</button>
+			
+					<p></p>
+					
+					<form>
+						<input type="text" id="tf_attribute" value="">
+					</form>
+					
+					<p></p>
+					
+					<button class="btn btn-secondary btn-sm" type="button" onclick="calculateNewAttribute()">Apply</button>
+				</div>
+              </li>
+			  
+			  
+			  <!-- CLASS SELECTOR -->
+              <li class="nav-item">
+			    <br>
+				<b id = "t_select_classes"> Select the Number of Classes </b>
+				<form id = "f_select_classes">
+					<select id = "s_select_classes" name = "s_select_classes" onchange=""> 
+						<option id = "o_select_classes_2" value="2" selected>2</option>
+						<option id = "o_select_classes_3" value="3">3</option> 
+						<option id = "o_select_classes_4" value="4">4</option> 
+						<option id = "o_select_classes_5" value="5">5</option> 
+						<option id = "o_select_classes_6" value="6">6</option> 
+						<option id = "o_select_classes_7" value="7">7</option> 
+						<option id = "o_select_classes_8" value="8">8</option> 
+					</select> 
+				</form>
+              </li>
+			  			  
+			  <!-- COLOR SCHEME SELECTOR -->
+              <li class="nav-item">
+			    <br>
+				<b id = "t_select_color"> Select the Color Scheme </b>
+				<form id = "f_select_color">
+					<select id = "s_select_color" name = "s_select_color" onchange=""> 
+						<option id = "OrRd" value="OrRd" selected>Red-Orange</option>
+						<option id = "PuBu" value="PuBu">Purple-Blue</option> 
+						<option id = "BuPu" value="BuPu">Blue-Purple</option> 
+						<option id = "Oranges" value="Oranges">Orange</option> 
+						<option id = "BuGn" value="BuGn">Blue-Green</option> 
+						<option id = "YlOrBr" value="YlOrBr">Yellow-Orange-Brown</option>
+						<option id = "YlGn" value="YlGn">Yellow-Green</option> 
+						<option id = "Reds" value="Reds">Red</option>
+						<option id = "RdPu" value="RdPu">Red-Purple</option>
+						<option id = "Greens" value="Greens">Green</option>
+						<option id = "YlGnBu" value="YlGn">Yellow-Green-Blue</option>
+						<option id = "Purples" value="Purples">Purple</option>
+						<option id = "GnBu" value="GnBu">Green-Blue</option>
+						<option id = "Greys" value="Greys">Grey</option>
+						<option id = "YlOrRd" value="YlOrRd">Yellow-Orange-Red</option>
+						<option id = "PuRd" value="PuRd">Purple-Red</option>
+						<option id = "Blues" value="Blues">Blue</option>
+						<option id = "PuBuGn" value="PuBuGn">Purple-Blue-Green</option>
+					</select> 
+				</form>
+              </li>
+			  
+			  <br><br>
+			  
+			  <!-- LINE WIDTH SELECTOR -->
+              <li class="nav-item">
+			    <br>
+				<b id = "t_select_line_width"> Select the Width of the Outline </b>
+				<form id = "f_select_line_width">
+					<input id="select_line_width" type="number" min="0.1" max="5.0" value="2" step="0.1">
+				</form>
+              </li>
+			  
+			  <br><br>
+			  
+			  <!-- LINE STYLE SELECTOR -->
+			  <li class="nav-item">
+			    <br>
+				<b id = "t_select_line_style"> Select the Style of the Outline </b>
+				<form id = "f_select_line_style">
+					<select size="1" id = "s_select_line_style" name = "s_select_line_style" > 
+						<option id = "o_select_line_style_s" value="solid" selected>Solid</option>
+						<option id = "o_select_line_style_d" value="dashed">Dashed</option> 
+						<option id = "o_select_line_style_d" value="dotted">Dotted</option> 
+						<!-- <option id = "o_select_line_style_" value="..">To be continued...</option>  -->
+					</select> 
+				</form>
+              </li>
+			  
+			  <br><br>
+			  
+			  <!-- LINE COLOR SELECTOR -->
+			  <li class="nav-item">
+			    <br>
+				<b id = "t_select_line_color"> Select the Color of the Outline </b><br>
+				<input type="color" id="i_select_line_color" name="i_select_line_color" value = "#E8B121" >
+              </li>
+            </ul>
+          </div>
+        </nav>
+
+        <main role="main" class="col-md-8 ml-sm-auto col-lg-9 pt-3 px-4">
+          <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
+            <h1 class="h4">Map Preview</h1>
+            <div class="btn-toolbar mb-2 mb-md-0">
+              <div class="btn-group mr-2">
+                <button class="btn btn-sm btn-outline-secondary">Export as Image</button>
+                <button class="btn btn-sm btn-outline-secondary">Export as Leaflet Map</button>
+				<button class="btn btn-sm btn-outline-secondary">Export SLD</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- <canvas class="my-4" id="myChart" width="900" height="380"></canvas> -->
+		  <div id="map"><div>
+        </main>
       </div>
     </div>
-    {% include ads.html %}
-  </div>
-</main>
 
-<div class="masthead-followup row m-0 border border-white">
-  <div class="col-12 col-md-4 p-3 p-md-5 bg-light border border-white">
-    <!-- Icon by Bytesize https://github.com/danklammer/bytesize-icons -->
-    {% include icons/import.svg width="32" height="32" class="text-primary mb-2" %}
-    <h3>Installation</h3>
-    <p>Include Bootstrap's source Sass and JavaScript files via npm, Composer or Meteor. Package managed installs don't include documentation, but do include our build system and readme.</p>
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script>window.jQuery || document.write('<script src="../../../../assets/js/vendor/jquery-slim.min.js"><\/script>')</script>
+    <script src="popper.min.js"></script>
+    <script src="bootstrap.min.js"></script>
 
-{% highlight sh %}
-npm install bootstrap
-{% endhighlight %}
+    <!-- Icons -->
+    <script src="https://unpkg.com/feather-icons/dist/feather.min.js"></script>
+    <script>
+      feather.replace()
+    </script>
 
-{% highlight sh %}
-gem install bootstrap -v {{ site.current_ruby_version }}
-{% endhighlight %}
-
-    <hr class="half-rule">
-    <a class="btn btn-outline-primary" href="{{ site.baseurl }}/docs/{{ site.docs_version }}/getting-started/download">Read installation docs</a>
-  </div>
-
-  <div class="col-12 col-md-4 p-3 p-md-5 bg-light border border-white">
-    <!-- Icon by Bytesize https://github.com/danklammer/bytesize-icons -->
-    {% include icons/download.svg width="32" height="32" class="text-primary mb-2" %}
-    <h3>BootstrapCDN</h3>
-    <p>When you only need to include Bootstrap's compiled CSS or JS, you can use <a href="https://www.bootstrapcdn.com/">BootstrapCDN</a>.</p>
-
-<h5>CSS only</h5>
-{% highlight html %}
-<link rel="stylesheet" href="{{ site.cdn.css }}" integrity="{{ site.cdn.css_hash }}" crossorigin="anonymous">
-{% endhighlight %}
-
-<h5>JS, Popper.js, and jQuery</h5>
-{% highlight html %}
-<script src="{{ site.cdn.jquery }}" integrity="{{ site.cdn.jquery_hash }}" crossorigin="anonymous"></script>
-<script src="{{ site.cdn.popper }}" integrity="{{ site.cdn.popper_hash }}" crossorigin="anonymous"></script>
-<script src="{{ site.cdn.js }}" integrity="{{ site.cdn.js_hash }}" crossorigin="anonymous"></script>
-{% endhighlight %}
-    <hr class="half-rule">
-    <a class="btn btn-outline-primary" href="{{ site.baseurl }}/docs/{{ site.docs_version }}/layout/overview/">Explore the docs</a>
-  </div>
-
-  <div class="col-12 col-md-4 p-3 p-md-5 bg-light border border-white">
-    <!-- Icon by Bytesize https://github.com/danklammer/bytesize-icons -->
-    {% include icons/lightning.svg width="32" height="32" class="text-primary mb-2" %}
-    <h3>Official Themes</h3>
-    <p>
-      Take Bootstrap 4 to the next level with official premium themes—toolkits built on Bootstrap with new components and plugins, docs, and build tools.
-    </p>
-    <img class="img-fluid mt-3 mx-auto" src="{{ site.baseurl }}/assets/img/bootstrap-themes.png" alt="Bootstrap Themes" width="1024" height="388">
-    <hr class="half-rule">
-    <a href="{{ site.themes }}" class="btn btn-outline-primary">Browse themes</a>
-  </div>
-</div>
+    <!-- Graphs -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.min.js"></script>
+    <script>
+      var ctx = document.getElementById("myChart");
+      var myChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+          labels: ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+          datasets: [{
+            data: [15339, 21345, 18483, 24003, 23489, 24092, 12034],
+            lineTension: 0,
+            backgroundColor: 'transparent',
+            borderColor: '#007bff',
+            borderWidth: 4,
+            pointBackgroundColor: '#007bff'
+          }]
+        },
+        options: {
+          scales: {
+            yAxes: [{
+              ticks: {
+                beginAtZero: false
+              }
+            }]
+          },
+          legend: {
+            display: false,
+          }
+        }
+      });
+    </script>
+  </body>
+</html>

@@ -17,11 +17,11 @@ form label {font-weight:bold}
 
 .sidebar {
   position: fixed;
-  top: 50px;
+  top: 45px;
   bottom: 0;
   left: 0;
   z-index: 100; /* Behind the navbar */
-  padding: 0;
+  padding: 15;
   box-shadow: inset -1px 0 0 rgba(0, 0, 0, .1);
 }
 
@@ -94,3 +94,62 @@ form label {font-weight:bold}
 
 .border-top { border-top: 1px solid #e5e5e5; }
 .border-bottom { border-bottom: 1px solid #e5e5e5; }
+
+
+/* CUSTOM CSS NOT FROM BOOTSTRAP EXAMPLE */
+
+/* ~~~~~~~~~~~~~GENERAL STYLES~~~~~~~~~~~~~ */
+
+/* For Attribute Selector */
+
+select:required:invalid {
+  color: gray;
+}
+option[value=""][disabled] {
+  display: none;
+}
+option {
+  color: black;
+}
+
+/* ~~~~~~~~~~~~~ID BASED STYLES~~~~~~~~~~~~~ */
+
+#input_fields {
+	width: 30%;
+	float: left;
+	height: 100%;
+	background-color:#ccfff5; 
+
+}
+
+#map {
+	width: 100%;
+	height: 100%;
+}
+
+#s_attribute_selection {
+	width: 90%;
+	border: 1px solid #004f3f;
+	padding: 2%;
+	
+}
+
+#c_attribute_selection {
+	width: 90%;
+	border: 1px solid #004f3f;
+	padding: 2%;
+	
+}
+
+#t_select_Attribute {
+	font-size: 12px;
+}
+
+#tf_attribute {
+	width: 100%;
+}
+
+
+
+
+
