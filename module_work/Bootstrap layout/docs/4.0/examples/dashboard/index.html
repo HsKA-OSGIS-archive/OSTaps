@@ -1,0 +1,223 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="../../../../favicon.ico">
+
+    <title>Dashboard Template for Bootstrap</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="dashboard.css" rel="stylesheet">
+  </head>
+
+  <body>
+    <nav class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0">
+      <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="#">OSTaps</a>
+    </nav>
+
+    <div class="container-fluid">
+      <div class="row">
+        <nav class="col-md-3 d-none d-md-block bg-light sidebar">
+          <div class="sidebar-sticky">
+            <ul class="nav flex-column">
+              <li class="nav-item">
+			  
+			    <!-- GEODATA SELECTOR -->
+				<div class="form-group">
+					<form ref='uploadForm' 
+					  id='f_select_input' 
+					  action='http://localhost:8000/upload/' 
+					  method='post' 
+					  encType="multipart/form-data">  <!-- {% csrf_token %} --->
+					    <label for="fileupload"> Select your Input GeoJSON </label>
+						<input type="file" class="form-control" id="fileupload" name="myFile" /> 
+						<!-- <input type="hidden" class="form-control" name="_csrf" value="<your_csrf_token>" />  -->
+						<input type='submit' class="form-control"/>
+					</form> 
+				<div>
+              </li>
+			  
+			  <hr />
+			  
+			  <!-- ATTRIBTUE SELECTOR -->
+              <li class="nav-item">
+				<b> Select the Attribute for Choropleth Map Creation </b><br><br>
+				
+				<input type="radio" id="singleRadio" name="Attribute" value="SingleAttribute" checked="checked" onchange = "selectAttributeSelectionType()" >
+				<label for="singleRadio"> Single Attribute</label> 
+				<input type="radio" id="calculatedRadio" name="Attribute" value="CalculatedAttribute" onchange = "selectAttributeSelectionType()">
+				<label for="calculatedRadio"> Calculated Attribute</label>
+				
+				<!-- FOR SINGLE ATTRIBUTES -->
+				<div id = "s_attribute_selection">
+				
+					<p id = "t_select_Attribute"> Select an Attribute of your Input File </p>
+					
+					<!--  will be deleted when loading geojson dynamically from server -->
+					<button id="sing_loadattr" class="button" type="button" onclick="fillAttributeDropdownSing(GeoJSON)">Load Attributes...</button>
+				
+					<select required id = "sing_s_select_attribute" onchange ="addAttributeToTextfield()">
+						<option value="" selected>Select...</option>
+					</select>
+					<button class="button" type="button" onclick="">Apply</button>
+				</div>
+				
+				
+				<!-- FOR CALCULATED ATTRIBUTES -->
+				<div id = "c_attribute_selection" style="display:none">
+				
+					<p id = "t_select_Attribute"> Select Attributes of your Input File and calculate a new Attribute via the +, -, * or /</p>
+					
+					<!--  will be deleted when loading geojson dynamically from server -->
+					<button id="calc_loadattr" class="button" type="button" onclick="fillAttributeDropdownCalc(GeoJSON)">Load Attributes...</button>
+				
+					<select required id = "calc_s_select_attribute" onchange ="addAttributeToTextfield()">
+						<option value="" selected>Select...</option>
+					</select>
+
+					<p></p>
+					
+					<button id="plus" class="button" type="button" onclick="add()">+</button>
+					<button id="minus" class="button" type="button" onclick="subtract()">-</button>
+					<button id="multiply" class="button" type="button" onclick="multiply()">*</button>
+					<button id="divide" class="button" type="button" onclick="divide()">/</button> 
+					<button id="o_brackets" class="button" type="button" onclick="obrackets()">(</button>
+					<button id="c_brackets" class="button" type="button" onclick="cbrackets()">)</button>
+			
+					<p></p>
+					
+					<form>
+						<input type="text" id="tf_attribute" value="">
+					</form>
+					
+					<p></p>
+					
+					<button class="button" type="button" onclick="calculateNewAttribute()">Apply</button>
+				</div>
+
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#">
+                  <span data-feather="users"></span>
+                  Customers
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#">
+                  <span data-feather="bar-chart-2"></span>
+                  Reports
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#">
+                  <span data-feather="layers"></span>
+                  Integrations
+                </a>
+              </li>
+            </ul>
+
+            <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
+              <span>Saved reports</span>
+              <a class="d-flex align-items-center text-muted" href="#">
+                <span data-feather="plus-circle"></span>
+              </a>
+            </h6>
+            <ul class="nav flex-column mb-2">
+              <li class="nav-item">
+                <a class="nav-link" href="#">
+                  <span data-feather="file-text"></span>
+                  Current month
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#">
+                  <span data-feather="file-text"></span>
+                  Last quarter
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#">
+                  <span data-feather="file-text"></span>
+                  Social engagement
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#">
+                  <span data-feather="file-text"></span>
+                  Year-end sale
+                </a>
+              </li>
+            </ul>
+          </div>
+        </nav>
+
+        <main role="main" class="col-md-8 ml-sm-auto col-lg-9 pt-3 px-4">
+          <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
+            <h1 class="h4">Map Preview</h1>
+            <div class="btn-toolbar mb-2 mb-md-0">
+              <div class="btn-group mr-2">
+                <button class="btn btn-sm btn-outline-secondary">Export as Image</button>
+                <button class="btn btn-sm btn-outline-secondary">Export as Leaflet Map</button>
+				<button class="btn btn-sm btn-outline-secondary">Export SLD</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- <canvas class="my-4" id="myChart" width="900" height="380"></canvas> -->
+        </main>
+      </div>
+    </div>
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script>window.jQuery || document.write('<script src="../../../../assets/js/vendor/jquery-slim.min.js"><\/script>')</script>
+    <script src="popper.min.js"></script>
+    <script src="bootstrap.min.js"></script>
+
+    <!-- Icons -->
+    <script src="https://unpkg.com/feather-icons/dist/feather.min.js"></script>
+    <script>
+      feather.replace()
+    </script>
+
+    <!-- Graphs -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.min.js"></script>
+    <script>
+      var ctx = document.getElementById("myChart");
+      var myChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+          labels: ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+          datasets: [{
+            data: [15339, 21345, 18483, 24003, 23489, 24092, 12034],
+            lineTension: 0,
+            backgroundColor: 'transparent',
+            borderColor: '#007bff',
+            borderWidth: 4,
+            pointBackgroundColor: '#007bff'
+          }]
+        },
+        options: {
+          scales: {
+            yAxes: [{
+              ticks: {
+                beginAtZero: false
+              }
+            }]
+          },
+          legend: {
+            display: false,
+          }
+        }
+      });
+    </script>
+  </body>
+</html>
