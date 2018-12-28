@@ -110,6 +110,27 @@ this.colorCode = undefined;
 				console.log(this.colorSchemes["OrRd"][this.numClasses]);
 				return this.colorSchemes["OrRd"][this.numClasses];
 			};
+			
+						// get color for a given value
+			this.getColorInRange = function (num) {
+				// return color code for supplied number
+				// [4, 6, 8, 9]
+				// [4-5.99, 6-7.99, 8-9]
+				var i = 0;
+				for(i; i < this.range.length; i++) {
+					//number equal to or greater than current value in range
+					//we havent reached the last value in range
+					if(num >= this.range[i] && i < this.range.length) {
+						if(num <= this.range[i + 1]) {
+							return this.colorSchemes[this.colorCode][this.numClasses][i];
+						}
+					} else if(num == this.range[i]) {
+						return this.colorSchemes[this.colorCode][this.numClasses][i - 1];
+					} else {
+						return false;
+					}
+				}
+			};
  
 this.classify = function() {
 //creation of two twodimensional matrixes, Dimension is: [values in this.series +1 ][number of classes +1] 
