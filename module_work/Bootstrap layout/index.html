@@ -26,7 +26,8 @@
         <nav class="col-md-3 d-none d-md-block bg-light sidebar">
           <div class="sidebar-sticky">
             <ul class="nav flex-column">
-              <li class="nav-item">
+			  <h5>Thematic Map Creator</h5>
+              <li class="nav-item">	  
 			  
 			    <!-- GEODATA SELECTOR -->
 				<div class="form-group">
@@ -36,7 +37,7 @@
 					  method='post' 
 					  encType="multipart/form-data">  <!-- {% csrf_token %} --->
 					    <label for="fileupload"> Select your Input GeoJSON </label>
-						<input type="file" class="form-control" id="fileupload" name="myFile" /> 
+						<input type="file" class="form-control" id="fileupload" name="myFile" accept=".geojson"/> 
 						<!-- <input type="hidden" class="form-control" name="_csrf" value="<your_csrf_token>" />  -->
 						<input type='submit' class="form-control"/>
 					</form> 
