@@ -12,22 +12,22 @@
 	<!-- Leaflet Source Code -->
 	<link rel="stylesheet" href="https://unpkg.com/leaflet@1.3.4/dist/leaflet.css" />
 	<script src="https://unpkg.com/leaflet@1.3.4/dist/leaflet.js"></script>
-	
+
 	<!-- JQuery -->
 	<script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.3.1.min.js"></script>
-	
+
 	<!-- Load static Stylesheet CSS -->
-	{% load static %}
+	{% load static from staticfiles %}
 	<link rel = "stylesheet" type = "text/css" href = "{% static 'css/bootstrap.min.css' %}" />
 	<link rel = "stylesheet" type = "text/css" href = "{% static 'css/style.css' %}" />
-	
+
 	<!-- Load static JS Script Files -->
-	{% load static %}
-	<script src = "{% static './js/leaflet_functionality.js' %}"></script>	 	
-	<script src = "{% static './js/attribute_selection.js' %}"></script> 
+	{% load static from staticfiles %}
+	<script src = "{% static './js/leaflet_functionality.js' %}"></script>
+	<script src = "{% static './js/attribute_selection.js' %}"></script>
 	<script src = "{% static './js/style_geoJson.js' %}"></script>
-	<script src = "{% static './lib/popper.min.js' %}"></script>	 	
-	<script src = "{% static './lib/bootstrap.min.js' %}"></script> 
+	<script src = "{% static './lib/popper.min.js' %}"></script>
+	<script src = "{% static './lib/bootstrap.min.js' %}"></script>
   </head>
 
   <body>
@@ -41,113 +41,113 @@
           <div class="sidebar-sticky">
             <ul class="nav flex-column">
 			  <h5>Thematic Map Creator</h5>
-              <li class="nav-item">	  
-			  
+              <li class="nav-item">
+
 			    <!-- GEODATA SELECTOR -->
 				<div class="form-group">
-					<form ref='uploadForm' 
-					  id='f_select_input' 
-					  action='http://localhost:8000/upload/' 
-					  method='post' 
+					<form ref='uploadForm'
+					  id='f_select_input'
+					  action='http://localhost:8000/upload/'
+					  method='post'
 					  encType="multipart/form-data">{% csrf_token %}
 					    <label for="fileupload"> Select your Input GeoJSON </label>
-						<input type="file" class="form-control" id="fileupload" name="myFile" accept=".geojson"/> 
-						<input type="hidden" class="form-control" name="_csrf" value="<your_csrf_token>" /> 
+						<input type="file" class="form-control" id="fileupload" name="myFile" accept=".geojson"/>
+						<input type="hidden" class="form-control" name="_csrf" value="<your_csrf_token>" />
 						<input type='submit' class="form-control"/>
-					</form> 
+					</form>
 				<div>
               </li>
-			  
+
 			  <br><br>
-			  
+
 			  <!-- ATTRIBTUE SELECTOR -->
               <li class="nav-item">
 				<b> Select the Attribute for Choropleth Map Creation </b><br>
-				
+
 				<input type="radio" id="singleRadio" name="Attribute" value="SingleAttribute" checked="checked" onchange = "selectAttributeSelectionType()" >
-				<label for="singleRadio"> Single Attribute</label> 
+				<label for="singleRadio"> Single Attribute</label>
 				<input type="radio" id="calculatedRadio" name="Attribute" value="CalculatedAttribute" onchange = "selectAttributeSelectionType()">
 				<label for="calculatedRadio"> Calculated Attribute</label>
-				
+
 				<!-- FOR SINGLE ATTRIBUTES -->
 				<div id = "s_attribute_selection">
-				
+
 					<p id = "t_select_Attribute"> Select an Attribute of your Input File </p>
-					
+
 					<!--  will be deleted when loading geojson dynamically from server -->
 					<button id="sing_loadattr" class="btn btn-secondary btn-sm" type="button" onclick="fillAttributeDropdownSing(GeoJSON)">Load Attributes...</button>
-				
+
 					<select required id = "sing_s_select_attribute" onchange ="addAttributeToTextfield()">
 						<option value="" selected>Select...</option>
 					</select>
 					<button class="btn btn-secondary btn-sm" type="button" onclick="">Apply</button>
 				</div>
-				
-				
+
+
 				<!-- FOR CALCULATED ATTRIBUTES -->
 				<div id = "c_attribute_selection" style="display:none">
-				
+
 					<p id = "t_select_Attribute"> Select Attributes of your Input File and calculate a new Attribute via the +, -, * or /</p>
-					
+
 					<!--  will be deleted when loading geojson dynamically from server -->
 					<button id="calc_loadattr" class="btn btn-secondary btn-sm" type="button" onclick="fillAttributeDropdownCalc(GeoJSON)">Load Attributes...</button>
-				
+
 					<select required id = "calc_s_select_attribute" onchange ="addAttributeToTextfield()">
 						<option value="" selected>Select...</option>
 					</select>
 
 					<p></p>
-					
+
 					<button id="plus" class="button" type="button" onclick="add()">+</button>
 					<button id="minus" class="button" type="button" onclick="subtract()">-</button>
 					<button id="multiply" class="button" type="button" onclick="multiply()">*</button>
-					<button id="divide" class="button" type="button" onclick="divide()">/</button> 
+					<button id="divide" class="button" type="button" onclick="divide()">/</button>
 					<button id="o_brackets" class="button" type="button" onclick="obrackets()">(</button>
 					<button id="c_brackets" class="button" type="button" onclick="cbrackets()">)</button>
-			
+
 					<p></p>
-					
+
 					<form>
 						<input type="text" id="tf_attribute" value="">
 					</form>
-					
+
 					<p></p>
-					
+
 					<button class="btn btn-secondary btn-sm" type="button" onclick="calculateNewAttribute()">Apply</button>
 				</div>
               </li>
-			  
-			  
+
+
 			  <!-- CLASS SELECTOR -->
               <li class="nav-item">
 			    <br>
 				<b id = "t_select_classes"> Select the Number of Classes </b>
 				<form id = "f_select_classes">
-					<select id = "s_select_classes" name = "s_select_classes" onchange=""> 
+					<select id = "s_select_classes" name = "s_select_classes" onchange="">
 						<option id = "o_select_classes_2" value="2" selected>2</option>
-						<option id = "o_select_classes_3" value="3">3</option> 
-						<option id = "o_select_classes_4" value="4">4</option> 
-						<option id = "o_select_classes_5" value="5">5</option> 
-						<option id = "o_select_classes_6" value="6">6</option> 
-						<option id = "o_select_classes_7" value="7">7</option> 
-						<option id = "o_select_classes_8" value="8">8</option> 
-					</select> 
+						<option id = "o_select_classes_3" value="3">3</option>
+						<option id = "o_select_classes_4" value="4">4</option>
+						<option id = "o_select_classes_5" value="5">5</option>
+						<option id = "o_select_classes_6" value="6">6</option>
+						<option id = "o_select_classes_7" value="7">7</option>
+						<option id = "o_select_classes_8" value="8">8</option>
+					</select>
 				</form>
               </li>
-			  			  
+
 			  <!-- COLOR SCHEME SELECTOR -->
               <li class="nav-item">
 			    <br>
 				<b id = "t_select_color"> Select the Color Scheme </b>
 				<form id = "f_select_color">
-					<select id = "s_select_color" name = "s_select_color" onchange=""> 
+					<select id = "s_select_color" name = "s_select_color" onchange="">
 						<option id = "OrRd" value="OrRd" selected>Red-Orange</option>
-						<option id = "PuBu" value="PuBu">Purple-Blue</option> 
-						<option id = "BuPu" value="BuPu">Blue-Purple</option> 
-						<option id = "Oranges" value="Oranges">Orange</option> 
-						<option id = "BuGn" value="BuGn">Blue-Green</option> 
+						<option id = "PuBu" value="PuBu">Purple-Blue</option>
+						<option id = "BuPu" value="BuPu">Blue-Purple</option>
+						<option id = "Oranges" value="Oranges">Orange</option>
+						<option id = "BuGn" value="BuGn">Blue-Green</option>
 						<option id = "YlOrBr" value="YlOrBr">Yellow-Orange-Brown</option>
-						<option id = "YlGn" value="YlGn">Yellow-Green</option> 
+						<option id = "YlGn" value="YlGn">Yellow-Green</option>
 						<option id = "Reds" value="Reds">Red</option>
 						<option id = "RdPu" value="RdPu">Red-Purple</option>
 						<option id = "Greens" value="Greens">Green</option>
@@ -159,12 +159,12 @@
 						<option id = "PuRd" value="PuRd">Purple-Red</option>
 						<option id = "Blues" value="Blues">Blue</option>
 						<option id = "PuBuGn" value="PuBuGn">Purple-Blue-Green</option>
-					</select> 
+					</select>
 				</form>
               </li>
-			  
+
 			  <br><br>
-			  
+
 			  <!-- LINE WIDTH SELECTOR -->
               <li class="nav-item">
 			    <br>
@@ -173,25 +173,25 @@
 					<input id="select_line_width" type="number" min="0.1" max="5.0" value="2" step="0.1">
 				</form>
               </li>
-			  
+
 			  <br><br>
-			  
+
 			  <!-- LINE STYLE SELECTOR -->
 			  <li class="nav-item">
 			    <br>
 				<b id = "t_select_line_style"> Select the Style of the Outline </b>
 				<form id = "f_select_line_style">
-					<select size="1" id = "s_select_line_style" name = "s_select_line_style" > 
+					<select size="1" id = "s_select_line_style" name = "s_select_line_style" >
 						<option id = "o_select_line_style_s" value="solid" selected>Solid</option>
-						<option id = "o_select_line_style_d" value="dashed">Dashed</option> 
-						<option id = "o_select_line_style_d" value="dotted">Dotted</option> 
+						<option id = "o_select_line_style_d" value="dashed">Dashed</option>
+						<option id = "o_select_line_style_d" value="dotted">Dotted</option>
 						<!-- <option id = "o_select_line_style_" value="..">To be continued...</option>  -->
-					</select> 
+					</select>
 				</form>
               </li>
-			  
+
 			  <br><br>
-			  
+
 			  <!-- LINE COLOR SELECTOR -->
 			  <li class="nav-item">
 			    <br>
@@ -215,7 +215,7 @@
           </div>
 
 		  <div id="map" class="h-100"><div>
-		  
+
 		  <script>
 			// global variable coming from Django, default ""
 			var filename = "{{filename}}"

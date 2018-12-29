@@ -3,10 +3,10 @@
 function selectAttributeSelectionType() {
 	var singleAttributeDiv = document.getElementById("s_attribute_selection");
 	var calcAttributeDiv = document.getElementById("c_attribute_selection");
-	
+
 	var singleRadio = document.getElementById("singleRadio");
 	var calcRadio = document.getElementById("calculatedRadio");
-	
+
 	if (singleRadio.checked){
 		calcAttributeDiv.style.display = "none";
 		singleAttributeDiv.style.display = "block";
@@ -14,7 +14,7 @@ function selectAttributeSelectionType() {
 		singleAttributeDiv.style.display = "none";
 		calcAttributeDiv.style.display = "block";
 	}
-	
+
 
 }
 
@@ -71,7 +71,7 @@ function cbrackets() {
 function addAttributeToTextfield() {
 	var dropdown = document.getElementById("calc_s_select_attribute");
 	var selectedOption = dropdown.options[dropdown.selectedIndex].text; // holds the changed value of select
-	
+
 	var cursorPos = $('#tf_attribute').prop('selectionStart');			// assigns the changed value to the text field
 	var v = $('#tf_attribute').val();
 	var textBefore = v.substring(0,  cursorPos );
@@ -87,19 +87,19 @@ function fillAttributeDropdownCalc(gjson) {
 	fillAttributeDropdownCalc = function(){}; // realizes that function is only executed once
 
 	properties = getProperties(gjson, filtered = true);
-	
+
 	dropdown = document.getElementById("calc_s_select_attribute");
-	
-	
+
+
 	for (var i = 0; i< properties.length; i++){
 		var opt = document.createElement('option');
 		opt.value = properties[i];
 		opt.innerHTML = properties[i];
 		dropdown.appendChild(opt);
 	}
-		
-	
-	
+
+
+
 }
 
 function fillAttributeDropdownSing(gjson) {
@@ -107,11 +107,9 @@ function fillAttributeDropdownSing(gjson) {
 	fillAttributeDropdownSing = function(){}; // realizes that function is only executed once
 
 	properties = getProperties(gjson, filtered = true);
-	
 
 	dropdown = document.getElementById("sing_s_select_attribute");
 
-	
 	for (var i = 0; i< properties.length; i++){
 		var opt = document.createElement('option');
 		opt.value = properties[i];
@@ -122,15 +120,15 @@ function fillAttributeDropdownSing(gjson) {
 
 
 // function for returning numerical property list of geojson
-function getProperties(gjson, filtered = false){ 
+function getProperties(gjson, filtered = false){
 	var properties = new Array();
-	
+
 	// saves all properties in a 2dim array
 	var nbfeatures = Object.keys(gjson.features).length;
 	for (var i = 0; i < nbfeatures; i++){
-		properties.push(Object.keys(gjson.features[i].properties));	
+		properties.push(Object.keys(gjson.features[i].properties));
 	}
-	
+
 	// checks if the properties of all features of are identical
 	for (var i = 0; i < properties.length; i++) { 							// iterates over properties of all features
 		if (i != properties.length - 1) { 									// if end is not reached yet
@@ -149,11 +147,11 @@ function getProperties(gjson, filtered = false){
 			}
 		}
 	}
-	
+
 	var propertyNames = properties[0];										// if all arrays are equal (which should be the case for a valid geojson), return property list of features
 	var numericProperties = properties[1];
 	var nbproperties = propertyNames.length;
-	
+
 	// filters data for numeric values and those which can be converted to numbers
 	if (filtered == true) {
 
@@ -164,31 +162,30 @@ function getProperties(gjson, filtered = false){
 				var currProperty = currFeature.properties[propertyNames[j]];
 				if (typeof(currProperty) == "number") {						// if data type of current property = number
 					continue;												// if yes -> continue
-				} else {													// if not	
+				} else {													// if not
 					if(isNaN(Number(currProperty))) {						// checks for converting non numerical attributes into numbers https://www.w3schools.com/jsref/jsref_number.asp
 						numericProperties.remove(propertyNames[j]);			// delete current property name from numericProperties Array
 					}
 				}
 			}
-			
 		}
 	}
-	
-	return numericProperties; // this is the list of numeric properties 
 
-} 
+	return numericProperties; // this is the list of numeric properties
+
+}
 
 
 function calculateNewAttribute(){
 	// Validation of Text Field when Apply is clicked
-	
+
 	// Calculation of new Attribute
 	var calculation = document.getElementById("tf_attribute").value; // returning string https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/eval
 	console.log(calculation);
-	
+
 	// Iterate over every Feature and it's properties for calculation ( 2 for loops
 
-	
+
 }
 
 
@@ -218,4 +215,3 @@ function arraysEqual(arr1, arr2) {
     }
     return true;
 }
-

@@ -20,5 +20,7 @@ urlpatterns = [
     url(r'^$', views.index),
     url(r'^upload/', views.upload, name=''),
     url(r'^get/(?P<filename>.*)$', views.get),
+    url(r'^update/', views.update),
+    url(r'^test/', views.test),
     url(r'^admin/', include(admin.site.urls)),
 ]

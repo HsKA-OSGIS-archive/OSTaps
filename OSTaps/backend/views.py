@@ -19,13 +19,34 @@ def upload(request):
 	return HttpResponseRedirect("/?data=" + filename)
 
 def get(request, filename):
-	path_upload=settings.BASE_DIR+'\\uploads\\'    
+	path_upload=settings.BASE_DIR+'\\uploads\\'
 	file_path = os.path.join(path_upload, filename)
 	if os.path.exists(file_path):
 
                 json_data = open(file_path)
-                data = json.load(json_data) 
+                data = json.load(json_data)
                 json_data.close()
                 return JsonResponse(data)
-        
+
 	raise Http404
+
+def test(request):
+        return HttpResponse("You are in OSTaps")
+
+def update(request):
+        data = request.POST.get("geojson", "")
+        data = json.dumps(data, separators=(',',':'))
+        data = data.replace("\\", "")
+        data = data[1:-1]
+
+        filename = request.POST.get("filename", "")
+
+        with open(settings.BASE_DIR+'\\uploads\\'+str(filename), 'wb') as outfile:
+                outfile.write("{0}".format(data))
+
+        return HttpResponse()
+
+
+
+
+

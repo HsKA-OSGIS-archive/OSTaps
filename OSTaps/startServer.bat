@@ -1,1 +1,1 @@
- python manage.py runserver
+ python27 manage.py runserver
