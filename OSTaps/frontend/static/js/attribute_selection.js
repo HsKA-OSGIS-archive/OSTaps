@@ -3,10 +3,10 @@
 function selectAttributeSelectionType() {
 	var singleAttributeDiv = document.getElementById("s_attribute_selection");
 	var calcAttributeDiv = document.getElementById("c_attribute_selection");
-	
+
 	var singleRadio = document.getElementById("singleRadio");
 	var calcRadio = document.getElementById("calculatedRadio");
-	
+
 	if (singleRadio.checked){
 		calcAttributeDiv.style.display = "none";
 		singleAttributeDiv.style.display = "block";
@@ -14,7 +14,7 @@ function selectAttributeSelectionType() {
 		singleAttributeDiv.style.display = "none";
 		calcAttributeDiv.style.display = "block";
 	}
-	
+
 
 }
 
@@ -71,7 +71,7 @@ function cbrackets() {
 function addAttributeToTextfield() {
 	var dropdown = document.getElementById("calc_s_select_attribute");
 	var selectedOption = dropdown.options[dropdown.selectedIndex].text; // holds the changed value of select
-	
+
 	var cursorPos = $('#tf_attribute').prop('selectionStart');			// assigns the changed value to the text field
 	var v = $('#tf_attribute').val();
 	var textBefore = v.substring(0,  cursorPos );
@@ -87,32 +87,32 @@ function fillAttributeDropdownCalc(gjson) {
 	fillAttributeDropdownCalc = function(){}; // realizes that function is only executed once
 
 	properties = getProperties(gjson, filtered = true);
-	
+
 	dropdown = document.getElementById("calc_s_select_attribute");
-	
-	
+
+
 	for (var i = 0; i< properties.length; i++){
 		var opt = document.createElement('option');
 		opt.value = properties[i];
 		opt.innerHTML = properties[i];
 		dropdown.appendChild(opt);
 	}
-		
-	
-	
+
+
+
 }
 
 function fillAttributeDropdownSing(gjson) {
 
 	fillAttributeDropdownSing = function(){}; // realizes that function is only executed once
-	
+
 	console.log("inside function");
 	properties = getProperties(gjson, filtered = true);
-	
+
 
 	dropdown = document.getElementById("sing_s_select_attribute");
 
-	
+
 	for (var i = 0; i< properties.length; i++){
 		var opt = document.createElement('option');
 		opt.value = properties[i];
@@ -121,17 +121,18 @@ function fillAttributeDropdownSing(gjson) {
 	}
 }
 
+var attributelist;
 
 // function for returning numerical property list of geojson
-function getProperties(gjson, filtered = false){ 
+function getProperties(gjson, filtered = false){
 	var properties = new Array();
 	console.log(gjson);
 	// saves all properties in a 2dim array
 	var nbfeatures = Object.keys(gjson.features).length;
 	for (var i = 0; i < nbfeatures; i++){
-		properties.push(Object.keys(gjson.features[i].properties));	
+		properties.push(Object.keys(gjson.features[i].properties));
 	}
-	
+
 	// checks if the properties of all features of are identical
 	for (var i = 0; i < properties.length; i++) { 							// iterates over properties of all features
 		if (i != properties.length - 1) { 									// if end is not reached yet
@@ -150,11 +151,11 @@ function getProperties(gjson, filtered = false){
 			}
 		}
 	}
-	
+
 	var propertyNames = properties[0];										// if all arrays are equal (which should be the case for a valid geojson), return property list of features
 	var numericProperties = properties[1];
 	var nbproperties = propertyNames.length;
-	
+
 	// filters data for numeric values and those which can be converted to numbers
 	if (filtered == true) {
 
@@ -165,35 +166,80 @@ function getProperties(gjson, filtered = false){
 				var currProperty = currFeature.properties[propertyNames[j]];
 				if (typeof(currProperty) == "number") {						// if data type of current property = number
 					continue;												// if yes -> continue
-				} else {													// if not	
+				} else {													// if not
 					if(isNaN(Number(currProperty))) {						// checks for converting non numerical attributes into numbers https://www.w3schools.com/jsref/jsref_number.asp
 						numericProperties.remove(propertyNames[j]);			// delete current property name from numericProperties Array
 					}
 				}
 			}
-			
+
 		}
 	}
-	
-	return numericProperties; // this is the list of numeric properties 
 
-} 
+	attributelist = numericProperties;
+	return numericProperties; // this is the list of numeric properties
+
+}
 
 
 function calculateNewAttribute(){
 	// Validation of Text Field when Apply is clicked
-	
+
 	// Calculation of new Attribute
 	var calculation = document.getElementById("tf_attribute").value; // returning string https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/eval
-	console.log(calculation);
-	
-	// Iterate over every Feature and it's properties for calculation ( 2 for loops
 
-	
+	// Evaluation of Calculation
+	var countCorrectElements = 0;
+
+	// split Calculation Statement
+	cSplit = calculation.split(" ");
+
+	// new Calculation String
+	newCalc = "";
+
+	for (var i = 0; i < cSplit.length; i++){
+		cElement = cSplit[i];
+		if (attributelist.indexOf(cElement) != -1){
+			// 1990 -> GeoJSON.features[i].properties["1990"]
+			newCalc += "Number(GeoJSON.features[i].properties[\"" + cElement +  "\"]) "
+			countCorrectElements++;
+		} else if (cElement == "+" || cElement == "-"|| cElement == "/"|| cElement == "*"|| cElement == "("|| cElement == ")" || !isNaN(Number(cElement))){
+			newCalc += cElement + " "
+			countCorrectElements++;
+		}
+	}
+	// if statement is valid
+	if (countCorrectElements == cSplit.length){
+		var nbfeatures = Object.keys(GeoJSON.features).length;
+		try {
+			for (var i = 0; i < nbfeatures; i++){
+				GeoJSON.features[i].properties["newProperty"] = eval(newCalc);
+			}
+
+			//---------------------------------------
+			// UPDATE GEOJSON:
+			var csrftoken = getCookie('csrftoken');
+
+			$.ajax({
+				url: '/update/',
+				type: 'post',
+				dataType: 'json',
+				async: true,
+				data: {
+					csrfmiddlewaretoken: csrftoken,
+					geojson: JSON.stringify(GeoJSON),
+					filename: filename
+				}
+			});
+
+		// if statement is invalid
+		} catch (e) {
+			alert("Invalid Calculation Statement")
+		}
+	} else {
+		alert("Invalid Calculation Statement");
+	}
 }
-
-
-
 
 // EXTERNAL FUNCTIONS
 // Removes a specific value from an array https://stackoverflow.com/questions/3954438/how-to-remove-item-from-array-by-value
@@ -220,3 +266,20 @@ function arraysEqual(arr1, arr2) {
     return true;
 }
 
+// https://docs.djangoproject.com/en/2.1/ref/csrf/
+// to prevent CSRF-ERROR
+function getCookie(name) {
+    var cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        var cookies = document.cookie.split(';');
+        for (var i = 0; i < cookies.length; i++) {
+            var cookie = jQuery.trim(cookies[i]);
+            // Does this cookie string begin with the name we want?
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}

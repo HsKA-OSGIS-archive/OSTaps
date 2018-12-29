@@ -118,3 +118,6 @@ USE_TZ = True
 
 STATIC_URL = '/frontend/static/'
 STATICFILES_DIRS = (os.path.join('frontend/static'),)
+
+DATA_UPLOAD_MAX_MEMORY_SIZE = 2000000000
+DATA_UPLOAD_MAX_NUMBER_FIELDS = 10000000
