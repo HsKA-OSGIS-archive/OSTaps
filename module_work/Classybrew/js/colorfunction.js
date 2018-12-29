@@ -8,9 +8,9 @@ function Color (classes, series) {
  
 this.series = undefined;
 this.numClasses= undefined;
-//this.breaks = undefined;
+this.breaks = undefined;
 this.colorCode = undefined;
-//this.range = undefined;
+this.range = undefined;
 
 
 
@@ -90,9 +90,6 @@ this.colorCode = undefined;
 			// define color ramp color
 			this.setColorCode = function (color) {
 				this.colorCode = color;
-
-				console.log(this.colorCode);
-				return this.colorCode
 			};
 
 			// get available color ramps
@@ -105,13 +102,35 @@ this.colorCode = undefined;
 			// get colors from data and num classes
 			this.getColors = function () {
 				// return array of colors
-				console.log("colorcode:",this.colorCode)
-				console.log(this.numClasses)
-				console.log(this.colorSchemes["OrRd"][this.numClasses]);
-				return this.colorSchemes["OrRd"][this.numClasses];
+				return this.colorSchemes[this.colorCode][this.numClasses];
 			};
 			
-						// get color for a given value
+						// get color codes
+			this.getColorCodes = function () {
+				var colorCodes = [];
+				for ( code in this.colorSchemes ) {
+					if ( this.colorSchemes.hasOwnProperty(code) ) {
+						colorCodes.push(code);
+					}
+				}
+				return colorCodes;
+			};
+
+			// get color codes by type
+			this.getColorCodesByType = function () {
+				var colorTypes = {};
+				for ( code in this.colorSchemes ) {
+					if ( this.colorSchemes.hasOwnProperty(code) ) {
+						if( !colorTypes.hasOwnProperty(this.colorSchemes[code].properties.type) ) {
+							colorTypes[this.colorSchemes[code].properties.type] = []
+						}
+						colorTypes[this.colorSchemes[code].properties.type].push(code);
+					}
+				}
+				return colorTypes;
+			};
+			
+			// get color for a given value
 			this.getColorInRange = function (num) {
 				// return color code for supplied number
 				// [4, 6, 8, 9]
