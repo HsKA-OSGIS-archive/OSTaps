@@ -181,64 +181,75 @@ function getProperties(gjson, filtered = false){
 
 }
 
-
+// function validates the user input and either returns an error to the user or calculates the new attribute, saves it permanently to the geojson and returns it in order to further process it for styling
 function calculateNewAttribute(){
-	// Validation of Text Field when Apply is clicked
 
-	// Calculation of new Attribute
-	var calculation = document.getElementById("tf_attribute").value; // returning string https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/eval
-
-	// Evaluation of Calculation
-	var countCorrectElements = 0;
-
-	// split Calculation Statement
-	cSplit = calculation.split(" ");
-
-	// new Calculation String
-	newCalc = "";
-
-	for (var i = 0; i < cSplit.length; i++){
+	// VALIDATION
+	var calculation = document.getElementById("tf_attribute").value; // returning string https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/eval // returns the users input calculation
+	var countCorrectElements = 0; 		// counter for the number of correct elements
+	cSplit = calculation.split(" ");    // splits Calculation Statement
+	newCalc = ""; 						// empty string which will be filled with correct calculation statements 
+	
+	for (var i = 0; i < cSplit.length; i++){ 											// iterating over splitted user input string
 		cElement = cSplit[i];
-		if (attributelist.indexOf(cElement) != -1){
-			// 1990 -> GeoJSON.features[i].properties["1990"]
-			newCalc += "Number(GeoJSON.features[i].properties[\"" + cElement +  "\"]) "
-			countCorrectElements++;
-		} else if (cElement == "+" || cElement == "-"|| cElement == "/"|| cElement == "*"|| cElement == "("|| cElement == ")" || !isNaN(Number(cElement))){
-			newCalc += cElement + " "
-			countCorrectElements++;
+		if (attributelist.indexOf(cElement) != -1){ 									// if current element is an existing attribute
+			newCalc += "Number(GeoJSON.features[i].properties[\"" + cElement +  "\"]) " // append this to the newCalc String --> example for "1990" as attribute -> GeoJSON.features[i].properties["1990"]
+			countCorrectElements++; 													// increment number of correct elements by 1
+		} else if (cElement == "+" || cElement == "-"|| cElement == "/"|| cElement == "*"|| cElement == "("|| cElement == ")" || !isNaN(Number(cElement))){ // // if current element is one of the calculators or a number
+			newCalc += cElement + " " 													// append current element to current newCalc String
+			countCorrectElements++;														// increment number of correct elements by 1
 		}
 	}
-	// if statement is valid
-	if (countCorrectElements == cSplit.length){
+	
+	if (countCorrectElements == cSplit.length){ // if statement is valid
 		var nbfeatures = Object.keys(GeoJSON.features).length;
 		try {
-			for (var i = 0; i < nbfeatures; i++){
-				GeoJSON.features[i].properties["newProperty"] = eval(newCalc);
+			var values2style = [] 												// empty array which will then be filled with new calculated attribute
+			// CALCULATION OF NEW ATTRIBUTE
+			for (var i = 0; i < nbfeatures; i++){ 								// iterate over all features of GeoJSON
+				GeoJSON.features[i].properties["newProperty"] = eval(newCalc);	// and evaluate the newCalc String and add it as a newProperty to GeoJSON	
+				// CONVERSION OF CALCULATED ATTRIBUTE INTO ARRAY FOR RETURNING AND FURTHER PROCESSING
+				values2style.push(GeoJSON.features[i].properties["newProperty"])
+				
 			}
-
-			//---------------------------------------
-			// UPDATE GEOJSON:
-			var csrftoken = getCookie('csrftoken');
+			
+			// UPDATE GEOJSON
+			var csrftoken = getCookie('csrftoken');								// get crsf token
 
 			$.ajax({
-				url: '/update/',
+				url: '/update/',												// execute update method
 				type: 'post',
 				dataType: 'json',
 				async: true,
 				data: {
 					csrfmiddlewaretoken: csrftoken,
-					geojson: JSON.stringify(GeoJSON),
-					filename: filename
+					geojson: JSON.stringify(GeoJSON),							// write stringified geojson
+					filename: filename											// as filename
 				}
 			});
 
 		// if statement is invalid
-		} catch (e) {
+		} catch (e) {															// if evaluation is not possible: show error to user
 			alert("Invalid Calculation Statement")
 		}
 	} else {
-		alert("Invalid Calculation Statement");
+		alert("Invalid Calculation Statement");									// if evaluation is not possible: show error to user
 	}
+	
+	return values2style;// FOR LUKAS N --> this array is returned when user clicks apply after successfully calculating a new attribute 
+						// contains the values from which the natural breaks should then be calculated
+}
+
+// function returns an array containing the values for calculating natural breaks from if user clicks apply when selecting a single attribute
+function returnSingleAttribute(){
+	var nbfeatures = Object.keys(GeoJSON.features).length;						// number of features of geojson
+	dropdownValue = document.getElementById("sing_s_select_attribute").value;	// attribute name the user selected
+	var values2style = [];														// empty array to be filled
+	for (var i = 0; i < nbfeatures; i++){
+		values2style.push(GeoJSON.features[i].properties[dropdownValue]);		// fill array with attribute value of current feature
+	}
+	return values2style;// FOR LUKAS N --> this array is returned when user clicks apply after selecting a single attribute for styling
+						// contains the values from which the natural breaks should then be calculated
 }
 
 // EXTERNAL FUNCTIONS

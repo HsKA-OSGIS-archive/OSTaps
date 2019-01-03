@@ -80,7 +80,7 @@
 					<select required id = "sing_s_select_attribute" onchange ="addAttributeToTextfield()">
 						<option value="" selected>Select...</option>
 					</select>
-					<button class="btn btn-secondary btn-sm" type="button" onclick="">Apply</button>
+					<button class="btn btn-secondary btn-sm" type="button" onclick="returnSingleAttribute()">Apply</button>
 				</div>
 
 
@@ -170,7 +170,7 @@
 			    <br>
 				<b id = "t_select_line_width"> Select the Width of the Outline </b>
 				<form id = "f_select_line_width">
-					<input id="select_line_width" type="number" min="0.1" max="5.0" value="2" step="0.1">
+					<input id="select_line_width" type="number" min="0.0" max="5.0" value="1" step="0.1">
 				</form>
               </li>
 
@@ -181,11 +181,10 @@
 			    <br>
 				<b id = "t_select_line_style"> Select the Style of the Outline </b>
 				<form id = "f_select_line_style">
-					<select size="1" id = "s_select_line_style" name = "s_select_line_style" >
+					<select id = "s_select_line_style" name = "s_select_line_style" >
 						<option id = "o_select_line_style_s" value="solid" selected>Solid</option>
 						<option id = "o_select_line_style_d" value="dashed">Dashed</option>
 						<option id = "o_select_line_style_d" value="dotted">Dotted</option>
-						<!-- <option id = "o_select_line_style_" value="..">To be continued...</option>  -->
 					</select>
 				</form>
               </li>

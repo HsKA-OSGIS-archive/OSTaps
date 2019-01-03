@@ -4,9 +4,9 @@ var f_select_line_width;
 var s_select_line_style;
 
 // default values, will be overwritten by user defined values
-var outlineColor = "#4B8A08";
+var outlineColor = "#3c3c3c";
 var fillColor = "#777777";
-var lineWidth  = 2 ;
+var lineWidth  = 1 ;
 var outlineStyle;
 
 //given outline styles
