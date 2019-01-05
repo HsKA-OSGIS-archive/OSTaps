@@ -201,14 +201,15 @@
 					}
 					
 				console.log(arraySeries);
-				
+				console.log(s_select_color.onchange());
+				console.log(s_select_classes.onchange());
 				
 				
 				
 				//var arrSeries = [5,7,1,3,12,22,16]
 				t = new Color();
-				t.setNumClasses(9);
-				t.setColorCode("OrRd");
+				t.setNumClasses(s_select_classes.onchange());
+				t.setColorCode(s_select_color.onchange());
 				
 				t.setSeries(arraySeries)
 				t.classify(arraySeries);
