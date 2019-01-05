@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 	<head>
+	
 		<!-- General Settings -->
 		<meta charset = "UTF-8" />
 		<meta name = "viewport" content ="width=device.width, initial-scale=1"/>
@@ -18,6 +19,7 @@
 		
 		<!-- Referencing Script Files -->
 		 <script src="./js/attribute_selection.js"></script> 
+		 <!-- <script src="./js/export_image.js"></script>  -->
 		 <script src="./js/style_geoJson.js"></script> 
 		 <script src="./js/leaflet.js"></script> <!-- DUBLICATE -->
 
@@ -27,19 +29,24 @@
 		 <script src = "data/DEU.geojson"></script>
 		 <script src = "data/brown_coal.geojson"></script>
 		 <script src = "data/test.geojson"></script>
-		 <!-- <script src = "lib/index.js"></script> -->
+		 
+		<!-- Export map -->
+		<script src="D:\Hochschule\Geomatics\Semester_3\OSGIS\OSTaps\module_work\GUI\js\leaflet-image.js"></script>
+		 
 		 
 		 <!-- Load JavaScript Files -->
 	
 	</head>
 	
-
 	<body>
+	<style>
+	#snapshot {
+		position:absolute;
+		top:0;bottom:0;right:0;
+	}
 
+	</style>
 	
-	
-	
-		
 		<!-- INPUT FIELDS -->
 		<div id = "input_fields">
 		
@@ -175,27 +182,64 @@
 			<p>  </p>	
 			
 			<!-- Buttons -->
-			<button id = "b_downImage" class="button" type="button">Download Map <br/>as Image</button>
+			<button id = "b_downImage" class="ui-button"  >Download Map <br/>as Image</button>
 			<button id = "b_downMap" class="button" type="button">Download Map <br/>as Leaflet Map</button>
 			<button id = "b_help" class="button" type="button">Help</button>
-		
+			
+			<canvas id="canvas" width="5" height="5"></canvas>
+
+
+			
+
+			
 		</div>
-		
-		<div id = "map">
+		<div id='snapshot'></div>
+		<div id = "map"></div>	
 			
 			<script>
-				<!-- var i_select_line_color; -->
-				<!-- var defaultColor = "#ff7800"; -->
-				<!-- var defaultWeight  = 2; -->
-				<!-- var x; -->
-				<!-- var newColor; -->
-				<!-- var state; -->
 				
-				// Create a map.
-				var map = L.map('map').setView([51, 10], 6);
+				var snapshot = document.getElementById('snapshot');
 				
+				var map = L.map('map', {
+					renderer: L.canvas()
+					}).setView([51, 10], 6);
+					
+				var ourGeoJSON = L.geoJson(DEU).addTo(map);	
+		
+				
+				document.getElementById('b_downImage').addEventListener('click', function() {
+				leafletImage(map, exportImage);
+				});
+				
+				function exportImage(err, canvas) {
+					console.log("Button Image NEW");
+					//erstellt ein HTML-Element
+					var img = document.createElement('img');
+					
+					//legt Groesse fest
+					var dimensions = map.getSize();
+					img.width = dimensions.x;
+					img.height = dimensions.y;
+					console.log(dimensions);
+					console.log(img.width);
+					console.log(img.height);
+					
+					//gibt eine data URI zurück, die eine Representation des Bildes zurück gibt
+					img.src = canvas.toDataURL();
+					console.log("data:[<mediatype>][;base64],<data>");
+					var source = img.src
+					console.log(img.src);
+					
+					snapshot.innerHTML = '';
+					snapshot.appendChild(img);
+					console.log(snapshot);
+					
+					<!-- return canvas; -->
+					<!-- return snapshot; -->
+			
+				}
 				// will be styled in style_geoJSON.js
-				var ourGeoJSON = L.geoJson(DEU).addTo(map);
+				
 				
 	
 
@@ -204,7 +248,7 @@
 				
 			</script> 
 		
-		</div>
+		
 	
 
 	
