@@ -19,10 +19,10 @@ var sdotted = "1,10";
 var numClasses = 2
 var colorCode = "OrRd"
 
-<<<<<<< HEAD
-=======
+
+
 var arrAttribute = calculateNewAttribute();
->>>>>>> 0fd18b0af453ea2cc58be9ab15727571cc63d247
+
 
 // everything is based on this styleGeoJSON function
 // INPUTS:
@@ -67,7 +67,7 @@ function startup() {
 	s_select_numb_class = document.querySelector("#s_select_classes");
 
 			
-=======
+
 	
 
 	// overwrites the default color by a nicer color defined by us (outlineColor)
@@ -77,9 +77,7 @@ function startup() {
 	s_select_fill_color.value = colorCode;
 	s_select_numb_class.value = numClasses;
 
-=======
-	
-	
+
 
 	
 	// add listener to check if color is changed by the user
