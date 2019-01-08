@@ -2,6 +2,8 @@
 var i_select_line_color;
 var f_select_line_width;
 var s_select_line_style;
+var s_select_fill_color;
+var s_select_numb_class;
 
 // default values, will be overwritten by user defined values
 var outlineColor = "#3c3c3c";
@@ -14,6 +16,10 @@ var ssolid = "";
 var sdashed = "15,10";
 var sdotted = "1,10";
 
+var numClasses = 2
+var colorCode = "OrRd"
+
+var arrAttribute = calculateNewAttribute();
 
 // everything is based on this styleGeoJSON function
 // INPUTS:
@@ -23,7 +29,6 @@ var sdotted = "1,10";
 // - fillColor:		fill color of the polygons (default value is the default color)
 //					-> will be styled by color brewer
 // - ....
-
 function styleGeoJSON(geoJSON2style) {
 	geoJSON2style.eachLayer(function(feature) {
 		feature.setStyle({
@@ -43,6 +48,8 @@ window.addEventListener("load", startup, false);
 // this function does the following:
 // 1. Register all user inputs from the GUI and add Event listeners
 function startup() {
+	console.log("TEST");
+	console.log(arrAttribute)
 
 	// ----------------------
 	// REGISTER COLOR CHOOSER
@@ -50,11 +57,17 @@ function startup() {
 	i_select_line_color = document.querySelector("#i_select_line_color");
 	f_select_line_width = document.querySelector("#select_line_width");
 	s_select_line_style = document.querySelector("#s_select_line_style");
-			
+	s_select_fill_color = document.querySelector("#s_select_color");
+	s_select_numb_class = document.querySelector("#s_select_classes");
+	
 	// overwrites the default color by a nicer color defined by us (outlineColor)
 	i_select_line_color.value = outlineColor;	
 	f_select_line_width.value = lineWidth;	
 	s_select_line_style.value = outlineStyle;
+	s_select_fill_color.value = colorCode;
+	s_select_numb_class.value = numClasses;
+	
+	
 	
 	// add listener to check if color is changed by the user
 	i_select_line_color.addEventListener("change", updateOutlineColor, true);
@@ -62,6 +75,10 @@ function startup() {
 	f_select_line_width.addEventListener("change", updateLineWidth, true);
 	// add listener to check if line style is changed by the user
 	s_select_line_style.addEventListener("change", updateLineStyle, true);
+	// add listener to check if Color Code is changed by the user
+	s_select_fill_color.addEventListener("change", updateFillColor, true);
+	// add listener to check if Number of Classes changed by the user
+	s_select_numb_class.addEventListener("change", updateNumclasses, true);
 	
 	//------------------------
 	// REGISTER NEXT GUI ELEMENT
@@ -116,8 +133,25 @@ function updateLineStyle(event) {
 	
 }
 
-// HANDLE NEXT ELEMENT
-// .....
+// FILL COLOR
+function updateFillColor(event) {
+	// get colorCode 
+	colorCode = s_select_fill_color.value;
+	console.log("New Color choosen from user:");
+	console.log(colorCode);
+	
+	styleGeoJSON(LeafletGeoJSON);
+}
+
+// Change Number of Classes
+function updateNumclasses(event) {
+	// get numClasses 
+	numClasses = s_select_numb_class.value;
+	console.log("New Number of Classes choosen from user:");
+	console.log(numClasses);
+	
+	styleGeoJSON(LeafletGeoJSON);
+}
 
 
 
