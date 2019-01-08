@@ -32,6 +32,17 @@ label {
 	margin-top: 10px;
 }
 
+
+snapshot {
+
+  position:absolute;
+
+  top:0;bottom:0;right:0;
+
+  width:50%;
+
+}
+
 /* For Attribute Selector */
 
 select:required:invalid {
