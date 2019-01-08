@@ -19,6 +19,10 @@ var sdotted = "1,10";
 var numClasses = 2
 var colorCode = "OrRd"
 
+<<<<<<< HEAD
+=======
+var arrAttribute = calculateNewAttribute();
+>>>>>>> 0fd18b0af453ea2cc58be9ab15727571cc63d247
 
 // everything is based on this styleGeoJSON function
 // INPUTS:
@@ -28,7 +32,6 @@ var colorCode = "OrRd"
 // - fillColor:		fill color of the polygons (default value is the default color)
 //					-> will be styled by color brewer
 // - ....
-
 function styleGeoJSON(geoJSON2style) {
 	geoJSON2style.eachLayer(function(feature) {
 		feature.setStyle({
@@ -48,6 +51,8 @@ window.addEventListener("load", startup, false);
 // this function does the following:
 // 1. Register all user inputs from the GUI and add Event listeners
 function startup() {
+	console.log("TEST");
+	console.log(arrAttribute)
 
 	console.log("TEST");
 	console.log(arrAttribute)
@@ -60,13 +65,22 @@ function startup() {
 	s_select_line_style = document.querySelector("#s_select_line_style");
 	s_select_fill_color = document.querySelector("#s_select_color");
 	s_select_numb_class = document.querySelector("#s_select_classes");
+
 			
+=======
+	
+
 	// overwrites the default color by a nicer color defined by us (outlineColor)
 	i_select_line_color.value = outlineColor;	
 	f_select_line_width.value = lineWidth;	
 	s_select_line_style.value = outlineStyle;
 	s_select_fill_color.value = colorCode;
 	s_select_numb_class.value = numClasses;
+
+=======
+	
+	
+
 	
 	// add listener to check if color is changed by the user
 	i_select_line_color.addEventListener("change", updateOutlineColor, true);
