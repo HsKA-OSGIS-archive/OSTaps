@@ -236,8 +236,9 @@ function calculateNewAttribute(){
 		alert("Invalid Calculation Statement");									// if evaluation is not possible: show error to user
 	}
 	
-	return values2style;// FOR LUKAS N --> this array is returned when user clicks apply after successfully calculating a new attribute 
-						// contains the values from which the natural breaks should then be calculated
+	arrAttribute = values2style;	// FOR LUKAS N --> this array is returned when user clicks apply after successfully calculating a new attribute 
+									// contains the values from which the natural breaks should then be calculated
+	styleGeoJSON(LeafletGeoJSON)	// ->style_geoJson.js
 }
 
 // function returns an array containing the values for calculating natural breaks from if user clicks apply when selecting a single attribute
@@ -248,8 +249,9 @@ function returnSingleAttribute(){
 	for (var i = 0; i < nbfeatures; i++){
 		values2style.push(GeoJSON.features[i].properties[dropdownValue]);		// fill array with attribute value of current feature
 	}
-	return values2style;// FOR LUKAS N --> this array is returned when user clicks apply after selecting a single attribute for styling
-						// contains the values from which the natural breaks should then be calculated
+	arrAttribute = values2style;	// FOR LUKAS N --> this array is returned when user clicks apply after selecting a single attribute for styling
+									// contains the values from which the natural breaks should then be calculated
+	styleGeoJSON(LeafletGeoJSON)	// ->style_geoJson.js
 }
 
 // EXTERNAL FUNCTIONS

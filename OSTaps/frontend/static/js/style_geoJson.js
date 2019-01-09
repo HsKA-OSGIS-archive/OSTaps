@@ -19,9 +19,7 @@ var sdotted = "1,10";
 var numClasses = 2
 var colorCode = "OrRd"
 
-
-
-var arrAttribute = calculateNewAttribute();
+var arrAttribute = "";
 
 
 // everything is based on this styleGeoJSON function
@@ -32,7 +30,7 @@ var arrAttribute = calculateNewAttribute();
 // - fillColor:		fill color of the polygons (default value is the default color)
 //					-> will be styled by color brewer
 // - ....
-function styleGeoJSON(geoJSON2style) {
+function styleGeoJSON(geoJSON2style) {	
 	geoJSON2style.eachLayer(function(feature) {
 		feature.setStyle({
 			color: outlineColor,
@@ -73,7 +71,7 @@ function startup() {
 	// overwrites the default color by a nicer color defined by us (outlineColor)
 	i_select_line_color.value = outlineColor;	
 	f_select_line_width.value = lineWidth;	
-	s_select_line_style.value = outlineStyle;
+	s_select_line_style.value = "solid";
 	s_select_fill_color.value = colorCode;
 	s_select_numb_class.value = numClasses;
 
