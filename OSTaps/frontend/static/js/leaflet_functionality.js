@@ -8,7 +8,7 @@ function initialiseMap(filename) {
 					renderer: L.canvas()
 					}).setView([51, 10], 6);
 
-	$.getJSON("http://localhost:8000/get/" + filename, function(geojsonData) {
+	$.getJSON("/get/" + filename, function(geojsonData) {
 		GeoJSON = geojsonData;
 		console.log(GeoJSON);
 		LeafletGeoJSON = L.geoJson(GeoJSON).addTo(map);

@@ -50,11 +50,6 @@ window.addEventListener("load", startup, false);
 // this function does the following:
 // 1. Register all user inputs from the GUI and add Event listeners
 function startup() {
-	console.log("TEST");
-	console.log(arrAttribute)
-
-	console.log("TEST");
-	console.log(arrAttribute)
 
 	// ----------------------
 	// REGISTER COLOR CHOOSER

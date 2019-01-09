@@ -223,7 +223,7 @@ function calculateNewAttribute(){
 				async: true,
 				data: {
 					csrfmiddlewaretoken: csrftoken,
-					geojson: JSON.stringify(GeoJSON),							// write stringified geojson
+					geojson: JSON.stringify(GeoJSON),				// write stringified geojson
 					filename: filename											// as filename
 				}
 			});

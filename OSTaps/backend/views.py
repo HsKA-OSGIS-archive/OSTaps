@@ -14,7 +14,7 @@ def upload(request):                                                    # UPLOAD
 	filename = doc_to_save._get_name()                              # get the original file name
 	filename = os.path.basename(filename)                           # omit possible "../" for security reasons
 	fd = open(settings.BASE_DIR+'\\uploads\\'+str(filename),'wb')   # create a file in the servers file storage and open
-        for chunk in doc_to_save.chunks():                              
+        for chunk in doc_to_save.chunks():
             fd.write(chunk)                                             # write json chunks in the created file
         fd.close()                                                      # close the file
 	return HttpResponseRedirect("/?data=" + filename)               # redirect to the index.html, but with the filename as "data" parameter
@@ -36,18 +36,12 @@ def test(request):
 
 def update(request):                                                    # UPDATE is called when a user calculates a new attribute
         data = request.POST.get("geojson", "")                          # get geojson parameter from POST request. Empty string if not given.
-        data = json.dumps(data, separators=(',',':'))                   # dump stringified JSON to string
-        data = data.replace("\\", "")                                   # replace \ with nothing       
-        data = data[1:-1]                                               # remove leading and trailing "
+        data = json.loads(data)                                         # convert stringified JSON to python dict
+        data = json.dumps(data)                                         # convert dict to json string
 
         filename = request.POST.get("filename", "")                     # get filename parameter from POST request. Empty string if not given.
 
-        with open(settings.BASE_DIR+'\\uploads\\'+str(filename), 'wb') as outfile:      # overwrite the existing file
-                outfile.write("{0}".format(data))                                       # with JSON
+        with open(settings.BASE_DIR+'\\uploads\\'+str(filename), 'wb') as outfile:  # overwrite the existing file
+                outfile.write(data)                                     # with JSON
 
         return HttpResponse()                                           # no loading of any pages or data
-
-
-
-
-
