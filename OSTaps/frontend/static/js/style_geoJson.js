@@ -7,7 +7,7 @@ var s_select_numb_class;
 
 // default values, will be overwritten by user defined values
 var outlineColor = "#3c3c3c";
-var fillColor = "#777777";
+var fillColor = "#CCCCCC";
 var lineWidth  = 1 ;
 var outlineStyle;
 
@@ -16,10 +16,11 @@ var ssolid = "";
 var sdashed = "15,10";
 var sdotted = "1,10";
 
-var numClasses = 2
+var numClasses = 3
 var colorCode = "OrRd"
 
 var arrAttribute = "";
+var attributeName = "";
 
 
 // everything is based on this styleGeoJSON function
@@ -30,14 +31,14 @@ var arrAttribute = "";
 // - fillColor:		fill color of the polygons (default value is the default color)
 //					-> will be styled by color brewer
 // - ....
-function styleGeoJSON(geoJSON2style) {	
+function styleGeoJSON(geoJSON2style) {
 	geoJSON2style.eachLayer(function(feature) {
 		feature.setStyle({
 			color: outlineColor,
-			fillColor: fillColor,
+			fillColor: getColor(feature),
 			weight: lineWidth,
 			dashArray: outlineStyle,
-            // lineJoin: 'round'
+			fillOpacity: 1
 		});
 	});
 }
@@ -64,20 +65,20 @@ function startup() {
 	s_select_fill_color = document.querySelector("#s_select_color");
 	s_select_numb_class = document.querySelector("#s_select_classes");
 
-			
 
-	
+
+
 
 	// overwrites the default color by a nicer color defined by us (outlineColor)
-	i_select_line_color.value = outlineColor;	
-	f_select_line_width.value = lineWidth;	
+	i_select_line_color.value = outlineColor;
+	f_select_line_width.value = lineWidth;
 	s_select_line_style.value = "solid";
 	s_select_fill_color.value = colorCode;
 	s_select_numb_class.value = numClasses;
 
 
 
-	
+
 	// add listener to check if color is changed by the user
 	i_select_line_color.addEventListener("change", updateOutlineColor, true);
 	// add listener to check if line width is changed by the user
@@ -88,7 +89,7 @@ function startup() {
 	s_select_fill_color.addEventListener("change", updateFillColor, true);
 	// add listener to check if Number of Classes changed by the user
 	s_select_numb_class.addEventListener("change", updateNumclasses, true);
-	
+
 	//------------------------
 	// REGISTER NEXT GUI ELEMENT
 	// ....
@@ -103,67 +104,76 @@ function updateOutlineColor(event) {
 	outlineColor = i_select_line_color.value;
 	console.log("New color choosen from user:");
 	console.log(outlineColor);
-	
+
 	styleGeoJSON(LeafletGeoJSON);
 }
 
 // OUTLINE WIDTH
 function updateLineWidth(event) {
-	// get lineWidth 
+	// get lineWidth
 	lineWidth = f_select_line_width.value;
 	console.log("New width choosen from user:");
 	console.log(lineWidth);
-	
+
 	styleGeoJSON(LeafletGeoJSON);
 }
 
 //OUTLINE STYLE
 function updateLineStyle(event) {
 	console.log("updateLineStyle");
-	
+
 	//check which option is selected
 	s_select_line_style = document.querySelector("#s_select_line_style");
 	console.log(s_select_line_style.value);
 	var style = s_select_line_style.value
-	
+
 	if (style == "solid"){
 		outlineStyle = ssolid;
 	}
-	
+
 	if (style == "dashed"){
 	outlineStyle = sdashed;
 	}
-	
+
 	if (style == "dotted"){
 	outlineStyle = sdotted;
 	}
-	
+
 	styleGeoJSON(LeafletGeoJSON);
-	
+
 }
 
 // FILL COLOR
 function updateFillColor(event) {
-	// get colorCode 
+	// get colorCode
 	colorCode = s_select_fill_color.value;
 	console.log("New Color choosen from user:");
 	console.log(colorCode);
-	
+
 	styleGeoJSON(LeafletGeoJSON);
 }
 
 // Change Number of Classes
 function updateNumclasses(event) {
-	// get numClasses 
+	// get numClasses
 	numClasses = s_select_numb_class.value;
 	console.log("New Number of Classes choosen from user:");
 	console.log(numClasses);
-	
+
 	styleGeoJSON(LeafletGeoJSON);
 }
 
+function getColor(feature){
+	if (arrAttribute == ""){
+		return fillColor;
+	} else {
+		t = new Color();
+		t.setNumClasses(numClasses);
+		t.setColorCode(colorCode);
 
+		t.setSeries(arrAttribute)
+		t.classify(arrAttribute);
 
-
-
-
+		return t.getColorInRange(feature.feature.properties[attributeName])
+	}
+}

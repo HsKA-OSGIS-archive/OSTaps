@@ -188,8 +188,8 @@ function calculateNewAttribute(){
 	var calculation = document.getElementById("tf_attribute").value; // returning string https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/eval // returns the users input calculation
 	var countCorrectElements = 0; 		// counter for the number of correct elements
 	cSplit = calculation.split(" ");    // splits Calculation Statement
-	newCalc = ""; 						// empty string which will be filled with correct calculation statements 
-	
+	newCalc = ""; 						// empty string which will be filled with correct calculation statements
+
 	for (var i = 0; i < cSplit.length; i++){ 											// iterating over splitted user input string
 		cElement = cSplit[i];
 		if (attributelist.indexOf(cElement) != -1){ 									// if current element is an existing attribute
@@ -200,19 +200,19 @@ function calculateNewAttribute(){
 			countCorrectElements++;														// increment number of correct elements by 1
 		}
 	}
-	
+
 	if (countCorrectElements == cSplit.length){ // if statement is valid
 		var nbfeatures = Object.keys(GeoJSON.features).length;
 		try {
 			var values2style = [] 												// empty array which will then be filled with new calculated attribute
 			// CALCULATION OF NEW ATTRIBUTE
 			for (var i = 0; i < nbfeatures; i++){ 								// iterate over all features of GeoJSON
-				GeoJSON.features[i].properties["newProperty"] = eval(newCalc);	// and evaluate the newCalc String and add it as a newProperty to GeoJSON	
+				GeoJSON.features[i].properties["newProperty"] = eval(newCalc);	// and evaluate the newCalc String and add it as a newProperty to GeoJSON
 				// CONVERSION OF CALCULATED ATTRIBUTE INTO ARRAY FOR RETURNING AND FURTHER PROCESSING
 				values2style.push(GeoJSON.features[i].properties["newProperty"])
-				
+
 			}
-			
+
 			// UPDATE GEOJSON
 			var csrftoken = getCookie('csrftoken');								// get crsf token
 
@@ -235,9 +235,9 @@ function calculateNewAttribute(){
 	} else {
 		alert("Invalid Calculation Statement");									// if evaluation is not possible: show error to user
 	}
-	
-	arrAttribute = values2style;	// FOR LUKAS N --> this array is returned when user clicks apply after successfully calculating a new attribute 
-									// contains the values from which the natural breaks should then be calculated
+
+	arrAttribute = values2style;	// FOR LUKAS N --> this array is returned when user clicks apply after successfully calculating a new attribute
+	attributeName = "newProperty"	// contains the values from which the natural breaks should then be calculated
 	styleGeoJSON(LeafletGeoJSON)	// ->style_geoJson.js
 }
 
@@ -250,7 +250,7 @@ function returnSingleAttribute(){
 		values2style.push(GeoJSON.features[i].properties[dropdownValue]);		// fill array with attribute value of current feature
 	}
 	arrAttribute = values2style;	// FOR LUKAS N --> this array is returned when user clicks apply after selecting a single attribute for styling
-									// contains the values from which the natural breaks should then be calculated
+	attributeName = dropdownValue // contains the values from which the natural breaks should then be calculated
 	styleGeoJSON(LeafletGeoJSON)	// ->style_geoJson.js
 }
 
