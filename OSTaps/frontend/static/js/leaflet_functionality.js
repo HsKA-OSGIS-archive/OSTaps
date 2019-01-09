@@ -4,7 +4,9 @@ var GeoJSON;
 
 function initialiseMap(filename) {
 
-	var map = L.map("map").setView([51, 10], 6);
+	map = L.map('map', {
+					renderer: L.canvas()
+					}).setView([51, 10], 6);
 
 	$.getJSON("http://localhost:8000/get/" + filename, function(geojsonData) {
 		GeoJSON = geojsonData;

@@ -26,10 +26,11 @@
 	<script src = "{% static './js/leaflet_functionality.js' %}"></script>
 	<script src = "{% static './js/attribute_selection.js' %}"></script>
 	<script src = "{% static './js/style_geoJson.js' %}"></script>
-	<script src = "{% static './js/export_image.js' %}"></script>
+	<script src = "{% static './js/export_as_image.js' %}"></script>
 	<script src = "{% static './lib/classybrew.js' %}"></script>
 	<script src = "{% static './lib/popper.min.js' %}"></script>
 	<script src = "{% static './lib/bootstrap.min.js' %}"></script>
+	<script src = "{% static './lib/leaflet-image.js' %}"></script>
 	
 	
 	
@@ -211,7 +212,7 @@
             <h1 class="h4">Map Preview</h1>
             <div class="btn-toolbar mb-2 mb-md-0">
               <div class="btn-group mr-2">
-                <button class="btn btn-sm btn-outline-secondary" >Export as Image</button>
+                <button class="btn btn-sm btn-outline-secondary" id = "b_downImage" >Export as Image</button>
                 <button class="btn btn-sm btn-outline-secondary">Export as Leaflet Map</button>
 				<button class="btn btn-sm btn-outline-secondary">Export SLD</button>
               </div>
