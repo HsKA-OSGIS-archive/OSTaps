@@ -22,6 +22,8 @@
 		 <!-- <script src="./js/export_image.js"></script>  -->
 		 <script src="./js/style_geoJson.js"></script> 
 		 <script src="./js/leaflet.js"></script> <!-- DUBLICATE -->
+		 <script src="./js/leaflet-image.js"></script> 
+		 <script src="./js/export_as_image.js"></script> 
 
 		
 		<!-- Add Static GeoJson for Testing -->
@@ -206,38 +208,9 @@
 					
 				var ourGeoJSON = L.geoJson(DEU).addTo(map);	
 		
-				
-				document.getElementById('b_downImage').addEventListener('click', function() {
-				leafletImage(map, exportImage);
-				});
-				
-				function exportImage(err, canvas) {
-					console.log("Button Image NEW");
-					//erstellt ein HTML-Element
-					var img = document.createElement('img');
-					
-					//legt Groesse fest
-					var dimensions = map.getSize();
-					img.width = dimensions.x;
-					img.height = dimensions.y;
-					console.log(dimensions);
-					console.log(img.width);
-					console.log(img.height);
-					
-					//gibt eine data URI zurück, die eine Representation des Bildes zurück gibt
-					img.src = canvas.toDataURL();
-					console.log("data:[<mediatype>][;base64],<data>");
-					var source = img.src
-					console.log(img.src);
-					
-					snapshot.innerHTML = '';
-					snapshot.appendChild(img);
-					console.log(snapshot);
-					
-					<!-- return canvas; -->
-					<!-- return snapshot; -->
 			
-				}
+				
+		
 				// will be styled in style_geoJSON.js
 				
 				

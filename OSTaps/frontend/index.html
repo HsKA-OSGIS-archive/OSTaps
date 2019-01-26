@@ -31,6 +31,7 @@
 	<script src = "{% static './lib/popper.min.js' %}"></script>
 	<script src = "{% static './lib/bootstrap.min.js' %}"></script>
 	<script src = "{% static './lib/leaflet-image.js' %}"></script>
+	<script src = "{% static './lib/download.js' %}"></script>
 
 
 
@@ -196,7 +197,7 @@
               </li>
 
 			  <br><br>
-
+			  
 			  <!-- LINE COLOR SELECTOR -->
 			  <li class="nav-item">
 			    <br>
@@ -213,7 +214,7 @@
             <div class="btn-toolbar mb-2 mb-md-0">
               <div class="btn-group mr-2">
                 <button class="btn btn-sm btn-outline-secondary" id = "b_downImage" >Export as Image</button>
-                <button class="btn btn-sm btn-outline-secondary">Export as Leaflet Map</button>
+                <button class="btn btn-sm btn-outline-secondary" onclick="exportImage()">Export as Leaflet Map</button>
 				<button class="btn btn-sm btn-outline-secondary">Export SLD</button>
               </div>
             </div>

@@ -17,7 +17,11 @@ function exportImage(err, canvas) {
 
 	//gibt eine data URI zurück, die eine Representation des Bildes zurück gibt
 	img.src = canvas.toDataURL('image/png');
-	console.log(img.src);
-	download(img.src, "yourMap.png", "image/png");
+
+  //img.src = img.src.replace(/^data:image\/[^;]*/, 'data:application/octet-stream');
+	//img.src = img.src.replace(/^data:application\/octet-stream/, 'data:application/octet-stream;headers=Content-Disposition%3A%20attachment%3B%20filename=Canvas.png');
+
+	window.open(img.src, "_blank");
+
 
 }
