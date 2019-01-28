@@ -27,13 +27,17 @@
 	<script src = "{% static './js/leaflet_functionality.js' %}"></script>
 	<script src = "{% static './js/attribute_selection.js' %}"></script>
 	<script src = "{% static './js/style_geoJson.js' %}"></script>
+  <script src = "{% static './js/classybrew2geostyler.js' %}"></script>
+  <script src = "{% static './js/NodeJS/js/parserBrowserified.js' %}"></script>
 	<script src = "{% static './js/export_as_image.js' %}"></script>
 	<script src = "{% static './js/export_as_map.js' %}"></script>
+  <script src = "{% static './js/export_as_sld.js' %}"></script>
 	<script src = "{% static './lib/classybrew.js' %}"></script>
 	<script src = "{% static './lib/popper.min.js' %}"></script>
 	<script src = "{% static './lib/bootstrap.min.js' %}"></script>
 	<script src = "{% static './lib/leaflet-image.js' %}"></script>
 	<script src = "{% static './lib/download.js' %}"></script>
+  <script src = "{% static './lib/fileSaver.js' %}"></script>
 
   </head>
 
@@ -215,7 +219,7 @@
               <div class="btn-group mr-2">
                 <button class="btn btn-sm btn-outline-secondary" id = "b_downImage" >Export as Image</button>
                 <button class="btn btn-sm btn-outline-secondary" id = "b_downMap">Export as Leaflet Map</button>
-				<button class="btn btn-sm btn-outline-secondary">Export SLD</button>
+				<button class="btn btn-sm btn-outline-secondary" id = "b_downSLD">Export SLD</button>
               </div>
             </div>
           </div>
