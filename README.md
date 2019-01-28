@@ -6,7 +6,8 @@ Development of a Web Client for Thematic Mapping - Interactive Creation, Styling
 
 This folder contains interim results of the ongoing project. The content of these folders are shortly described:
 
-[module_work/Bootstrap layout](Bootstrap layout)
+[Bootstrap layout](module_work/Bootstrap layout)
+
 Classybrew 	
 Classybrew2Geostyler 
 DjangoServer
