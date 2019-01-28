@@ -84,7 +84,7 @@
 					<!--  will be deleted when loading geojson dynamically from server -->
 					<button id="sing_loadattr" class="btn btn-secondary btn-sm" type="button" onclick="fillAttributeDropdownSing(GeoJSON)">Load Attributes...</button>
 
-					<select required id = "sing_s_select_attribute" onchange ="addAttributeToTextfield()">
+					<select required id = "sing_s_select_attribute">
 						<option value="" selected>Select...</option>
 					</select>
 					<button class="btn btn-secondary btn-sm" type="button" onclick="returnSingleAttribute()">Apply</button>
@@ -177,7 +177,7 @@
 			    <br>
 				<b id = "t_select_line_width"> Select the Width of the Outline </b>
 				<form id = "f_select_line_width">
-					<input id="select_line_width" type="number" min="0.0" max="5.0" value="1" step="0.1">
+					<input id="select_line_width" type="number" min="1.0" max="5.0" value="1" step="1">
 				</form>
               </li>
 

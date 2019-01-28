@@ -77,7 +77,6 @@ function addAttributeToTextfield() {
 	var textBefore = v.substring(0,  cursorPos );
 	var textAfter  = v.substring( cursorPos, v.length );
 	$('#tf_attribute').val( textBefore+ selectedOption + textAfter );
-
 }
 
 // Fills Dropdown for Attribute Selection dynamically with Result of getProperties function
