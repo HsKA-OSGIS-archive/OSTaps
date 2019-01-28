@@ -27,16 +27,17 @@
 	<script src = "{% static './js/attribute_selection.js' %}"></script>
 	<script src = "{% static './js/style_geoJson.js' %}"></script>
 	<script src = "{% static './js/export_as_image.js' %}"></script>
+	<script src = "{% static './js/export_as_map.js' %}"></script>
 	<script src = "{% static './lib/classybrew.js' %}"></script>
 	<script src = "{% static './lib/popper.min.js' %}"></script>
 	<script src = "{% static './lib/bootstrap.min.js' %}"></script>
 	<script src = "{% static './lib/leaflet-image.js' %}"></script>
 	<script src = "{% static './lib/download.js' %}"></script>
 
-	<style>#map { width: 800px; height: 500px; }
+	<!-- <style>#map { width: 800px; height: 500px; }
 .info { padding: 6px 8px; font: 14px/16px Arial, Helvetica, sans-serif; background: white; background: rgba(255,255,255,0.8); box-shadow: 0 0 15px rgba(0,0,0,0.2); border-radius: 5px; } .info h4 { margin: 0 0 5px; color: #777; }
-.legend { text-align: left; line-height: 18px; color: #555; } .legend i { width: 18px; height: 18px; float: left; margin-right: 8px; opacity: 0.7; }</style>
-	
+.legend { text-align: left; line-height: 18px; color: #555; } .legend i { width: 18px; height: 18px; float: left; margin-right: 8px; opacity: 0.7; }</style> -->
+
   </head>
 
   <body>
@@ -60,7 +61,7 @@
 					  method='post'
 					  encType="multipart/form-data">{% csrf_token %}
 					    <label for="fileupload"> Select your Input GeoJSON </label>
-						<input type="file" class="form-control" id="fileupload" name="myFile" accept=".geojson"/>
+						<input type="file" class="form-control" id="fileupload" name="myFile" accept=".geojson, .json"/>
 						<input type="hidden" class="form-control" name="_csrf" value="<your_csrf_token>" />
 						<input type='submit' class="form-control"/>
 					</form>
@@ -199,7 +200,7 @@
               </li>
 
 			  <br><br>
-			  
+
 			  <!-- LINE COLOR SELECTOR -->
 			  <li class="nav-item">
 			    <br>
@@ -216,7 +217,7 @@
             <div class="btn-toolbar mb-2 mb-md-0">
               <div class="btn-group mr-2">
                 <button class="btn btn-sm btn-outline-secondary" id = "b_downImage" >Export as Image</button>
-                <button class="btn btn-sm btn-outline-secondary" onclick="exportImage()">Export as Leaflet Map</button>
+                <button class="btn btn-sm btn-outline-secondary" id = "b_downMap">Export as Leaflet Map</button>
 				<button class="btn btn-sm btn-outline-secondary">Export SLD</button>
               </div>
             </div>
@@ -228,31 +229,31 @@
 			// global variable coming from Django, default ""
 			var filename = "{{filename}}"
 			initialiseMap(filename)
-			
-			var legend = L.control({position: 'bottomright'});
-			legend.onAdd = function (map) {
 
-				var div = L.DomUtil.create('div', 'info legend'),
-					grades = [],
-					labels = [],
-					from, to;
+			// var legend = L.control({position: 'bottomright'});
+			// legend.onAdd = function (map) {
+      //
+			// 	var div = L.DomUtil.create('div', 'info legend'),
+			// 		grades = [],
+			// 		labels = [],
+			// 		from, to;
+      //
+			// 	for (var i = 0; i < grades.length; i++) {
+			// 		from = grades[i];
+			// 		to = grades[i + 1];
+      //
+			// 		labels.push(
+			// 			'<i style="background:' + getColor(from + 1) + '"></i> ' +
+			// 			from + (to ? '&ndash;' + to : '+'));
+			// 	}
+      //
+			// 	div.innerHTML = labels.join('<br>');
+			// 	return div;
+			// };
+      //
+			// legend.addTo(map);
 
-				for (var i = 0; i < grades.length; i++) {
-					from = grades[i];
-					to = grades[i + 1];
 
-					labels.push(
-						'<i style="background:' + getColor(from + 1) + '"></i> ' +
-						from + (to ? '&ndash;' + to : '+'));
-				}
-
-				div.innerHTML = labels.join('<br>');
-				return div;
-			};
-
-			legend.addTo(map);
-			
-			
 		  </script>
         </main>
       </div>

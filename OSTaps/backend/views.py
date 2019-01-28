@@ -27,7 +27,9 @@ def get(request, filename):                                             # GET is
                 json_data = open(file_path)                             # open file
                 data = json.load(json_data)                             # load JSON data
                 json_data.close()                                       # close file
-                return JsonResponse(data)                               # return JSON to client
+                response = JsonResponse(data)                           # return JSON to client
+                response["Access-Control-Allow-Origin"] = "*"           # allow external pages to acess the response
+                return response                               
 
 	raise Http404                                                   # if file does not exists throw file not found error
 

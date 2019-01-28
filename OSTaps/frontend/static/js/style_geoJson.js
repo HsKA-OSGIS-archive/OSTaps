@@ -5,16 +5,16 @@ var s_select_line_style;
 var s_select_fill_color;
 var s_select_numb_class;
 
-// default values, will be overwritten by user defined values
-var outlineColor = "#3c3c3c";
-var fillColor = "#CCCCCC";
-var lineWidth  = 1 ;
-var outlineStyle;
-
 //given outline styles
 var ssolid = "";
 var sdashed = "15,10";
 var sdotted = "1,10";
+
+// default values, will be overwritten by user defined values
+var outlineColor = "#3c3c3c";
+var fillColor = "#CCCCCC";
+var lineWidth  = 1;
+var outlineStyle = ssolid;
 
 var numClasses = 3
 var colorCode = "OrRd"
