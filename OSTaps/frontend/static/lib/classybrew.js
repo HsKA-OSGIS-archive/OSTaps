@@ -1,23 +1,12 @@
 
 function Color (classes, series) {
-		
-	
-		console.log("Classybrew started")
- 
 
- 
-this.series = undefined;
-this.numClasses= undefined;
-this.breaks = undefined;
-this.colorCode = undefined;
-this.range = undefined;
+	this.series = undefined;
+	this.numClasses= undefined;
+	this.breaks = undefined;
+	this.colorCode = undefined;
+	this.range = undefined;
 
-
-
-//this.series = this.series.sort();
-//console.log(this.series)
- 
- 
 			this.colorSchemes = {
 				/** Sequential **/
 				OrRd:  {2: ['rgb(254,232,200)', 'rgb(227,74,51)'],3: ['rgb(254,232,200)', 'rgb(253,187,132)', 'rgb(227,74,51)'], 4: ['rgb(254,240,217)', 'rgb(253,204,138)', 'rgb(252,141,89)', 'rgb(215,48,31)'], 5: ['rgb(254,240,217)', 'rgb(253,204,138)', 'rgb(252,141,89)', 'rgb(227,74,51)', 'rgb(179,0,0)'], 6: ['rgb(254,240,217)', 'rgb(253,212,158)', 'rgb(253,187,132)', 'rgb(252,141,89)', 'rgb(227,74,51)', 'rgb(179,0,0)'], 7: ['rgb(254,240,217)', 'rgb(253,212,158)', 'rgb(253,187,132)', 'rgb(252,141,89)', 'rgb(239,101,72)', 'rgb(215,48,31)', 'rgb(153,0,0)'], 8: ['rgb(255,247,236)', 'rgb(254,232,200)', 'rgb(253,212,158)', 'rgb(253,187,132)', 'rgb(252,141,89)', 'rgb(239,101,72)', 'rgb(215,48,31)', 'rgb(153,0,0)'], 9: ['rgb(255,247,236)', 'rgb(254,232,200)', 'rgb(253,212,158)', 'rgb(253,187,132)', 'rgb(252,141,89)', 'rgb(239,101,72)', 'rgb(215,48,31)', 'rgb(179,0,0)', 'rgb(127,0,0)'], 'properties':{'type': 'seq','blind':[1],'print':[1,1,0,0,0,0,0],'copy':[1,1,2,0,0,0,0],'screen':[1,1,1,0,0,0,0] } } ,
@@ -58,26 +47,24 @@ this.range = undefined;
 				Pastel2:  {2: ['rgb(179,226,205)','rgb(203,213,232)'],3: ['rgb(179,226,205)', 'rgb(253,205,172)', 'rgb(203,213,232)'], 4: ['rgb(179,226,205)', 'rgb(253,205,172)', 'rgb(203,213,232)', 'rgb(244,202,228)'], 5: ['rgb(179,226,205)', 'rgb(253,205,172)', 'rgb(203,213,232)', 'rgb(244,202,228)', 'rgb(230,245,201)'], 6: ['rgb(179,226,205)', 'rgb(253,205,172)', 'rgb(203,213,232)', 'rgb(244,202,228)', 'rgb(230,245,201)', 'rgb(255,242,174)'], 7: ['rgb(179,226,205)', 'rgb(253,205,172)', 'rgb(203,213,232)', 'rgb(244,202,228)', 'rgb(230,245,201)', 'rgb(255,242,174)', 'rgb(241,226,204)'], 8: ['rgb(179,226,205)', 'rgb(253,205,172)', 'rgb(203,213,232)', 'rgb(244,202,228)', 'rgb(230,245,201)', 'rgb(255,242,174)', 'rgb(241,226,204)', 'rgb(204,204,204)'], 'properties':{'type': 'qual','blind':[2,0,0,0,0,0],'print':[2,0,0,0,0,0],'copy':[0],'screen':[2,2,0,0,0,0] } } ,
 				Pastel1:  {2: ['rgb(251,180,174)',  'rgb(204,235,197)'],3: ['rgb(251,180,174)', 'rgb(179,205,227)', 'rgb(204,235,197)'], 4: ['rgb(251,180,174)', 'rgb(179,205,227)', 'rgb(204,235,197)', 'rgb(222,203,228)'], 5: ['rgb(251,180,174)', 'rgb(179,205,227)', 'rgb(204,235,197)', 'rgb(222,203,228)', 'rgb(254,217,166)'], 6: ['rgb(251,180,174)', 'rgb(179,205,227)', 'rgb(204,235,197)', 'rgb(222,203,228)', 'rgb(254,217,166)', 'rgb(255,255,204)'], 7: ['rgb(251,180,174)', 'rgb(179,205,227)', 'rgb(204,235,197)', 'rgb(222,203,228)', 'rgb(254,217,166)', 'rgb(255,255,204)', 'rgb(229,216,189)'], 8: ['rgb(251,180,174)', 'rgb(179,205,227)', 'rgb(204,235,197)', 'rgb(222,203,228)', 'rgb(254,217,166)', 'rgb(255,255,204)', 'rgb(229,216,189)', 'rgb(253,218,236)'], 9: ['rgb(251,180,174)', 'rgb(179,205,227)', 'rgb(204,235,197)', 'rgb(222,203,228)', 'rgb(254,217,166)', 'rgb(255,255,204)', 'rgb(229,216,189)', 'rgb(253,218,236)', 'rgb(242,242,242)'], 'properties':{'type': 'qual','blind':[2,0,0,0,0,0,0],'print':[2,2,2,0,0,0,0],'copy':[0],'screen':[2,2,2,2,0,0,0] } }
 		};
- 
+
 			// define array of values
 			this.setSeries = function (seriesArr) {
 				this.series = Array();
 				this.series = seriesArr;
 				this.series = this.series.sort(function (a, b) { return a-b });
-				console.log(this.series)
 			};
 
 			// return array of values
 			this.getSeries = function () {
 				return this.series;
 			};
-			
+
 
 
 			// set number of classes
 			this.setNumClasses = function (n) {
 				this.numClasses = n;
-				console.log(n);
 				return this.numClasses;
 			};
 
@@ -85,8 +72,8 @@ this.range = undefined;
 			this.getNumClasses = function () {
 				return this.numClasses;
 			};
- 
- 
+
+
 			// define color ramp color
 			this.setColorCode = function (color) {
 				this.colorCode = color;
@@ -94,17 +81,16 @@ this.range = undefined;
 
 			// get available color ramps
 			this.getColorCode = function () {
-				
-				console.log(this.colorCode);
+
 				return this.colorCode;
 			};
-			
+
 			// get colors from data and num classes
 			this.getColors = function () {
 				// return array of colors
 				return this.colorSchemes[this.colorCode][this.numClasses];
 			};
-			
+
 						// get color codes
 			this.getColorCodes = function () {
 				var colorCodes = [];
@@ -129,7 +115,7 @@ this.range = undefined;
 				}
 				return colorTypes;
 			};
-			
+
 			// get color for a given value
 			this.getColorInRange = function (num) {
 				// return color code for supplied number
@@ -150,9 +136,9 @@ this.range = undefined;
 					}
 				}
 			};
- 
+
 this.classify = function() {
-//creation of two twodimensional matrixes, Dimension is: [values in this.series +1 ][number of classes +1] 
+//creation of two twodimensional matrixes, Dimension is: [values in this.series +1 ][number of classes +1]
 // both values are completly filled with 0 values
 var mat1 = []
 		for ( var x = 0, xl = this.series.length + 1; x < xl; x++) {
@@ -193,11 +179,11 @@ var mat2 = []
 		// one another to and adjust the indices until you meet the rules:
 		// minimum deviation
 		// within a class and maximum separation between classes
-		for ( var l = 2, ll = this.series.length + 1; l < ll; l++) { //loop through this.series, starting at value 2 (dL[1,2,6,8] 4 vaölues)
+		for ( var l = 2, ll = this.series.length + 1; l < ll; l++) { //loop through this.series, starting at value 2 (dL[1,2,6,8] 4 vaï¿½lues)
 			var s1 = 0.0
 			var s2 = 0.0			//s1 and s2 = standard Deviation? setting zero
 			var w = 0.0				// w = ?
-			
+
 			for ( var m = 1, ml = l + 1; m < ml; m++) { //loop with  l iterations
 				var i3 = l - m + 1 // i3 for first iteration : 2, 1 ; second: 3, 2, 1 ... last: 4,3,2,1
 				var val = parseFloat(this.series[i3 - 1]) // val for first it: this.series[1,0], second: dL[2,1,0] ... last: dL[3,2,1,0]
@@ -218,8 +204,6 @@ var mat2 = []
 			mat1[l][1] = 1
 			mat2[l][1] = v
 		}
-console.log("Matrix1:",mat1);
-console.log("Matrix2:",mat2);
 
 		var k = this.series.length
 		var kclass = []
@@ -240,7 +224,6 @@ console.log("Matrix2:",mat2);
 			kclass[countNum - 1] = this.series[id]
 			k = parseInt((mat1[k][countNum] - 1))
 			// spits out the rank and value of the break values:
-			console.log("id="+id,"rank = " + String(mat1[k][countNum]),"val = " + String(this.series[id]))
 			// count down:
 			countNum -= 1
 		}
@@ -249,17 +232,14 @@ console.log("Matrix2:",mat2);
 
 			return this.range; //array of breaks
 }
- 
- 
- 
- 
- 
 
- 
+
+
+
+
+
+
 
 
 	return this.range, series, classes;
  };
- 
- 
- 

@@ -10,7 +10,6 @@ function initialiseMap(filename) {
 
 	$.getJSON("/get/" + filename, function(geojsonData) {
 		GeoJSON = geojsonData;
-		console.log(GeoJSON);
 		LeafletGeoJSON = L.geoJson(GeoJSON).addTo(map);
 
 		var bounds = LeafletGeoJSON.getBounds();

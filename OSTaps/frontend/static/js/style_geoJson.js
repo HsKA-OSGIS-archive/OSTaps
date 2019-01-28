@@ -97,9 +97,6 @@ function startup() {
 function updateOutlineColor(event) {
 	// get newColor from colorPicker
 	outlineColor = i_select_line_color.value;
-	console.log("New color choosen from user:");
-	console.log(outlineColor);
-
 	styleGeoJSON(LeafletGeoJSON);
 }
 
@@ -107,19 +104,13 @@ function updateOutlineColor(event) {
 function updateLineWidth(event) {
 	// get lineWidth
 	lineWidth = f_select_line_width.value;
-	console.log("New width choosen from user:");
-	console.log(lineWidth);
-
 	styleGeoJSON(LeafletGeoJSON);
 }
 
 //OUTLINE STYLE
 function updateLineStyle(event) {
-	console.log("updateLineStyle");
-
 	//check which option is selected
 	s_select_line_style = document.querySelector("#s_select_line_style");
-	console.log(s_select_line_style.value);
 	var style = s_select_line_style.value
 
 	if (style == "solid"){
@@ -142,9 +133,6 @@ function updateLineStyle(event) {
 function updateFillColor(event) {
 	// get colorCode
 	colorCode = s_select_fill_color.value;
-	console.log("New Color choosen from user:");
-	console.log(colorCode);
-
 	styleGeoJSON(LeafletGeoJSON);
 }
 
@@ -152,9 +140,6 @@ function updateFillColor(event) {
 function updateNumclasses(event) {
 	// get numClasses
 	numClasses = s_select_numb_class.value;
-	console.log("New Number of Classes choosen from user:");
-	console.log(numClasses);
-
 	styleGeoJSON(LeafletGeoJSON);
 }
 

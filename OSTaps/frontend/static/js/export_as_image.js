@@ -6,7 +6,6 @@ $( document ).ready(function() {
 
 function exportImage(err, canvas) {
 
-	console.log("extern");
 	//erstellt ein HTML-Element
 	var img = document.createElement('img');
 
@@ -17,7 +16,6 @@ function exportImage(err, canvas) {
 
 	//gibt eine data URI zurück, die eine Representation des Bildes zurück gibt
 	img.src = canvas.toDataURL('image/png');
-	console.log(img.src);
 	download(img.src, "yourMap.png", "image/png");
 
 }
