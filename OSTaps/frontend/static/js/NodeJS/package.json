@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo hello there!",
-    "build": "browserify js/parser.js -o js/parserBrowserified.js",
+    "build": "browserify js/parser.js | uglifyjs -cm > js/parserBrowserified.js",
     "watch": "watchify js/parser.js -o js/parserBrowserified.js -v"
   },
   "repository": {
@@ -22,6 +22,7 @@
   "author": "Lukas Weber",
   "license": "BSD-2-Clause",
   "dependencies": {
-    "geostyler-sld-parser": "^0.18.0"
+    "geostyler-sld-parser": "^0.18.0",
+    "uglify-js": "^3.4.9"
   }
 }

@@ -249,6 +249,18 @@ You can also build a "watch"-routine to be able to call "npm run watch" and shor
 ```
 ***BUT:*** you can not watch multiple files here because one watch blocks the console!
 
+### Minimize the result for production mode using uglifyjs
 
+Install uglify-js package:
+
+```
+npm install uglify-js
+```
+
+then use the package to minify the browserified JS
+
+```
+browserify js/parser.js  | uglifyjs -cm > js/parser.js
+```
 
  
