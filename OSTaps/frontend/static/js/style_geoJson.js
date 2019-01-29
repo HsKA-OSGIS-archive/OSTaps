@@ -37,7 +37,7 @@ function styleGeoJSON(geoJSON2style) {
 			fillColor: getColor(feature),
 			weight: lineWidth,
 			dashArray: outlineStyle,
-			fillOpacity: 1
+			fillOpacity: 1,
 		});
 	});
 	if (arrAttribute != ""){
@@ -99,8 +99,6 @@ function updateOutlineColor(event) {
 function updateLineWidth(event) {
 	// get lineWidth
 	lineWidth = f_select_line_width.value;
-	console.log(f_select_line_width.value);
-	console.log(lineWidth)
 	styleGeoJSON(LeafletGeoJSON);
 }
 
