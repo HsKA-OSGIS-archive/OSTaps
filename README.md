@@ -55,6 +55,9 @@ fileSaver.js - https://github.com/eligrey/FileSaver.js/
 
 classybrew.js - https://github.com/tannerjt/classybrew
 
+geostyler-sld-parser - https://github.com/terrestris/geostyler-sld-parser
+
+leaflet-image.js - https://github.com/mapbox/leaflet-image
  	
  
 
