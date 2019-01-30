@@ -39,8 +39,21 @@ After the server started sucessfully, open the browser and type http://localhost
 [DownloadFunctionality:](https://github.com/HsKA-OSGIS/OSTaps/tree/master/module_work/DownloadFunctionality) How to download a stand alone HTML with Leaflet content using a multiline string?
 
 
+### Used JS libraries:
 
+leaflet.js - https://leafletjs.com/
 
+jquery.js - https://jquery.com/
+
+bootstrap.js - https://getbootstrap.com/
+
+popper.js - https://popper.js.org/
+
+download.js - http://danml.com/download.html
+
+fileSaver.js - https://github.com/eligrey/FileSaver.js/
+
+classybrew.js - https://github.com/tannerjt/classybrew
 
  	
  
