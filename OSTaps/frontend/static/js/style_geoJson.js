@@ -139,7 +139,7 @@ function getColor(feature){
 	if (arrAttribute == ""){
 		return fillColor;
 	} else {
-		t = new Color();
+		t = new classyBrew();
 		t.setNumClasses(numClasses);
 		t.setColorCode(colorCode);
 		t.setSeries(arrAttribute)

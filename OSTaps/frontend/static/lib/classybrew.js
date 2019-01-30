@@ -1,5 +1,5 @@
 
-function Color (classes, series) {
+function classyBrew (classes, series) {
 
 	this.series = undefined;
 	this.numClasses= undefined;
@@ -91,7 +91,7 @@ function Color (classes, series) {
 				return this.colorSchemes[this.colorCode][this.numClasses];
 			};
 
-						// get color codes
+			// get color codes
 			this.getColorCodes = function () {
 				var colorCodes = [];
 				for ( code in this.colorSchemes ) {
@@ -137,101 +137,101 @@ function Color (classes, series) {
 				}
 			};
 
-this.classify = function() {
-//creation of two twodimensional matrixes, Dimension is: [values in this.series +1 ][number of classes +1]
-// both values are completly filled with 0 values
-var mat1 = []
-		for ( var x = 0, xl = this.series.length + 1; x < xl; x++) {
-			var temp = []
-			for ( var j = 0, jl = this.numClasses + 1; j < jl; j++) {
-				temp.push(0)
-			}
-			mat1.push(temp)
-		}
-
-var mat2 = []
-		for ( var i = 0, il = this.series.length + 1; i < il; i++) {
-			var temp2 = []
-			for ( var c = 0, cl = this.numClasses + 1; c < cl; c++) {
-				temp2.push(0)
-			}
-			mat2.push(temp2)
-		}
-
-
-		// absolutely no idea what this does - best I can tell, it sets the 1st
-		// group in the
-		// mat1 and mat2 arrays to 1 and 0 respectively
-		for ( var y = 1, yl = this.numClasses + 1; y < yl; y++) {
-			mat1[0][y] = 1
-			mat2[0][y] = 0
-			for ( var t = 1, tl = this.series.length + 1; t < tl; t++) {
-				mat2[t][y] = Infinity
-			}
-			var v = 0.0
-		}
-
-
-
-		// and this part - I'm a little clueless on - but it works
-		// pretty sure it iterates across the entire dataset and compares each
-		// value to
-		// one another to and adjust the indices until you meet the rules:
-		// minimum deviation
-		// within a class and maximum separation between classes
-		for ( var l = 2, ll = this.series.length + 1; l < ll; l++) { //loop through this.series, starting at value 2 (dL[1,2,6,8] 4 va�lues)
-			var s1 = 0.0
-			var s2 = 0.0			//s1 and s2 = standard Deviation? setting zero
-			var w = 0.0				// w = ?
-
-			for ( var m = 1, ml = l + 1; m < ml; m++) { //loop with  l iterations
-				var i3 = l - m + 1 // i3 for first iteration : 2, 1 ; second: 3, 2, 1 ... last: 4,3,2,1
-				var val = parseFloat(this.series[i3 - 1]) // val for first it: this.series[1,0], second: dL[2,1,0] ... last: dL[3,2,1,0]
-				s2 += val * val // square of each value from this.series
-				s1 += val		// value out of this.series
-				w += 1			// counter for each loop
-				v = s2 - (s1 * s1) / w // Varianz minus  // 4 -(2*2)/1 = 0 / 5 - (5*5)/2 = -7,5
-				var i4 = i3 - 1
-				if (i4 != 0) {
-					for ( var p = 2, pl = this.numClasses + 1; p < pl; p++) {
-						if (mat2[l][p] >= (v + mat2[i4][p - 1])) {
-							mat1[l][p] = i3
-							mat2[l][p] = v + mat2[i4][p - 1]
+			this.classify = function() {
+				//creation of two twodimensional matrixes, Dimension is: [values in this.series +1 ][number of classes +1]
+				// both values are completly filled with 0 values
+				var mat1 = []
+						for ( var x = 0, xl = this.series.length + 1; x < xl; x++) {
+							var temp = []
+							for ( var j = 0, jl = this.numClasses + 1; j < jl; j++) {
+								temp.push(0)
+							}
+							mat1.push(temp)
 						}
-					}
+
+				var mat2 = []
+						for ( var i = 0, il = this.series.length + 1; i < il; i++) {
+							var temp2 = []
+							for ( var c = 0, cl = this.numClasses + 1; c < cl; c++) {
+								temp2.push(0)
+							}
+							mat2.push(temp2)
+						}
+
+
+						// absolutely no idea what this does - best I can tell, it sets the 1st
+						// group in the
+						// mat1 and mat2 arrays to 1 and 0 respectively
+						for ( var y = 1, yl = this.numClasses + 1; y < yl; y++) {
+							mat1[0][y] = 1
+							mat2[0][y] = 0
+							for ( var t = 1, tl = this.series.length + 1; t < tl; t++) {
+								mat2[t][y] = Infinity
+							}
+							var v = 0.0
+						}
+
+
+
+						// and this part - I'm a little clueless on - but it works
+						// pretty sure it iterates across the entire dataset and compares each
+						// value to
+						// one another to and adjust the indices until you meet the rules:
+						// minimum deviation
+						// within a class and maximum separation between classes
+						for ( var l = 2, ll = this.series.length + 1; l < ll; l++) { //loop through this.series, starting at value 2 (dL[1,2,6,8] 4 va�lues)
+							var s1 = 0.0
+							var s2 = 0.0			//s1 and s2 = standard Deviation? setting zero
+							var w = 0.0				// w = ?
+
+							for ( var m = 1, ml = l + 1; m < ml; m++) { //loop with  l iterations
+								var i3 = l - m + 1 // i3 for first iteration : 2, 1 ; second: 3, 2, 1 ... last: 4,3,2,1
+								var val = parseFloat(this.series[i3 - 1]) // val for first it: this.series[1,0], second: dL[2,1,0] ... last: dL[3,2,1,0]
+								s2 += val * val // square of each value from this.series
+								s1 += val		// value out of this.series
+								w += 1			// counter for each loop
+								v = s2 - (s1 * s1) / w // Varianz minus  // 4 -(2*2)/1 = 0 / 5 - (5*5)/2 = -7,5
+								var i4 = i3 - 1
+								if (i4 != 0) {
+									for ( var p = 2, pl = this.numClasses + 1; p < pl; p++) {
+										if (mat2[l][p] >= (v + mat2[i4][p - 1])) {
+											mat1[l][p] = i3
+											mat2[l][p] = v + mat2[i4][p - 1]
+										}
+									}
+								}
+							}
+							mat1[l][1] = 1
+							mat2[l][1] = v
+						}
+
+						var k = this.series.length
+						var kclass = []
+
+						// fill the kclass (classification) array with zeros:
+						for (i = 0; i <= this.numClasses; i++) {
+							kclass.push(0);
+						}
+
+						// this is the last number in the array:
+						kclass[this.numClasses] = parseFloat(this.series[this.series.length - 1])
+						// this is the first number - can set to zero, but want to set to lowest
+						// to use for legend:
+						kclass[0] = parseFloat(this.series[0])
+						var countNum = this.numClasses
+						while (countNum >= 2) {
+							var id = parseInt((mat1[k][countNum]) - 2)
+							kclass[countNum - 1] = this.series[id]
+							k = parseInt((mat1[k][countNum] - 1))
+							// spits out the rank and value of the break values:
+							// count down:
+							countNum -= 1
+						}
+							this.range = kclass;
+							this.range.sort(function (a, b) { return a-b })
+
+							return this.range; //array of breaks
 				}
-			}
-			mat1[l][1] = 1
-			mat2[l][1] = v
-		}
-
-		var k = this.series.length
-		var kclass = []
-
-		// fill the kclass (classification) array with zeros:
-		for (i = 0; i <= this.numClasses; i++) {
-			kclass.push(0);
-		}
-
-		// this is the last number in the array:
-		kclass[this.numClasses] = parseFloat(this.series[this.series.length - 1])
-		// this is the first number - can set to zero, but want to set to lowest
-		// to use for legend:
-		kclass[0] = parseFloat(this.series[0])
-		var countNum = this.numClasses
-		while (countNum >= 2) {
-			var id = parseInt((mat1[k][countNum]) - 2)
-			kclass[countNum - 1] = this.series[id]
-			k = parseInt((mat1[k][countNum] - 1))
-			// spits out the rank and value of the break values:
-			// count down:
-			countNum -= 1
-		}
-			this.range = kclass;
-			this.range.sort(function (a, b) { return a-b })
-
-			return this.range; //array of breaks
-}
 
 
 
