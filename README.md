@@ -61,7 +61,12 @@ leaflet-image.js - https://github.com/mapbox/leaflet-image
  	
  
 
-
+### Developer Names
+Lukas Weber
+Lukas Nübel
+Fabienne Heise
+Philipp Juhasz
+Carina Bühler
  
  
 
